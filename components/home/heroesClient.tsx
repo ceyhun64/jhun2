@@ -89,7 +89,7 @@ export default function HeroesClient({ dict, className, locale }: HeroesClientPr
   return (
     <div
       className={cn(
-        "relative w-full flex items-center justify-center overflow-hidden bg-black min-h-[80vh] md:min-h-screen",
+        "relative w-full flex items-center justify-center overflow-hidden bg-black min-h-[90vh] md:min-h-screen",
         className
       )}
     >

@@ -206,7 +206,7 @@ export default function AboutClient({ dict }: Props) {
                   </div>
 
                   {/* Görsel Kutusu (Değiştirilmedi) */}
-                  <div className="w-full sm:w-auto h-96 sm:h-72 md:h-full rounded-2xl overflow-hidden">
+                  <div className="w-full sm:w-auto h-96 sm:h-72 md:h-full rounded-2xl overflow-hidden flex items-center justify-center">
                     <PixelImage src="/logo/logo.webp" grid="4x6" />
                   </div>
                 </motion.div>
@@ -275,7 +275,7 @@ export default function AboutClient({ dict }: Props) {
         </div> */}
 
         {/* Başarılarımız */}
-        <div className="relative overflow-hidden p-8 md:p-16 dark:bg-black text-white">
+        <div className="mt-16 relative overflow-hidden p-8 md:p-16 dark:bg-black text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
             population={1}

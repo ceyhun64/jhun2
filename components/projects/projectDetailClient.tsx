@@ -185,7 +185,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   ].filter((img): img is string => Boolean(img)); // boş olanları çıkar
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-black text-white py-4 md:py-10 px-5 md:px-20 overflow-hidden relative font-mono">
+    <div className="min-h-screen bg-gradient-to-b from-black via-indigo-950 to-black text-white py-4 md:py-10 px-5 md:px-20 overflow-hidden relative font-mono">
       <SparklesCore
         id="tsparticlesfullpage1"
         background="transparent"

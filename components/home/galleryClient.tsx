@@ -83,13 +83,9 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   }, [carouselApi, items.length]); // items.length'i de dinleyelim ki veri geldiğinde durum güncellensin
 
   return (
-    <section className="py-16 md:py-28  bg-linear-to-t from-black to-slate-950 relative font-sans overflow-hidden">
+    <section className="py-16 md:py-28 bg-linear-to-t from-black to-slate-950 relative font-sans overflow-hidden">
       {/* Neon glow background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#3b82f6]/20 blur-[160px] rounded-full"></div>
-        <div className="absolute bottom-0 right-20 w-[400px] h-[400px] bg-orange-500/20 blur-[120px] rounded-full"></div>
-      </div>
-
+    
       {/* Title */}
       <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left px-4 sm:px-6 md:px-16">
         <RollingText

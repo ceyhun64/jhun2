@@ -348,7 +348,7 @@ function FireworksBackground({
       className={cn(
         "relative w-full h-full overflow-hidden",
         className,
-        "bg-gradient-to-t from-black via-slate-950 to-slate-950 rounded-xl" // gece gökyüzü
+        "bg-gradient-to-br from-black via-indigo-950 to-black rounded-xl" // gece gökyüzü
       )}
       {...props}
     >

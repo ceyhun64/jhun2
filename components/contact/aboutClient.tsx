@@ -76,7 +76,7 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-16 md:py-16 px-4 md:px-10 bg-linear-to-b from-black via-slate-950 to-black  font-sans"
+      className="py-16 mt-16 md:py-16 px-4 md:px-10 bg-linear-to-b from-black via-slate-950 to-black  font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -206,7 +206,7 @@ export default function AboutClient({ dict }: Props) {
                   </div>
 
                   {/* Görsel Kutusu (Değiştirilmedi) */}
-                  <div className="w-full sm:w-auto h-96 sm:h-72 md:h-full rounded-2xl overflow-hidden">
+                  <div className="w-full sm:w-auto h-96 sm:h-72 md:h-full rounded-2xl overflow-hidden flex items-center justify-center">
                     <PixelImage src="/logo/logo.webp" grid="4x6" />
                   </div>
                 </motion.div>
@@ -275,7 +275,7 @@ export default function AboutClient({ dict }: Props) {
         </div> */}
 
         {/* Başarılarımız */}
-        <div className="relative overflow-hidden p-8 md:p-16 dark:bg-black text-white">
+        <div className="relative mt-16 overflow-hidden p-8 md:p-16 dark:bg-black text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
             population={1}
