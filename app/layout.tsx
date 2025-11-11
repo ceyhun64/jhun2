@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description:
       "Kurumsal web siteleri, e-ticaret platformları ve özel dijital çözümlerle markanızı büyütün.",
     siteName: "Jhun Tech",
-    images: ["/og-image.png"], // Artık relative olabilir
+    images: ["/og-image.webp"], // Artık relative olabilir
     locale: "tr_TR",
     type: "website",
   },

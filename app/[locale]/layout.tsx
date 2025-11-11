@@ -36,7 +36,7 @@ export async function generateMetadata({
       description:
         "Kurumsal web siteleri, e-ticaret platformları ve özel dijital çözümlerle markanızı büyütün.",
       siteName: "Jhun Tech",
-      images: ["/og-image.png"],
+      images: ["/og-image.webp"],
       locale: ogLocale,
       type: "website",
     },

@@ -207,7 +207,7 @@ export default function AboutClient({ dict }: Props) {
 
                   {/* Görsel Kutusu (Değiştirilmedi) */}
                   <div className="w-full sm:w-auto h-96 sm:h-72 md:h-full rounded-2xl overflow-hidden">
-                    <PixelImage src="/logo/logo1.png" grid="4x6" />
+                    <PixelImage src="/logo/logo.webp" grid="4x6" />
                   </div>
                 </motion.div>
               </div>
