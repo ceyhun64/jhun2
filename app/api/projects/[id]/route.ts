@@ -47,23 +47,32 @@ async function deleteImageFromCloudinary(imageUrl?: string | null) {
 // ------------------------- GET -------------------------
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> } // Promise olarak al
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await context.params; // await et
+  const { id } = await context.params;
 
   const project = await prisma.project.findUnique({
     where: { id },
-    include: { technologies: { include: { technology: true } } },
+    include: { technologies: { include: { technology: true } } }, // join ile tech bilgisi
   });
 
   if (!project)
     return NextResponse.json({ message: "Proje bulunamadı" }, { status: 404 });
 
+  // Tüm technology objularını dön
   const result = {
     ...project,
-    technologies: project.technologies.map(
-      (pt: { technology: { id: string; name: string } }) => pt.technology.name
-    ),
+    technologies: project.technologies.map((pt) => {
+      const tech = pt.technology;
+      return {
+        _id: tech.id,
+        name: tech.name,
+        icon: tech.icon,
+        type: tech.type,
+        yoe: tech.yoe,
+        color: tech.color,
+      };
+    }),
   };
 
   return NextResponse.json({ project: result });
