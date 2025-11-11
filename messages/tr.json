@@ -1,0 +1,135 @@
+{
+  "navbar": {
+    "projects": "Projelerimiz",
+    "about": "Biz Kimiz",
+    "contact": "İletişime Geçin"
+  },
+  "heroes": {
+    "badge": ".jhun",
+    "title1": "Markanızı Dijitalleştirin",
+    "title2": "Modern & Profesyonel Web Sitelerine Sahip Olun",
+    "description": "Yaratıcı tasarım ve son teknoloji ile işletmenize özel modern web siteleri üretiyoruz. Dijital dünyada öne çıkın.",
+    "ctaText": "Hemen İletişime Geç"
+  },
+  "banner": {
+    "title": "Web Sitelerinizi Hızla Geliştirelim",
+    "subtitle": "Web sitelerinizi React, Next.js, Tailwind CSS ve TypeScript gibi son teknoloji araçlarla geliştiriyoruz. Bu sayede siteleriniz hızlı, etkileşimli ve mobil uyumlu olur, kullanıcı deneyimi üst seviyeye çıkar. Sürükleyici animasyonlar ve modern tasarım örnekleri ile projeleriniz fark yaratır.",
+    "tech_title": "Kullanılan Teknolojiler",
+    "tech_subtitle": "React ve Next.js ile dinamik ve ölçeklenebilir uygulamalar geliştiriyoruz. TypeScript ile hatasız kodlama sağlarken, Tailwind CSS ile modern ve estetik tasarımlar sunuyoruz. Bu teknolojiler, projelerinizi hızlı, güvenilir ve kullanıcı dostu hale getirir."
+  },
+  "gallery": {
+    "title": "Geleceği Tasarlıyoruz",
+    "description": "En yeni teknolojilerle geliştirilmiş modern projelerimizi keşfedin.",
+    "fetchError": "Projeler alınamadı.",
+    "view": "İncele",
+    "visitSite": "Siteye Git",
+    "exploreProjects": "Projeleri İncele"
+  },
+  "about": {
+    "title": ".jhun{}",
+    "typingTitle": "Biz Kimiz",
+    "heading": "Biz Kimiz",
+    "lead": ".jhun, işletmelerin dijital çağda büyümesini ve başarılı olmasını sağlayacak yenilikçi çözümler geliştirmeye adanmış tutkulu bir ekiptir.",
+    "paragraph1_title": "Dijital",
+    "paragraph1_text": "Dijital dünyada yaratıcılık ve teknoloji birleşiyor. .jhun olarak, web yazılımını sadece bir araç değil, bir sanat formu olarak görüyoruz. İşletmelerin dijital dönüşümünü hızlandırmak, kullanıcı deneyimini güçlendirmek ve markaların online dünyada öne çıkmasını sağlamak bizim işimiz.",
+    "mission_title": "Misyonumuz",
+    "mission_text": "Yenilikçi ve etkili web çözümleri sunmak, modern teknolojilerle hızlı, güvenli ve ölçeklenebilir altyapılar oluşturmak, kullanıcı odaklı arayüz ve deneyim tasarlamak, markaların dijital potansiyelini en üst düzeye çıkarmak.",
+    "vision_title": "Vizyonumuz",
+    "vision_text": ".jhun olarak, geleceğin web deneyimlerini tasarlamak ve sürekli değişen teknoloji dünyasında markaları öncü konumda tutmak istiyoruz. Dijitalde fark yaratmak, sadece bugünün değil, yarının trendlerini de yakalamak bizim hedefimiz. Her proje ile kullanıcı odaklı, yenilikçi ve estetik çözümler sunmayı amaçlıyoruz. Biz, yalnızca işlevsel web siteleri ve uygulamalar geliştirmekle kalmıyor; markaların dijital stratejilerini güçlendirecek, etkileşim ve dönüşümü artıracak deneyimler yaratıyoruz. Teknolojiyi stratejik bir avantaja dönüştürmek, veri güvenliğini en üst düzeyde sağlamak ve performanslı altyapılar oluşturmak vizyonumuzun temel taşlarıdır.",
+    "projects_heading": "jhun.tech’de yüzlerce proje",
+    "projects_description": "İşletmelere modern, kullanıcı dostu ve etkili web çözümleri sunuyoruz. Tasarımdan SEO optimizasyonuna, blog yönetiminden e-ticaret entegrasyonuna kadar tüm süreçlerde işletmelerin dijital büyümesini destekliyoruz.",
+    "logo_title": "Logomuz nereden geliyor?",
+    "logo_paragraph1": ".jhun ismi, kurucumuz Ceyhun Turkmen'in isminden okunuyor ve JSON formatına gönderme yapıyor: Nokta objeleri, süslü parantez veri bloklarını simgeliyor. Böylece isim ve logo, markamızın modern, minimal ve teknoloji odaklı kimliğini hem görsel hem kavramsal olarak yansıtıyor.",
+    "logo_paragraph2": "Lacivert renk, web tasarımında gece ve gökyüzünün sonsuzluğunu simgeler. .jhun logosundaki lacivert, evrendeki yıldızların ilham verici düzenini ve markamızın sınırsız yaratıcılığını temsil eder; profesyonel ve güvenilir kimliğimize ithaf edilmiştir.",
+    "quote": "Minimalist tasarım ve kod dünyasının sembolleri, markamızın yenilikçi ve çözüm odaklı yaklaşımını ziyaretçilere doğrudan anlatıyor.",
+    "companies_title": "Türkiye genelinde müşterilerimizin tercihi",
+    "achievement_heading": "Başarılarımız Sayılarla",
+    "achievement_sub": "İşletmelere iş akışlarını geliştiren, verimliliği artıran ve büyümeyi teşvik eden etkili araçlar sağlıyoruz.",
+    "achievement_1_label": "Desteklenen Şirket",
+    "achievement_1_value": "10+",
+    "achievement_2_label": "Tamamlanan Proje",
+    "achievement_2_value": "20+",
+    "achievement_3_label": "Mutlu Müşteri",
+    "achievement_3_value": "99%",
+    "achievement_4_label": "Kazanılan Ödül",
+    "achievement_4_value": "3+"
+  },
+
+  "contact": {
+    "title": "İletişime Geçin",
+    "description": "Sorularınız, geri bildirimleriniz veya iş birliği fırsatlarınız için buradayız. Size nasıl yardımcı olabileceğimizi bize bildirin!",
+    "infoTitle": "İletişim Bilgileri",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-posta",
+    "webLabel": "Web",
+    "form": {
+      "firstName": "Ad",
+      "lastName": "Soyad",
+      "email": "E-posta",
+      "subject": "Konu",
+      "message": "Mesaj",
+      "firstNamePlaceholder": "Adınızı girin",
+      "lastNamePlaceholder": "Soyadınızı girin",
+      "emailPlaceholder": "E-posta adresinizi girin",
+      "subjectPlaceholder": "Mesaj konusu",
+      "messagePlaceholder": "Mesajınızı buraya yazın",
+      "submit": "Mesaj Gönder",
+      "sending": "Gönderiliyor..."
+    },
+    "success": "Mesajınız başarıyla gönderildi, en kısa sürede dönüş yapılacaktır!",
+    "error": "Bir hata oluştu.",
+    "emailError": "Mail gönderilemedi"
+  },
+  "footer": {
+    "slogan": "Modern tasarım, şık ve etkileyici deneyim.",
+    "sections": [
+      { "title": "Şirket", "links": ["Hakkımızda", "Kariyer", "Basın"] },
+      {
+        "title": "Ürünler",
+        "links": ["Özellikler", "Fiyatlandırma", "Belgeler"]
+      },
+      { "title": "Destek", "links": ["İletişim", "SSS", "Yardım Merkezi"] },
+      { "title": "Yasal", "links": ["Gizlilik", "Şartlar", "Çerezler"] }
+    ],
+    "social": ["Facebook", "Instagram", "Linkedin", "Github", "Phone"],
+    "copyright": "© 2025 .jhun Tüm hakları saklıdır.",
+    "developerPrefix": "geliştiren"
+  },
+
+  "projects": {
+    "title_main": "GELECEĞİ KODLUYORUZ",
+    "title_reveal": "KODUN SANATSAL HALİ",
+    "subtitle": "En yeni teknolojilerle geliştirilmiş, yüksek performanslı ve modern projelerimiz.",
+    "loading": "Projeler yükleniyor...",
+    "error": "Projeler yüklenirken bir hata oluştu.",
+    "empty": "Henüz proje eklenmemiş.",
+    "view_project": "İncele",
+    "visit_site": "Siteye Git",
+    "cta_title": "Projen için teklif almak ister misin?",
+    "cta_text": "Sadece birkaç adımda markanı dijitalde öne çıkaracak projeni bizimle başlatabilirsin.",
+    "cta_button": "Hemen Teklif Al"
+  },
+  "projectdetail": {
+    "loading": "Yükleniyor...",
+    "notFound": "Proje bulunamadı",
+    "demoButton": "Siteye Git",
+    "technologiesTitle": "Kullanılan Teknolojiler",
+    "technologiesIntro": {
+      "p1": "Bu proje, modern web teknolojilerinin sunduğu en iyi araçlar kullanılarak geliştirildi. Her teknoloji, performans, güvenlik ve kullanıcı deneyimini maksimize edecek şekilde dikkatlice seçildi. Geliştirme sürecinde özellikle bileşen tabanlı yapı, yeniden kullanılabilir kod mimarisi ve optimize edilmiş render performansı hedeflendi.",
+      "p2": "Kullanıcı arayüzü, sade ama etkileyici bir görsel deneyim sunmak amacıyla tasarlandı. Tasarım sistemi; tutarlılık, okunabilirlik ve erişilebilirlik prensipleri üzerine kuruldu. Stil katmanında güçlü bir yapı sağlamak için modern CSS framework’leri ve yardımcı araçlar tercih edildi.",
+      "p3": "Frontend tarafında React ve Next.js gibi güçlü teknolojiler, hızlı yüklenme süreleri ve SEO uyumluluğu açısından büyük avantaj sağladı. Ek olarak, Tailwind CSS sayesinde tasarım süreçleri hızlanırken, geliştirme süreci daha esnek hale getirildi.",
+      "p4": "Sonuç olarak bu teknoloji yığını, projenin sadece bugünkü ihtiyaçlarını değil, gelecekteki ölçeklenebilirlik hedeflerini de destekleyen modern, sürdürülebilir bir altyapı oluşturdu.",
+      "p5": "Proje ayrıca responsive tasarım ve mobil öncelikli yaklaşım ile her cihazda kusursuz bir deneyim sunuyor. Kullanıcı etkileşimi ve erişilebilirlik testleri ile tasarımın her aşaması optimize edildi.",
+      "p6": "Performans optimizasyonları kapsamında sayfa yükleme süreleri minimize edildi, görseller ve medya içerikleri modern tekniklerle sıkıştırıldı. Bu sayede hem kullanıcı deneyimi yükseltildi hem de SEO açısından güçlü bir temel sağlandı."
+    },
+    "links": {
+      "openGithub": "GitHub'da Aç",
+      "getInTouch": "İletişime Geç"
+    },
+    "cta": {
+      "title": "Bu tarz bir site istiyor musun?",
+      "subtitle": "Sadece birkaç adımda kendi markanı dijitalde öne çıkarabilirsin.",
+      "button": "Evet, iletişime geçelim"
+    }
+  }
+}

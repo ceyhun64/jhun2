@@ -1,0 +1,137 @@
+{
+  "navbar": {
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "heroes": {
+    "badge": ".jhun",
+    "title1": "Digitize Your Brand",
+    "title2": "Own Modern & Professional Websites",
+    "description": "We craft modern websites tailored to your business with creative design and cutting-edge technology. Stand out in the digital world.",
+    "ctaText": "Get in Touch Now"
+  },
+
+  "banner": {
+    "title": "Let's Develop Your Websites Quickly",
+    "subtitle": "We develop your websites using cutting-edge tools like React, Next.js, Tailwind CSS, and TypeScript. This ensures your sites are fast, interactive, and mobile-friendly, offering a superior user experience. Engaging animations and modern design examples make your projects stand out.",
+    "tech_title": "Technologies Used",
+    "tech_subtitle": "We develop dynamic and scalable applications with React and Next.js. TypeScript ensures error-free coding, while Tailwind CSS provides modern and aesthetic designs. These technologies make your projects fast, reliable, and user-friendly."
+  },
+  "gallery": {
+    "title": "Designing the Future",
+    "description": "Discover our modern projects built with the latest technologies.",
+    "loading": "Loading projects...",
+    "fetchError": "Unable to load projects.",
+    "unknownError": "Unknown error",
+    "view": "View",
+    "visitSite": "Visit Site",
+    "exploreProjects": "Explore Projects"
+  },
+  "about": {
+    "title": ".jhun{}",
+    "typingTitle": "About Us",
+    "heading": "Who We Are",
+    "lead": ".jhun is a passionate team dedicated to creating innovative solutions that help businesses grow and succeed in the digital age.",
+    "paragraph1_title": "Digital",
+    "paragraph1_text": "Creativity and technology meet in the digital world. At .jhun we see web development not just as a tool but as an art form. We accelerate digital transformation, strengthen user experience, and help brands stand out online.",
+    "mission_title": "Our Mission",
+    "mission_text": "Deliver innovative and effective web solutions, build fast, secure and scalable infrastructures using modern technologies, design user-centered interfaces and experiences, and maximize brands' digital potential.",
+    "vision_title": "Our Vision",
+    "vision_text": "At .jhun we aim to design the web experiences of the future and keep brands at the forefront in a constantly changing tech world. Creating a difference in digital means catching not only today's but tomorrow's trends. With every project we deliver user-focused, innovative and aesthetic solutions. We don't just build functional websites and apps; we create experiences that strengthen brands' digital strategies, boost engagement and conversion. Turning technology into strategic advantage, ensuring top-level data security and building high-performance infrastructures are the cornerstones of our vision.",
+    "projects_heading": "Hundreds of projects on jhun.tech",
+    "projects_description": "We provide businesses with modern, user-friendly and effective web solutions. From design to SEO optimization, from blog management to e-commerce integration, we support digital growth in every step.",
+    "logo_title": "Where does our logo come from?",
+    "logo_paragraph1": ".jhun comes from our founder Ceyhun Turkmen's name and makes a playful nod to JSON format: the dot suggests objects and the curly braces represent data blocks. The name and the logo reflect our modern, minimal and tech-focused identity both visually and conceptually.",
+    "logo_paragraph2": "The navy color symbolizes the night sky's infinity in web design. The navy in the .jhun logo represents the inspiring order of stars and our brand's boundless creativity — dedicated to a professional and trustworthy identity.",
+    "quote": "Minimalist design and the symbols of the code world directly communicate our brand's innovative and solution-oriented approach to visitors.",
+    "companies_title": "Chosen by clients across Turkey",
+    "achievement_heading": "Our Achievements by Numbers",
+    "achievement_sub": "We provide tools that improve workflows, increase efficiency, and encourage growth for businesses.",
+    "achievement_1_label": "Supported Companies",
+    "achievement_1_value": "10+",
+    "achievement_2_label": "Completed Projects",
+    "achievement_2_value": "20+",
+    "achievement_3_label": "Satisfied Clients",
+    "achievement_3_value": "99%",
+    "achievement_4_label": "Awards Won",
+    "achievement_4_value": "3+"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "description": "We’re here for your questions, feedback, or collaboration opportunities. Let us know how we can help!",
+    "infoTitle": "Contact Information",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "webLabel": "Website",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastNamePlaceholder": "Enter your last name",
+      "emailPlaceholder": "Enter your email address",
+      "subjectPlaceholder": "Message subject",
+      "messagePlaceholder": "Write your message here",
+      "submit": "Send Message",
+      "sending": "Sending..."
+    },
+    "success": "Your message has been sent successfully! We'll get back to you soon.",
+    "error": "An error occurred.",
+    "emailError": "Failed to send email."
+  },
+
+  "footer": {
+    "slogan": "Modern design, sleek and impressive experience.",
+    "sections": [
+      { "title": "Company", "links": ["About Us", "Careers", "Press"] },
+      { "title": "Products", "links": ["Features", "Pricing", "Docs"] },
+      { "title": "Support", "links": ["Contact", "FAQ", "Help Center"] },
+      { "title": "Legal", "links": ["Privacy", "Terms", "Cookies"] }
+    ],
+    "social": ["Facebook", "Instagram", "Linkedin", "Github", "Phone"],
+    "copyright": "© 2025 .jhun All rights reserved.",
+    "developerPrefix": "developed by"
+  },
+
+  "projects": {
+    "title_main": "CODING THE FUTURE",
+    "title_reveal": "THE ART OF CODE",
+    "subtitle": "Our modern, high-performance projects built with the latest technologies.",
+
+    "loading": "Loading projects...",
+    "error": "An error occurred while loading projects.",
+    "empty": "No projects have been added yet.",
+    "view_project": "View",
+    "visit_site": "Visit Site",
+    "cta_title": "Want to get a quote for your project?",
+    "cta_text": "In just a few steps, you can start your project that will make your brand stand out digitally with us.",
+    "cta_button": "Get a Quote Now"
+  },
+
+  "projectdetail": {
+    "loading": "Loading...",
+    "notFound": "Project not found",
+    "demoButton": "Visit Site",
+    "technologiesTitle": "Technologies Used",
+    "technologiesIntro": {
+      "p1": "This project was developed using the best tools modern web technologies offer. Each technology was carefully selected to maximize performance, security, and user experience. During development, we focused on component-based architecture, reusable code, and optimized rendering performance.",
+      "p2": "The user interface was designed to provide a clean yet impactful visual experience. The design system is built on principles of consistency, readability, and accessibility. Modern CSS frameworks and utility tools were used to provide a strong styling foundation.",
+      "p3": "On the frontend, powerful technologies like React and Next.js provided great advantages in terms of fast load times and SEO optimization. Additionally, Tailwind CSS accelerated the design process and made development more flexible.",
+      "p4": "As a result, this technology stack forms a modern and sustainable infrastructure that supports not only today’s needs but also future scalability goals.",
+      "p5": "The project also delivers a seamless experience across all devices thanks to responsive design and a mobile-first approach. Every aspect of the design was optimized for usability and accessibility, ensuring smooth user interactions.",
+      "p6": "Performance optimizations were implemented to minimize page load times, including efficient media and image handling. This approach improves user experience while providing a solid foundation for SEO and overall site performance."
+    },
+    "links": {
+      "openGithub": "Open on GitHub",
+      "getInTouch": "Get in touch"
+    },
+    "cta": {
+      "title": "Want a site like this?",
+      "subtitle": "You can highlight your brand online in just a few steps.",
+      "button": "Yes, let’s get in touch"
+    }
+  }
+}
