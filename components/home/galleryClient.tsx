@@ -14,7 +14,6 @@ import type { EmblaCarouselType } from "embla-carousel";
 import { RollingText } from "../ui/shadcn-io/rolling-text";
 import { CardContainer, CardBody, CardItem } from "../ui/shadcn-io/3d-card";
 
-
 interface GalleryItem {
   id: string;
   title: string;
@@ -85,7 +84,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   return (
     <section className="py-16 md:py-28 bg-linear-to-t from-black to-slate-950 relative font-sans overflow-hidden">
       {/* Neon glow background */}
-    
+
       {/* Title */}
       <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left px-4 sm:px-6 md:px-16">
         <RollingText
@@ -98,7 +97,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
       </div>
 
       {/* Carousel */}
-      <div className="w-full overflow-x-hidden mt-10 font-mono">
+      <div className="w-full overflow-x-hidden mt-0 md:mt-10 font-mono">
         {items.length > 0 ? ( // Veri varsa karuseli göster
           <Carousel
             setApi={setCarouselApi}
@@ -111,7 +110,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
               },
             }}
           >
-            <CarouselContent className="flex px-4 sm:px-6 md:px-16">
+            <CarouselContent className="flex md:gap-0 px-4 sm:px-6 md:px-16">
               {items.map((item) => (
                 <CarouselItem
                   key={item.id}
@@ -119,9 +118,9 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                 >
                   <CardContainer
                     className="inter-var"
-                    containerClassName="py-6 "
+                    containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
                   >
-                    <CardBody className="relative bg-gradient-to-b from-zinc-950 to-zinc-900 border border-zinc-800/70 rounded-2xl p-4 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                    <CardBody className=" relative bg-gradient-to-b from-zinc-950 to-zinc-900 border border-zinc-800/70 rounded-2xl p-4 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
                       {/* Görsel */}
                       <CardItem translateZ="140" className="w-full">
                         <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
@@ -198,7 +197,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
       </div>
 
       {/* Arrows & buttons */}
-      <div className="flex md:hidden mt-6 justify-between items-center w-full gap-3 px-4 sm:px-6 md:px-16">
+      <div className="flex md:hidden m md:mt-6 justify-between items-center w-full gap-3 px-4 sm:px-6 md:px-16">
         <div className="flex gap-2">
           <Button
             size="icon"

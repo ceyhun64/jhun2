@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { SparklesCore } from "../sparkles";
 
 const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 const randInt = (min: number, max: number) =>
@@ -352,16 +351,7 @@ function FireworksBackground({
       )}
       {...props}
     >
-      <SparklesCore
-        id="tsparticlesfullpage2"
-        background="transparent"
-        minSize={0.6}
-        maxSize={1.4}
-        particleDensity={30}
-        className="absolute inset-0 w-full h-full"
-        particleColor="#FFFFFF"
-        speed={1}
-      />
+    
       <canvas
         {...canvasProps}
         ref={canvasRef}
