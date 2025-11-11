@@ -89,7 +89,7 @@ export default function HeroesClient({ dict, className, locale }: HeroesClientPr
   return (
     <div
       className={cn(
-        "relative w-full flex items-center justify-center overflow-hidden bg-black min-h-[90vh] md:min-h-screen",
+        "relative w-full flex items-center justify-center overflow-hidden bg-black min-h-[80vh] md:min-h-screen",
         className
       )}
     >
@@ -169,7 +169,7 @@ export default function HeroesClient({ dict, className, locale }: HeroesClientPr
             className="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-8 bg-white/5 backdrop-blur-sm shadow-[0_0_4px_rgba(0,255,255,0.2)] transition-shadow duration-300"
           >
             <Circle className="h-2 w-2 fill-sky-400/60" />
-            <span className="text-sm text-white/70 tracking-wide">
+            <span className="text-xs text-white/70 tracking-wide">
               {dict.badge}
             </span>
           </motion.div>
@@ -181,7 +181,7 @@ export default function HeroesClient({ dict, className, locale }: HeroesClientPr
             initial="hidden"
             animate="visible"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white/90 to-blue-400 drop-shadow-[0_0_6px_rgba(0,255,255,0.25)] transition-all duration-300">
+            <h1 className="text-4xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white/90 to-blue-400 drop-shadow-[0_0_6px_rgba(0,255,255,0.25)] transition-all duration-300">
               <span>{dict.title1}</span>
               <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white/90 to-sky-600">
@@ -196,7 +196,7 @@ export default function HeroesClient({ dict, className, locale }: HeroesClientPr
             variants={fadeUpVariants}
             initial="hidden"
             animate="visible"
-            className="text-base sm:text-lg md:text-xl mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/70 drop-shadow-[0_0_4px_rgba(0,255,255,0.15)] transition-shadow duration-300"
+            className="text-sm md:text-xl mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/70 drop-shadow-[0_0_4px_rgba(0,255,255,0.15)] transition-shadow duration-300"
           >
             {dict.description}
           </motion.div>

@@ -56,21 +56,21 @@ const Banner = async ({ locale }: Props) => {
         <AuroraBackground>
           {/* HERO BÖLÜMÜ */}
           {/* HERO BÖLÜMÜ */}
-          <div className="text-center py-16 z-50">
-            <h1 className="text-3xl sm:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
+          <div className="text-center py-15 z-50 px-2">
+            <h1 className="text-2xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
               {dict.title}
             </h1>
-            <p className="mt-6 text-md sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-6 text-sm md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               {dict.subtitle}
             </p>
           </div>
 
           {/* BİLGİ / CTA BÖLÜMÜ */}
           <div className="text-center mb-16">
-            <h2 className="text-xl sm:text-3xl font-semibold text-gray-800 dark:text-gray-200">
+            <h2 className="text-xl md:text-4xl font-semibold text-gray-800 dark:text-gray-200">
               {dict.tech_title}
             </h2>
-            <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto sm:text-xl leading-relaxed text-md">
+            <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-lg">
               {dict.tech_subtitle}
             </p>
           </div>

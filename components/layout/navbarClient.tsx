@@ -71,12 +71,12 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
       </div>
 
       {/* İkonlar ve Hamburger */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-0 md:gap-3">
           <Link href="https://github.com/ceyhun64">
             <Button
               variant="ghost"
-              size="icon"
+              size="icon-sm"
               className="text-white hover:text-purple-400 transition-all hover:scale-110"
             >
               <Github className="h-5 w-5" />
@@ -85,7 +85,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
           <Link href="https://linkedin.com/in/ceyhun-türkmen-14882a26a">
             <Button
               variant="ghost"
-              size="icon"
+              size="icon-sm"
               className="text-white hover:text-blue-400 transition-all hover:scale-110"
             >
               <Linkedin className="h-5 w-5" />
@@ -106,7 +106,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
             {mobileOpen ? (
               <X className="h-6 w-6" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5" />
             )}
           </Button>
         </div>
@@ -128,7 +128,8 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
             >
               <Button
                 variant="ghost"
-                className="px-6 py-2 text-white rounded-md font-semibold shadow-lg bg-linear-to-r from-blue-500 via-blue-700 to-blue-900 hover:scale-105 hover:brightness-110 transition-all"
+                size="sm"
+                className=" text-white rounded-full font-semibold shadow-lg bg-linear-to-r from-blue-500 via-blue-700 to-blue-900 hover:scale-105 hover:brightness-110 transition-all"
               >
                 {link.name}
               </Button>
