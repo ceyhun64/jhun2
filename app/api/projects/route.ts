@@ -5,11 +5,7 @@ import prisma from "@/lib/db";
 import type { NextRequest } from "next/server";
 
 // MongoDB için tipler
-type ProjectTechnology = {
-  technology: { id: string; name: string };
-};
-
-type Project = {
+type ProjectWithTech = {
   id: string;
   title: string;
   summary: string;
@@ -23,7 +19,16 @@ type Project = {
   subImage3?: string | null;
   subImage4?: string | null;
   subImage5?: string | null;
-  technologies: ProjectTechnology[];
+  createdAt: Date;
+  updatedAt: Date;
+  technologies: {
+    id: string;
+    name: string;
+    icon: string;
+    type: string;
+    yoe: number;
+    color: string;
+  }[];
 };
 
 export async function GET(request: NextRequest) {
@@ -38,11 +43,9 @@ export async function GET(request: NextRequest) {
     });
 
     // Frontend için technologies array’ini düzleştir
-    const result = projects.map((project: Project) => ({
+    const result: ProjectWithTech[] = projects.map((project) => ({
       ...project,
-      technologies: project.technologies.map(
-        (pt: ProjectTechnology) => pt.technology
-      ),
+      technologies: project.technologies.map((pt) => pt.technology),
     }));
 
     return NextResponse.json({ projects: result });
@@ -85,7 +88,6 @@ export async function POST(request: NextRequest) {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    // Dosya upload helper
     async function uploadFile(file: File | null) {
       if (!file) return null;
 
@@ -114,7 +116,6 @@ export async function POST(request: NextRequest) {
       uploadFile(subImage5),
     ]);
 
-    // 1️⃣ Proje oluştur
     const project = await prisma.project.create({
       data: {
         title,
@@ -132,31 +133,26 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // 2️⃣ Join table: ProjectTechnology ekle
     if (technologyIds.length > 0) {
       const projectTechnologies = technologyIds.map((techId) => ({
         projectId: project.id,
         technologyId: techId,
       }));
 
-      // MongoDB için skipDuplicates kaldırıldı
       await prisma.projectTechnology.createMany({
         data: projectTechnologies,
       });
     }
 
-    // 3️⃣ Güncel proje ile teknolojileri çek
     const projectWithTech = await prisma.project.findUnique({
       where: { id: project.id },
       include: { technologies: { include: { technology: true } } },
     });
 
-    const result: Project | null = projectWithTech
+    const result: ProjectWithTech | null = projectWithTech
       ? {
           ...projectWithTech,
-          technologies: projectWithTech.technologies.map(
-            (pt: ProjectTechnology) => pt.technology
-          ),
+          technologies: projectWithTech.technologies.map((pt) => pt.technology),
         }
       : null;
 
