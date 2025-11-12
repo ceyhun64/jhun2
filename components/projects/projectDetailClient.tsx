@@ -185,7 +185,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   ].filter((img): img is string => Boolean(img)); // boş olanları çıkar
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-indigo-950 to-black text-white py-4 md:py-10 px-5 md:px-20 overflow-hidden relative font-mono">
+    <div className="min-h-screen bg-gradient-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
       <SparklesCore
         id="tsparticlesfullpage1"
         background="transparent"
@@ -202,7 +202,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="max-w-8xl mx-auto mt-20 p-6 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden"
+        className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden"
       >
         {/* Sol: Görseller */}
         <div className="w-full lg:w-1/2 flex flex-col gap-6">
@@ -432,18 +432,17 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                 {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
-                  {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
                 {"\n    "}
                 {dict.technologiesIntro.p5}
                 {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
-                {"\n"}  {"\n  "}
+                {"\n"} {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
                 {"\n    "}
                 {dict.technologiesIntro.p6}
-                                <span className="ml-1 animate-blink text-green-400">_</span>
-
+                <span className="ml-1 animate-blink text-green-400">_</span>
                 {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
@@ -531,17 +530,17 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         viewport={{ once: true }}
         className="mt-32 mb-20 text-center relative z-10"
       >
-        <div className="relative inline-block px-10 py-8 rounded-3xl bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-400 shadow-[0_0_40px_rgba(255,200,0,0.4)] hover:shadow-[0_0_60px_rgba(255,220,100,0.7)] transition-all duration-500">
-          <h2 className="text-4xl md:text-5xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-white">
+        <div className="relative inline-block px-10 py-8 rounded-3xl bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-400 border border-amber-500/30 shadow-[0_0_50px_rgba(255,200,0,0.5)] hover:shadow-[0_0_80px_rgba(255,220,100,0.7)] transition-all duration-700 backdrop-blur-md">
+          <h2 className="text-3xl md:text-5xl  font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-white drop-shadow-[0_0_15px_rgba(255,220,100,0.3)]">
             {dict.cta.title}
           </h2>
-          <p className="text-gray-200 text-lg mt-3 font-sans">
+          <p className="text-gray-200 text-base sm:text-lg mt-3 font-sans leading-relaxed">
             {dict.cta.subtitle}
           </p>
 
           <button
             onClick={() => (window.location.href = "/contact")}
-            className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300 rounded-full text-black font-semibold text-lg shadow-[0_0_15px_rgba(255,200,0,0.6)] hover:scale-105 hover:shadow-[0_0_25px_rgba(255,220,0,0.8)] transition-all duration-300"
+            className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300 rounded-full text-black font-semibold text-base md:text-lg shadow-[0_0_20px_rgba(255,200,0,0.7)] hover:scale-105 hover:shadow-[0_0_40px_rgba(255,220,100,0.8)] transition-all duration-300"
           >
             {dict.cta.button} <ArrowRight className="w-5 h-5" />
           </button>

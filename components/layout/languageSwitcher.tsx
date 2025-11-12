@@ -49,7 +49,7 @@ export default function LanguageSwitcher() {
             ${
               currentLocale === "tr"
                 ? "text-black"
-                : "text-gray-300 hover:text-white"
+                : "text-gray-300 hover:text-black"
             }`}
         >
           TR
@@ -65,7 +65,7 @@ export default function LanguageSwitcher() {
             ${
               currentLocale === "en"
                 ? "text-black"
-                : "text-gray-300 hover:text-white"
+                : "text-gray-300 hover:text-black"
             }`}
         >
           EN

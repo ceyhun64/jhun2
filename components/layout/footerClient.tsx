@@ -1,16 +1,27 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Facebook, Instagram, Linkedin, Github, Phone } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Github,
+  Phone,
+  ChevronDown,
+} from "lucide-react";
 import { GradientText } from "@/components/ui/shadcn-io/gradient-text";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ModernFooterClientProps {
   dict: any;
 }
 
-const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+const SOCIAL_ICONS: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   Facebook,
   Instagram,
   Linkedin,
@@ -18,131 +29,130 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> 
   Phone,
 };
 
-const particleCount = 25;
-const waveCount = 3;
-
 const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
   const [mounted, setMounted] = useState(false);
+  const [openSections, setOpenSections] = useState<boolean[]>([]);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    setOpenSections(dict.sections.map(() => false));
+  }, [dict.sections]);
+
+  const toggleSection = (index: number) => {
+    setOpenSections((prev) => prev.map((v, i) => (i === index ? !v : v)));
+  };
 
   return (
-    <footer className="relative bg-black text-white overflow-hidden font-sans md:px-20">
-      {mounted && (
-        <div className="absolute inset-0 overflow-hidden">
-          {Array.from({ length: waveCount }).map((_, idx) => (
-            <motion.div
-              key={idx}
-              animate={{ x: ["-100%", "100%"] }}
-              transition={{
-                duration: 8 + idx * 2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute w-[200%] h-[2px] rounded-full opacity-30"
-              style={{
-                top: `${20 + idx * 20}%`,
-                background:
-                  "linear-gradient(90deg, rgba(0,255,255,0.4), rgba(255,0,255,0.4), rgba(0,255,255,0.4))",
-                filter: "blur(4px)",
-              }}
+    <footer className="relative overflow-hidden bg-gradient-to-b from-black via-zinc-950 to-black text-white font-sans border-t border-zinc-800/50">
+      {/* Neon blur background */}
+      <div className="absolute inset-0 opacity-40">
+        <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-amber-500/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[120px]" />
+      </div>
+
+      {/* Content */}
+      <div className="relative container mx-auto px-5 md:px-10 py-16 md:py-24 z-10">
+        <div className="flex flex-col md:flex-row justify-between gap-14 md:gap-24">
+          {/* Left Side */}
+          <div className="md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
+            <GradientText
+              className="text-4xl sm:text-5xl font-extrabold font-mono tracking-tight drop-shadow-[0_0_15px_rgba(255,200,100,0.25)]"
+              text=".jhun{}"
             />
-          ))}
+            <p className="text-gray-400 mt-3 text-sm md:text-base max-w-sm leading-relaxed">
+              {dict.slogan}
+            </p>
 
-          {Array.from({ length: particleCount }).map((_, idx) => {
-            const width = 2 + Math.random() * 3;
-            const height = 2 + Math.random() * 3;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const xAnim = 5 - Math.random() * 10;
-            const boxShadow = `0 0 ${3 + Math.random() * 5}px #0ff, 0 0 ${
-              3 + Math.random() * 10
-            }px #f0f`;
-            const duration = 1 + Math.random() * 2;
-            const delay = Math.random() * 3;
-
-            return (
-              <motion.div
-                key={idx}
-                animate={{
-                  y: [0, -15, 0],
-                  x: [0, xAnim, 0],
-                  opacity: [0.1, 0.8, 0.1],
-                }}
-                transition={{
-                  duration,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  delay,
-                }}
-                className="absolute rounded-full"
-                style={{
-                  width,
-                  height,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  background: "#0ff",
-                  boxShadow,
-                }}
-              />
-            );
-          })}
-        </div>
-      )}
-
-      <div className="relative container mx-auto px-5 md:px-6 py-16 md:py-24 z-10">
-        <div className="text-center mb-10 mt-10">
-          <GradientText
-            className="text-3xl sm:text-4xl font-bold font-mono"
-            text=".jhun{}"
-            neon={true}
-          />
-          <p className="text-gray-400 mt-3 text-base sm:text-lg font-sans">
-            {dict.slogan}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center md:text-left">
-          {dict.sections.map((section: any, idx: number) => (
-            <div key={idx}>
-              <h3 className="font-semibold text-lg mb-3">{section.title}</h3>
-              <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                {section.links.map((link: string, i: number) => (
-                  <li key={i}>
-                    <a
-                      className="hover:text-amber-400 transition-colors"
-                      href="#"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            {/* Social Icons Desktop */}
+            <div className="hidden md:flex gap-4 mt-6">
+              {dict.social.map((iconName: string, i: number) => {
+                const Icon = SOCIAL_ICONS[iconName] || Phone;
+                return (
+                  <motion.a
+                    key={i}
+                    href="#"
+                    whileHover={{ scale: 1.15, rotate: 3 }}
+                    className="p-3 rounded-full bg-zinc-800/60 backdrop-blur-md border border-zinc-700 hover:border-amber-400/70 transition-all shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                  >
+                    <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white hover:text-amber-400 transition-colors" />
+                  </motion.a>
+                );
+              })}
             </div>
-          ))}
+          </div>
+
+          {/* Right Side */}
+          <div className="md:w-[55%] grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+            {dict.sections.map((section: any, idx: number) => (
+              <div
+                key={idx}
+                className="border-b border-zinc-800 pb-3 md:border-none md:pb-0"
+              >
+                {/* Header */}
+                <button
+                  onClick={() => toggleSection(idx)}
+                  className="w-full flex justify-between items-center md:justify-start text-white/90 md:text-amber-400/90 font-semibold text-lg md:mb-3 focus:outline-none"
+                >
+                  {section.title}
+                  <ChevronDown
+                    className={`ml-2 transition-transform duration-300 md:hidden ${
+                      openSections[idx] ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
+                </button>
+
+                {/* Link List */}
+                <AnimatePresence initial={false}>
+                  {(isMobile ? openSections[idx] : true) && (
+                    <motion.ul
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden mt-2 space-y-2 text-gray-400 text-sm md:text-base md:mt-0 md:block"
+                    >
+                      {section.links.map((link: any, i: number) => (
+                        <li key={i}>
+                          <Link
+                            href={`/${dict.locale}${link.href}`}
+                            className="group relative inline-block py-1 hover:text-amber-400 transition-colors"
+                          >
+                            {link.label}
+                            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-amber-400 transition-all duration-300 group-hover:w-full"></span>
+                          </Link>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="flex flex-wrap justify-center md:justify-center gap-4 md:gap-6 mt-8 md:mt-12">
+        {/* Social Icons Mobile */}
+        <div className="flex md:hidden flex-wrap justify-center gap-4 mt-8">
           {dict.social.map((iconName: string, i: number) => {
             const Icon = SOCIAL_ICONS[iconName] || Phone;
             return (
-              <a
+              <motion.a
                 key={i}
                 href="#"
-                className="p-3 rounded-full bg-gray-800 hover:bg-amber-500 hover:shadow-lg hover:shadow-amber-400/50 transition-all"
+                whileHover={{ scale: 1.1, rotate: 2 }}
+                className="p-3 rounded-full bg-zinc-800/60 backdrop-blur-md border border-zinc-700 hover:border-amber-400/70 transition-all shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
               >
-                <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white hover:text-black transition-colors" />
-              </a>
+                <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white hover:text-amber-400 transition-colors" />
+              </motion.a>
             );
           })}
         </div>
 
-        <div className="mt-12 border-t border-gray-700/50 pt-4 text-center text-sm sm:text-base text-gray-400 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+        {/* Bottom Section */}
+        <div className="mt-14 border-t border-zinc-800/70 pt-5 text-center text-sm sm:text-base text-gray-400 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
           <span>{dict.copyright}</span>
-          <span className="hidden sm:inline">|</span>
-          <div className="flex items-center gap-1 flex-nowrap">
+          <span className="hidden sm:inline">•</span>
+          <div className="flex items-center gap-1">
             <span>{dict.developerPrefix}</span>
             <Link
               href="https://wa.me/905541496377"
@@ -150,10 +160,10 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
               rel="noopener noreferrer"
             >
               <GradientText
-                gradient="linear-gradient(90deg, #f97316 0%, #facc15 50%, #f97316 100%)"
+                gradient="linear-gradient(90deg, #f59e0b 0%, #facc15 50%, #f59e0b 100%)"
                 className="text-white"
                 text="Ceyhun Türkmen"
-                neon={true}
+                neon
               />
             </Link>
           </div>

@@ -84,18 +84,30 @@
   },
 
   "footer": {
-    "slogan": "Modern design, sleek and impressive experience.",
+    "slogan": "With the elegance of modern design and a focus on user experience, we deliver a stylish and impactful web experience.",
     "sections": [
-      { "title": "Company", "links": ["About Us", "Careers", "Press"] },
-      { "title": "Products", "links": ["Features", "Pricing", "Docs"] },
-      { "title": "Support", "links": ["Contact", "FAQ", "Help Center"] },
-      { "title": "Legal", "links": ["Privacy", "Terms", "Cookies"] }
+      {
+        "title": "Explore",
+        "links": [
+          { "label": "Projects", "href": "/projects" },
+          { "label": "About Us", "href": "/about" },
+          { "label": "Contact", "href": "/contact" }
+        ]
+      },
+      {
+        "title": "Our Services",
+        "links": [
+          { "label": "Web Development", "href": "/contact" },
+          { "label": "SEO Optimization", "href": "/contact" },
+          { "label": "Digital Consulting", "href": "/contact" }
+        ]
+      }
     ],
-    "social": ["Facebook", "Instagram", "Linkedin", "Github", "Phone"],
+    "social": ["Instagram", "Linkedin", "Github", "Phone"],
     "copyright": "© 2025 .jhun All rights reserved.",
-    "developerPrefix": "developed by"
+    "developerPrefix": "developed by",
+    "locale": "en"
   },
-
   "projects": {
     "title_main": "CODING THE FUTURE",
     "title_reveal": "THE ART OF CODE",

@@ -40,16 +40,22 @@ export const SparklesCore = (props: ParticlesProps) => {
   }, []);
   const controls = useAnimation();
 
+  const [containerLoaded, setContainerLoaded] = useState(false);
+
   const particlesLoaded = async (container?: Container) => {
     if (container) {
-      controls.start({
-        opacity: 1,
-        transition: {
-          duration: 1,
-        },
-      });
+      setContainerLoaded(true);
     }
   };
+
+  useEffect(() => {
+    if (containerLoaded) {
+      controls.start({
+        opacity: 1,
+        transition: { duration: 1 },
+      });
+    }
+  }, [containerLoaded, controls]);
 
   const generatedId = useId();
   return (

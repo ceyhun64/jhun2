@@ -76,20 +76,20 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-16 mt-16 md:py-16 px-4 md:px-10 bg-linear-to-b from-black via-slate-950 to-black  font-sans"
+      className="py-8 md:py-16 px-4 md:px-10 bg-linear-to-b from-black  via-slate-900 to-black font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      <div className="container mx-auto">
+      <div className=" mx-auto">
         {/* Başlık ve açıklama */}
-        <div className="mb-2 md:mb-4 grid gap-5 text-center md:grid-cols-2 md:text-left px-12">
+        <div className="mb-2 md:mb-4 grid gap-5 text-center md:grid-cols-2 md:text-left px-2 md:px-12">
           <TypingText
             className="text-3xl sm:text-4xl md:text-5xl font-sans font-semibold tracking-tight text-white"
             text={dict.typingTitle}
             cursorClassName="h-8 sm:h-9"
           />
-          <p className="leading-7 text-sm sm:text-base md:text-lg not-first:mt-4 text-white">
+          <p className=" text-sm sm:text-base md:text-lg mb-6 md:mb-0 mt-1 md:not-first:mt-4 text-white">
             {dict.lead}
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function AboutClient({ dict }: Props) {
         <div className="grid gap-7 lg:grid-cols-3">
           {/* Sol Görsel Alanı */}
           <div className="lg:col-span-2">
-            <div className="relative flex-1 rounded-xl overflow-hidden sm:p-8">
+            <div className="relative flex-1 rounded-xl overflow-hidden">
               <SparklesCore
                 id="tsparticlesfullpage0"
                 background="transparent"
@@ -108,7 +108,7 @@ export default function AboutClient({ dict }: Props) {
                 particleColor="#FFFFFF"
                 speed={1}
               />
-              <div className="relative z-10 flex flex-col justify-between h-full overflow-hidden p-4 space-y-4">
+              <div className="relative z-10 flex flex-col justify-between h-full overflow-hidden p-0 md:p-4 space-y-4">
                 {/* 1. ve 2. Paragrafı içeren Ana Kod Bloğu */}
                 <pre className="bg-gray-900 text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
                   <code>
@@ -158,7 +158,7 @@ export default function AboutClient({ dict }: Props) {
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   {/* Vizyon Paragrafı (Küçük Kutucuk) */}
-                  <div className="flex flex-col justify-center p-4 rounded-2xl shadow bg-gray-900">
+                  <div className="flex flex-col justify-center p-0 md:p-4 rounded-2xl shadow bg-gray-900">
                     <pre className="bg-gray-900 text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
                       <code>
                         <span className="text-blue-400">&lt;div id=</span>
@@ -216,7 +216,7 @@ export default function AboutClient({ dict }: Props) {
 
           {/* Sağ İçerik */}
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
-            <div className="relative rounded-xl overflow-hidden p-5 sm:p-8">
+            <div className="relative rounded-xl overflow-hidden p-0.5 md:p-4">
               <SparklesCore
                 id="tsparticlesfullpage1"
                 background="transparent"
@@ -275,7 +275,7 @@ export default function AboutClient({ dict }: Props) {
         </div> */}
 
         {/* Başarılarımız */}
-        <div className="relative mt-16 overflow-hidden p-8 md:p-16 dark:bg-black text-white">
+        <div className=" mt-16 relative overflow-hidden py-8 px-4 md:p-16 dark:bg-black text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
             population={1}

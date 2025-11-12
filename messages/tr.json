@@ -81,21 +81,30 @@
     "emailError": "Mail gönderilemedi"
   },
   "footer": {
-    "slogan": "Modern tasarım, şık ve etkileyici deneyim.",
+"slogan": "Modern tasarımın zarafetiyle, kullanıcı deneyimini ön planda tutan, şık ve etkileyici bir web deneyimi sunuyoruz.",
     "sections": [
-      { "title": "Şirket", "links": ["Hakkımızda", "Kariyer", "Basın"] },
       {
-        "title": "Ürünler",
-        "links": ["Özellikler", "Fiyatlandırma", "Belgeler"]
+        "title": "Keşfet",
+        "links": [
+          { "label": "Projeler", "href": "/projects" },
+          { "label": "Hakkımızda", "href": "/about" },
+          { "label": "İletişim", "href": "/contact" }
+        ]
       },
-      { "title": "Destek", "links": ["İletişim", "SSS", "Yardım Merkezi"] },
-      { "title": "Yasal", "links": ["Gizlilik", "Şartlar", "Çerezler"] }
+      {
+        "title": "Hizmetlerimiz",
+        "links": [
+          { "label": "Web Geliştirme", "href": "/contact" },
+          { "label": "SEO Optimizasyonu", "href": "/contact" },
+          { "label": "Dijital Danışmanlık", "href": "/contact" }
+        ]
+      }
     ],
-    "social": ["Facebook", "Instagram", "Linkedin", "Github", "Phone"],
+    "social": ["Instagram", "Linkedin", "Github", "Phone"],
     "copyright": "© 2025 .jhun Tüm hakları saklıdır.",
-    "developerPrefix": "geliştiren"
+    "developerPrefix": "geliştiren",
+    "locale": "tr"
   },
-
   "projects": {
     "title_main": "GELECEĞİ KODLUYORUZ",
     "title_reveal": "KODUN SANATSAL HALİ",
