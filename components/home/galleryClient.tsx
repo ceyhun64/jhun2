@@ -124,7 +124,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                 >
                   {isMobile ? (
                     // ✅ Mobil: sade Tailwind kart
-                    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 text-left mt-6">
+                    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 text-left mt-6">
                       <div className="relative aspect-video overflow-hidden rounded-xl">
                         <Link href={`/projects/${item.id}`}>
                           <Image
@@ -163,7 +163,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                       className="inter-var"
                       containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
                     >
-                      <CardBody className="relative bg-gradient-to-b from-zinc-950 to-zinc-900 border border-zinc-800/70 rounded-2xl p-4 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                      <CardBody className="relative bg-gradient-to-b from-zinc-950/10 to-zinc-900 border border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
                         <CardItem translateZ="140" className="w-full">
                           <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
                             <Link href={`/projects/${item.id}`}>

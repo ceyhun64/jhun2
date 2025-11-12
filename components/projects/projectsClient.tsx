@@ -118,7 +118,7 @@ export default function ProjectsClient({ dict, locale }: Props) {
             >
               {isMobile ? (
                 // ✅ Mobil: sade Tailwind kart
-                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 text-left">
+                <div className="bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 text-left">
                   <div className="relative aspect-video overflow-hidden rounded-xl">
                     <Link href={`/${locale}/projects/${proj.id}`}>
                       <Image
@@ -157,7 +157,7 @@ export default function ProjectsClient({ dict, locale }: Props) {
                   className="inter-var"
                   containerClassName="py-6 scale-95 md:scale-100 transition-transform duration-300"
                 >
-                  <CardBody className="relative bg-gradient-to-b from-zinc-950 to-zinc-900 border border-zinc-800/70 rounded-2xl p-4 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                  <CardBody className="relative bg-gradient-to-b from-zinc-950/50 to-zinc-900/70 border border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
                     <CardItem translateZ="140" className="w-full">
                       <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
                         <Link href={`/${locale}/projects/${proj.id}`}>

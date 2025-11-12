@@ -67,9 +67,10 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
         </Link>
 
         {/* Desktop Menü */}
-        <div className="hidden md:flex">
+        {/* Desktop Menü */}
+        <div className="hidden md:flex absolute left-1/2 top-0 transform -translate-x-1/2 h-full items-center">
           <NavigationMenu>
-            <NavigationMenuList className="flex gap-6">
+            <NavigationMenuList className="flex gap-8">
               {links.map((link, i) => {
                 const isActive = pathname === `/${locale}/${link.href}`;
                 return (
