@@ -118,8 +118,8 @@ export default function ProjectsClient({ dict, locale }: Props) {
             >
               {isMobile ? (
                 // ✅ Mobil: sade Tailwind kart
-                <div className="bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 text-left">
-                  <div className="relative aspect-video overflow-hidden rounded-xl">
+                <div className="bg-zinc-950/50 border border-zinc-800 rounded-2xl p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 text-left">
+                  <div className="relative aspect-video overflow-hidden rounded-xl ">
                     <Link href={`/${locale}/projects/${proj.id}`}>
                       <Image
                         src={proj.image}
@@ -129,26 +129,28 @@ export default function ProjectsClient({ dict, locale }: Props) {
                       />
                     </Link>
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-white">
-                    {proj.title}
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-2 line-clamp-3">
-                    {proj.summary}
-                  </p>
+                  <div className="p-1.5">
+                    <h3 className="mt-4 text-lg font-semibold text-white">
+                      {proj.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-2 line-clamp-3">
+                      {proj.summary}
+                    </p>
 
-                  <div className="mt-4 flex justify-between items-center">
-                    <Link
-                      href={`/${locale}/projects/${proj.id}`}
-                      className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
-                    >
-                      <Eye className="w-4 h-4" /> {dict.view_project}
-                    </Link>
-                    <Button
-                      onClick={() => window.open(proj.url, "_blank")}
-                      className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
-                    >
-                      {dict.visit_site} <ArrowRight className="w-4 h-4" />
-                    </Button>
+                    <div className="mt-4 flex justify-between items-center">
+                      <Link
+                        href={`/${locale}/projects/${proj.id}`}
+                        className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                      >
+                        <Eye className="w-4 h-4" /> {dict.view_project}
+                      </Link>
+                      <Button
+                        onClick={() => window.open(proj.url, "_blank")}
+                        className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
+                      >
+                        {dict.visit_site} <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (

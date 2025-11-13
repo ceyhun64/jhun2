@@ -234,9 +234,9 @@ export default function AboutClient({ dict }: Props) {
                     text={dict.title}
                   />
                 </Link>
-                <h4 className="text-lg sm:text-xl font-semibold tracking-tight">
+                <h3 className="text-lg sm:text-xl font-semibold tracking-tight">
                   {dict.projects_heading}
-                </h4>
+                </h3>
                 <p className="leading-7 text-sm sm:text-base">
                   {dict.projects_description}
                 </p>

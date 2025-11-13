@@ -124,7 +124,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                 >
                   {isMobile ? (
                     // ✅ Mobil: sade Tailwind kart
-                    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 text-left mt-6">
+                    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 text-left mt-6">
                       <div className="relative aspect-video overflow-hidden rounded-xl">
                         <Link href={`/projects/${item.id}`}>
                           <Image
@@ -135,26 +135,28 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                           />
                         </Link>
                       </div>
-                      <h3 className="mt-4 text-lg font-semibold text-white">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-gray-400 mt-2 line-clamp-3">
-                        {item.summary}
-                      </p>
+                      <div className="p-1.5">
+                        <h3 className="mt-4 text-lg font-semibold text-white">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-gray-400 mt-2 line-clamp-3">
+                          {item.summary}
+                        </p>
 
-                      <div className="mt-4 flex justify-between items-center">
-                        <Link
-                          href={`/projects/${item.id}`}
-                          className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
-                        >
-                          <Eye className="w-4 h-4" /> {dict.view}
-                        </Link>
-                        <Button
-                          onClick={() => window.open(item.url, "_blank")}
-                          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
-                        >
-                          {dict.visitSite} <ArrowRight className="w-4 h-4" />
-                        </Button>
+                        <div className="mt-4 flex justify-between items-center">
+                          <Link
+                            href={`/projects/${item.id}`}
+                            className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                          >
+                            <Eye className="w-4 h-4" /> {dict.view}
+                          </Link>
+                          <Button
+                            onClick={() => window.open(item.url, "_blank")}
+                            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
+                          >
+                            {dict.visitSite} <ArrowRight className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ) : (
