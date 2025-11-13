@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jhun.vercel.app/sitemap.xml

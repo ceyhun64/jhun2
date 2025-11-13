@@ -158,9 +158,9 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
             whileHover={{ scale: 1.02 }}
             className="mt-4 md:mt-8 w-full lg:w-fit mx-auto text-center lg:mx-0 lg:text-left backdrop-blur-md bg-white/5 rounded-xl p-6 border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-500"
           >
-            <h3 className="mb-6 text-lg md:text-2xl font-semibold text-amber-400">
+            <h2 className="mb-6 text-lg md:text-2xl font-semibold text-amber-400">
               {dict.infoTitle}
-            </h3>
+            </h2>
             <ul className="space-y-1 md:space-y-2 text-xs md:text-base">
               <li className="text-xs md:text-sm">
                 <span className="font-bold ">{dict.phoneLabel}: </span>+90 554

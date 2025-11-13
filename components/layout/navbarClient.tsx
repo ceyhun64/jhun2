@@ -12,8 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { GradientText } from "@/components/ui/shadcn-io/gradient-text";
 import LanguageSwitcher from "./languageSwitcher";
-import { useParams } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 type NavbarClientProps = {
   dict: {
@@ -27,7 +26,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const params = useParams();
-  const pathname = usePathname(); // mevcut path
+  const pathname = usePathname();
 
   const locale = params.locale || "tr";
 
@@ -37,7 +36,6 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
     { name: dict.contact, href: "contact" },
   ];
 
-  // Scroll efekti — küçülen navbar
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
@@ -59,14 +57,18 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
     >
       <div className="flex items-center justify-between px-5 sm:px-10">
         {/* Logo */}
-        <Link href={`/${locale}`} className="flex items-center gap-1">
+        <Link
+          href={`/${locale}`}
+          className="flex items-center gap-1"
+          aria-label={locale === "en" ? "Homepage" : "Anasayfa"}
+          title={locale === "en" ? "Homepage" : "Anasayfa"}
+        >
           <GradientText
             className="text-2xl font-bold font-mono tracking-tighter"
             text=".jhun{}"
           />
         </Link>
 
-        {/* Desktop Menü */}
         {/* Desktop Menü */}
         <div className="hidden md:flex absolute left-1/2 top-0 transform -translate-x-1/2 h-full items-center">
           <NavigationMenu>
@@ -75,23 +77,22 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
                 const isActive = pathname === `/${locale}/${link.href}`;
                 return (
                   <NavigationMenuItem key={i}>
-                    <Link href={`/${locale}/${link.href}`}>
+                    <Link
+                      href={`/${locale}/${link.href}`}
+                      aria-label={`${link.name} sayfasına git`}
+                      title={`${link.name}`}
+                    >
                       <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.97 }}
                       >
                         <Button
                           variant="ghost"
-                          className={`
-                    px-4 py-2 font-medium transition-all duration-300
-                    bg-transparent
-                    ${
-                      isActive
-                        ? "text-orange-500"
-                        : "text-white hover:text-white"
-                    }
-                    hover:bg-amber-600/90
-                  `}
+                          className={`px-4 py-2 font-medium transition-all duration-300 bg-transparent ${
+                            isActive
+                              ? "text-orange-500"
+                              : "text-white hover:text-white"
+                          } hover:bg-amber-600/90`}
                         >
                           {link.name}
                         </Button>
@@ -106,14 +107,21 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
 
         {/* Sağ Taraf */}
         <div className="flex items-center gap-3 md:gap-4">
-          <Link href="https://github.com/ceyhun64" target="_blank">
+          <Link
+            href="https://github.com/ceyhun64"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profilini aç"
+            title="GitHub"
+          >
             <motion.div whileHover={{ scale: 1.2 }}>
               <Button
                 variant="ghost"
                 size="icon-sm"
                 className="text-white hover:text-purple-400"
+                aria-label="GitHub"
               >
-                <Github className="h-5 w-5" />
+                <Github className="h-5 w-5" aria-hidden="true" />
               </Button>
             </motion.div>
           </Link>
@@ -121,14 +129,18 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
           <Link
             href="https://linkedin.com/in/ceyhun-türkmen-14882a26a"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profilini aç"
+            title="LinkedIn"
           >
             <motion.div whileHover={{ scale: 1.2 }}>
               <Button
                 variant="ghost"
                 size="icon-sm"
                 className="text-white hover:text-blue-400"
+                aria-label="LinkedIn"
               >
-                <Linkedin className="h-5 w-5" />
+                <Linkedin className="h-5 w-5" aria-hidden="true" />
               </Button>
             </motion.div>
           </Link>
@@ -142,18 +154,20 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
               size="icon"
               onClick={() => setMobileOpen(!mobileOpen)}
               className="text-white"
+              aria-label={mobileOpen ? "Mobil menüyü kapat" : "Mobil menüyü aç"}
+              title={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
             >
               {mobileOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6" aria-hidden="true" />
               ) : (
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5" aria-hidden="true" />
               )}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* 🌙 Mobile Menü (Full-screen modal tarzı) */}
+      {/* 🌙 Mobile Menü */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -162,13 +176,16 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.35 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+            aria-label="Mobil menü"
           >
             {/* 🔹 Kapat Butonu */}
             <button
               onClick={() => setMobileOpen(false)}
               className="absolute top-5 right-6 text-gray-300 hover:text-amber-400 transition-all"
+              aria-label="Menüyü kapat"
+              title="Menüyü kapat"
             >
-              <X className="h-7 w-7" />
+              <X className="h-7 w-7" aria-hidden="true" />
             </button>
 
             {/* Menü Linkleri */}
@@ -182,6 +199,8 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
                 <Link
                   href={`/${locale}/${link.href}`}
                   onClick={() => setMobileOpen(false)}
+                  aria-label={`${link.name} sayfasına git`}
+                  title={link.name}
                 >
                   <motion.div whileHover={{ scale: 1.1 }}>
                     <Button
@@ -198,14 +217,29 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
 
             {/* Sosyal ikonlar */}
             <div className="flex gap-5 mt-8">
-              <Link href="https://github.com/ceyhun64" target="_blank">
-                <Github className="h-7 w-7 text-gray-300 hover:text-purple-400 transition-colors" />
+              <Link
+                href="https://github.com/ceyhun64"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profilini aç"
+                title="GitHub"
+              >
+                <Github
+                  className="h-7 w-7 text-gray-300 hover:text-purple-400 transition-colors"
+                  aria-hidden="true"
+                />
               </Link>
               <Link
                 href="https://linkedin.com/in/ceyhun-türkmen-14882a26a"
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profilini aç"
+                title="LinkedIn"
               >
-                <Linkedin className="h-7 w-7 text-gray-300 hover:text-blue-400 transition-colors" />
+                <Linkedin
+                  className="h-7 w-7 text-gray-300 hover:text-blue-400 transition-colors"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </motion.div>
