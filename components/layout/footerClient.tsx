@@ -90,6 +90,7 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.15, rotate: 3 }}
                     className="p-3 rounded-full bg-zinc-800/60 ..."
+                    aria-label={item.name} // ✅ aria-label eklendi
                   >
                     <Icon className="h-5 w-5 text-white hover:text-amber-400 transition-colors" />
                   </motion.a>
@@ -101,10 +102,7 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
           {/* Right Side */}
           <div className="md:w-[55%] grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
             {dict.sections.map((section: any, idx: number) => (
-              <div
-                key={idx}
-                className=" pb-3 md:border-none md:pb-0"
-              >
+              <div key={idx} className=" pb-3 md:border-none md:pb-0">
                 {/* Header */}
                 <button
                   onClick={() => toggleSection(idx)}
@@ -159,6 +157,7 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: 2 }}
                 className="p-3 rounded-full bg-zinc-800/60 backdrop-blur-md border border-zinc-700 hover:border-amber-400/70 transition-all shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                aria-label={item.name} // ✅ aria-label eklendi
               >
                 <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white hover:text-amber-400 transition-colors" />
               </motion.a>
