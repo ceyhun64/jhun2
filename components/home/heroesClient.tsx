@@ -189,24 +189,35 @@ export default function HeroesClient({
 
         {/* CTA Button */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
+          custom={3}
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate="visible"
           className="inline-block relative overflow-visible"
         >
-          <Link href={`/${locale}/contact`}>
-            <MagneticButton
-              className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
-              bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300
-              shadow-[0_0_10px_rgba(255,200,0,0.4)]
-              hover:shadow-[0_0_20px_rgba(255,220,50,0.5)]
-              after:absolute after:inset-0 after:rounded-full after:blur-xl after:bg-gradient-to-r after:from-yellow-400/20 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
-              transition-all duration-300"
-            >
-              <Sparkles className="w-5 h-5 mr-2 text-white/80" />
-              {dict.ctaText}
-            </MagneticButton>
-          </Link>
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeInOut",
+            }}
+          >
+            <Link href={`/${locale}/contact`}>
+              <MagneticButton
+                className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
+                   bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300
+                   shadow-[0_0_10px_rgba(255,200,0,0.4)]
+                   hover:shadow-[0_0_20px_rgba(255,220,50,0.5)]
+                   after:absolute after:inset-0 after:rounded-full after:blur-xl after:bg-gradient-to-r after:from-yellow-400/20 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
+                   transition-all duration-300"
+              >
+                <Sparkles className="w-5 h-5 mr-2 text-white/80" />
+                {dict.ctaText}
+              </MagneticButton>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
 
