@@ -10,12 +10,6 @@ export default function SocialSidebar() {
   const whatsappLink = `https://wa.me/${whatsappNumber.replace(/[^\d]/g, "")}`;
 
   const socialIcons = [
-     {
-      name: "Linkedin",
-      link: "https://www.instagram.com/ceyhunturkmenn/",
-      src: "/socialMedia/linkedin.webp",
-      color: "#0A66C2",
-    },
     {
       name: "Github",
       link: "https://www.instagram.com/ceyhunturkmenn/",
@@ -23,12 +17,18 @@ export default function SocialSidebar() {
       color: "#000000",
     },
     {
+      name: "Linkedin",
+      link: "https://www.instagram.com/ceyhunturkmenn/",
+      src: "/socialMedia/linkedin.avif",
+      color: "#0A66C2",
+    },
+    {
       name: "Instagram",
       link: "https://www.instagram.com/ceyhunturkmenn/",
       src: "/socialMedia/instagram.webp",
       color: "#E1306C",
     },
-  
+
     {
       name: "WhatsApp",
       link: whatsappLink,
@@ -70,7 +70,7 @@ export default function SocialSidebar() {
                   y: -2,
                 }}
                 whileTap={{ scale: 0.96 }}
-                className="relative rounded-full shadow-sm backdrop-blur-sm bg-slate-900/70 border border-white/10"
+                className="relative rounded-full shadow-sm backdrop-blur-sm border border-white/10 bg-black"
                 aria-label={icon.name}
               >
                 {/* Çok hafif parlama efekti */}
@@ -87,7 +87,7 @@ export default function SocialSidebar() {
                     ease: "easeInOut",
                   }}
                 />
-                <div className="relative rounded-full p-0.5 flex items-center justify-center">
+                <div className="relative rounded-full p-0 flex items-center justify-center">
                   <img
                     src={icon.src}
                     alt={icon.name}
