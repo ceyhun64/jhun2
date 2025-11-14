@@ -6,14 +6,17 @@ import ClientLayoutWrapper from "@/components/layout/clientLayoutWrapper";
 import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",       // text hemen gösterilir, font yüklenirken fallback kullanılır
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export async function generateMetadata({
