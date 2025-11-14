@@ -233,12 +233,12 @@ export default function ProjectsClient({ dict, locale }: Props) {
           <p className="text-slate-300 text-base sm:text-lg mt-3 font-sans leading-relaxed">
             {dict.cta_text}
           </p>
-          <button
-            onClick={() => (window.location.href = `/${locale}/contact`)}
+          <Link
+            href={`/${locale}/contact`}
             className="mt-6 w-full sm:w-auto inline-flex justify-center items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-400 rounded-full text-black font-semibold text-lg shadow-[0_0_20px_rgba(56,189,248,0.7)] hover:scale-105 hover:shadow-[0_0_40px_rgba(56,189,248,1)] transition-all duration-300"
           >
             {dict.cta_button} <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </motion.div>
     </div>

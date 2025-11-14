@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Circle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MagneticButton } from "@/components/ui/shadcn-io/magnetic-button";
+import Link from "next/link";
 type ElegantShapeProps = {
   className?: string;
   delay?: number;
@@ -72,7 +73,11 @@ type HeroesClientProps = {
   locale: "tr" | "en";
 };
 
-export default function HeroesClient({ dict, className, locale }: HeroesClientProps) {
+export default function HeroesClient({
+  dict,
+  className,
+  locale,
+}: HeroesClientProps) {
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({
@@ -218,18 +223,19 @@ export default function HeroesClient({ dict, className, locale }: HeroesClientPr
                 ease: "easeInOut",
               }}
             >
-              <MagneticButton
-                onClick={() => (window.location.href = `/${locale}/contact`)}
-                className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
+              <Link href={`/${locale}/contact`}>
+                <MagneticButton
+                  className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
                    bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300
                    shadow-[0_0_10px_rgba(255,200,0,0.4)]
                    hover:shadow-[0_0_20px_rgba(255,220,50,0.5)]
                    after:absolute after:inset-0 after:rounded-full after:blur-xl after:bg-gradient-to-r after:from-yellow-400/20 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
                    transition-all duration-300"
-              >
-                <Sparkles className="w-5 h-5 mr-2 text-white/80" />
-                {dict.ctaText}
-              </MagneticButton>
+                >
+                  <Sparkles className="w-5 h-5 mr-2 text-white/80" />
+                  {dict.ctaText}
+                </MagneticButton>
+              </Link>
             </motion.div>
           </motion.div>
         </div>

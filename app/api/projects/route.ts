@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
+    console.log("formData:", formData);
     const title = formData.get("title") as string;
     const summary = formData.get("summary") as string;
     const url = formData.get("url") as string;

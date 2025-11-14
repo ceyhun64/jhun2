@@ -103,7 +103,25 @@
         ]
       }
     ],
-    "social": ["Instagram", "Linkedin", "Github", "Phone"],
+    "social": [
+      { "name": "Github", "url": "https://github.com/ceyhun64" },
+      {
+        "name": "Linkedin",
+        "url": "https://www.linkedin.com/in/ceyhun-türkmen-14882a26a"
+      },
+      {
+        "name": "Instagram",
+        "url": "https://www.instagram.com/jhun_tech?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D"
+      },
+      {
+        "name": "Whatsapp",
+        "url": "https://wa.me/905541496377"
+      },
+      {
+        "name": "Phone",
+        "url": "tel:+905541496377"
+      }
+    ],
     "copyright": "© 2025 .jhun All rights reserved.",
     "developerPrefix": "developed by",
     "locale": "en"

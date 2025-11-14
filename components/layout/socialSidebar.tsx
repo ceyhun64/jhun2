@@ -10,18 +10,25 @@ export default function SocialSidebar() {
   const whatsappLink = `https://wa.me/${whatsappNumber.replace(/[^\d]/g, "")}`;
 
   const socialIcons = [
+     {
+      name: "Linkedin",
+      link: "https://www.instagram.com/ceyhunturkmenn/",
+      src: "/socialMedia/linkedin.webp",
+      color: "#0A66C2",
+    },
+    {
+      name: "Github",
+      link: "https://www.instagram.com/ceyhunturkmenn/",
+      src: "/socialMedia/github.png",
+      color: "#000000",
+    },
     {
       name: "Instagram",
       link: "https://www.instagram.com/ceyhunturkmenn/",
       src: "/socialMedia/instagram.webp",
       color: "#E1306C",
     },
-    {
-      name: "Facebook",
-      link: "https://www.facebook.com/",
-      src: "/socialMedia/facebook.webp",
-      color: "#1877F2",
-    },
+  
     {
       name: "WhatsApp",
       link: whatsappLink,
@@ -80,7 +87,7 @@ export default function SocialSidebar() {
                     ease: "easeInOut",
                   }}
                 />
-                <div className="relative rounded-full p-1 flex items-center justify-center">
+                <div className="relative rounded-full p-0.5 flex items-center justify-center">
                   <img
                     src={icon.src}
                     alt={icon.name}
@@ -121,7 +128,7 @@ export default function SocialSidebar() {
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
         >
-          <Plus size={24} />
+          <Plus size={20} />
         </motion.div>
       </motion.button>
     </div>

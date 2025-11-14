@@ -207,7 +207,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         {/* Sol: Görseller */}
         <div className="w-full lg:w-1/2 flex flex-col gap-6">
           <motion.div
-            className="relative rounded-xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl"
+            className="relative rounded-xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl"
             whileHover={{ scale: 1.02 }}
           >
             {mainImage && (
@@ -216,13 +216,16 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                   '[&_[data-rmiz-modal-overlay="visible"]]:bg-black/60'
                 )}
               >
-                <Image
-                  src={mainImage}
-                  alt={title}
-                  width={1000}
-                  height={600}
-                  className="object-cover object-center w-full h-auto rounded-xl"
-                />
+                <div className="relative w-full aspect-video lg:aspect-[16/9] rounded-xl overflow-hidden">
+                  <Image
+                    src={mainImage}
+                    alt={title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 1000px"
+                    className="object-cover object-center"
+                    priority
+                  />
+                </div>
               </ImageZoom>
             )}
           </motion.div>
@@ -538,12 +541,12 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
             {dict.cta.subtitle}
           </p>
 
-          <button
-            onClick={() => (window.location.href = "/contact")}
+          <Link
+            href={`/${locale}/contact`}
             className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300 rounded-full text-black font-semibold text-base md:text-lg shadow-[0_0_20px_rgba(255,200,0,0.7)] hover:scale-105 hover:shadow-[0_0_40px_rgba(255,220,100,0.8)] transition-all duration-300"
           >
             {dict.cta.button} <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
 
         {/* Hafif arka plan glow efekti */}
