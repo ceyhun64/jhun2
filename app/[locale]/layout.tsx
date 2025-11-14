@@ -19,28 +19,75 @@ const geistMono = Geist_Mono({
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }) {
-  // params bir Promise olduğu için await gerekiyor
-  const { locale } = await params;
+  const { locale } = params;
+
   const htmlLang = locale || "tr";
   const ogLocale = locale === "tr" ? "tr_TR" : "en_US";
 
+  const url = "https://jhun.vercel.app"; // kendi siten
+
   return {
-    title:
-      "Jhun Tech | Web Geliştirme & Dijital Çözümler – Modern, Hızlı ve Etkileyici Web Siteleri",
+    metadataBase: new URL(url),
+    title: "Jhun | Web Geliştirme & Dijital Çözümler",
     description:
-      "Jhun Tech – Kurumsal web siteleri, e-ticaret, portföy ve özel çözümler ile markanızı dijitalde ön plana çıkarın.",
+      "Kurumsal web siteleri, e-ticaret, portföy ve özel dijital çözümler ile markanızı dijitalde büyütün.",
+    keywords: [
+      "web tasarım",
+      "web geliştirme",
+      "freelance developer",
+      "kurumsal web sitesi",
+      "react developer",
+      "next.js developer",
+      "dijital çözümler",
+    ],
+
+    alternates: {
+      canonical: url,
+      languages: {
+        tr: `${url}/tr`,
+        en: `${url}/en`,
+      },
+    },
+
     openGraph: {
-      title: "Jhun Tech | Web Geliştirme Ajansı",
+      title: "Jhun | Web Geliştirme Ajansı",
       description:
-        "Kurumsal web siteleri, e-ticaret platformları ve özel dijital çözümlerle markanızı büyütün.",
-      siteName: "Jhun Tech",
-      images: ["/og-image.webp"],
+        "Modern, hızlı ve etkileyici web siteleriyle markanızı dijital dünyada öne çıkarın.",
+      url: url,
+      siteName: "Jhun",
+      images: [
+        {
+          url: "/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: "Jhun Web Geliştirme Ajansı",
+        },
+      ],
       locale: ogLocale,
       type: "website",
     },
-    // Next.js 15'te <html lang="..."> otomatik metadata.lang'tan alınır
+
+    twitter: {
+      card: "summary_large_image",
+      title: "Jhun | Web Geliştirme Ajansı",
+      description: "Modern, hızlı ve etkili web çözümleriyle işinizi büyütün.",
+      images: ["/og-image.webp"],
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        maxSnippet: -1,
+        maxImagePreview: "large",
+        maxVideoPreview: -1,
+      },
+    },
+
     lang: htmlLang,
   };
 }
