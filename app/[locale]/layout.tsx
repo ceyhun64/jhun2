@@ -20,7 +20,8 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata({
   params,
-}: {
+}: // pathname, searchParams gibi ek bilgileri Next.js 13.4+ ile kullanabilirsin
+{
   params: { locale: string };
 }) {
   const { locale } = params;
@@ -31,6 +32,7 @@ export async function generateMetadata({
   const baseUrl = "https://jhun.vercel.app";
 
   // canonical URL’yi dinamik oluşturuyoruz
+  // Örnek: /tr/hizmetler -> https://jhun.vercel.app/tr/hizmetler
   const canonicalUrl = `${baseUrl}/${locale}`;
 
   return {
@@ -49,7 +51,7 @@ export async function generateMetadata({
     ],
 
     alternates: {
-      canonical: canonicalUrl,
+      canonical: canonicalUrl, // Her sayfa kendi URL'si
       languages: {
         tr: `${baseUrl}/tr`,
         en: `${baseUrl}/en`,
@@ -99,16 +101,12 @@ export async function generateMetadata({
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
 }) {
-  const htmlLang = params.locale || "tr";
-
   return (
-    <html lang={htmlLang}>
-      <body
+    <html lang="tr">
+      <div
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClientLayoutWrapper>
@@ -122,7 +120,7 @@ export default function RootLayout({
           position="bottom-right"
           toastOptions={{ style: { zIndex: 9999 } }}
         />
-      </body>
+      </div>
     </html>
   );
 }
