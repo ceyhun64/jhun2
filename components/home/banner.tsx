@@ -10,44 +10,43 @@ const Banner = async ({ locale }: Props) => {
   const dict = dictAll.banner;
 
   const images = [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/768px-React-icon.svg.png?20220125121207",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/768px-React-icon.svg.png?20220125121207",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/768px-React-icon.svg.png?20220125121207",
-    "https://img-c.udemycdn.com/course/750x422/522048_4a6f.jpg", //html
-    "https://devio2024-media.developers.io/image/upload/f_auto,q_auto,w_3840/v1728916104/user-gen-eyecatch/kdto5ze9dbln9agt6wsh.webp", //shadcn
-    "https://wearedevelopers.imgix.net/magazine/articles/554/images/hero/odPaQHSbArSIFzZbUzlE-1740483365.jpeg?w=720&auto=compress,format", //ts
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://media.licdn.com/dms/image/v2/D5612AQH-HrWdn6BhYg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1677358366310?e=2147483647&v=beta&t=gVLQpnfHPqPtYnn_qcQuT5ZFXJyLX9mhb7QNFOELjHE", //mysql
-    "https://wearedevelopers.imgix.net/magazine/articles/554/images/hero/odPaQHSbArSIFzZbUzlE-1740483365.jpeg?w=720&auto=compress,format",
-    "https://miro.medium.com/v2/0*7sP4KxRZaIRmzYG8.png",
-    "https://assets.aceternity.com/carousel.webp",
-    "https://assets.aceternity.com/placeholders-and-vanish-input.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Spotlight_ar5jpr.png",
-    "https://cdn-1.webcatalog.io/catalog/prisma-data-platform/prisma-data-platform-social-preview.png?v=1714776724281", //prisma
-
-    "https://www.kozmoslisesi.com/wp-content/uploads/2022/11/JavaScript.jpg", //js
-    "https://www.crmizmir.com/KYP/Resimler/Next-JS-26-04-2023-10-48-44.png", //next.js
-    "https://miro.medium.com/v2/1*Ojh_geZ9dR6L49yO7rim1Q.jpeg", //node.js
-    "https://www.bilgisayar.name/wp-content/uploads/2014/03/mysql-logo.gif", //mysql
-    "https://img-c.udemycdn.com/course/750x422/522050_6f76.jpg", //css
-    "https://cdn-1.webcatalog.io/catalog/prisma-data-platform/prisma-data-platform-social-preview.png?v=1714776724281",
-    "https://assets.aceternity.com/cloudinary_bkp/typewriter-effect.png",
-    "https://assets.aceternity.com/glowing-effect.webp",
-    "https://assets.aceternity.com/hover-border-gradient.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Infinite_Moving_Cards_evhzur.png",
-    "https://saigontechnology.com/wp-content/uploads/redux%20toolkit.webp", //tailwind
-    "https://miro.medium.com/v2/0*7sP4KxRZaIRmzYG8.png", //
-    "https://img-c.udemycdn.com/course/750x422/522048_4a6f.jpg", //
-    "https://a.storyblok.com/f/42126/f247bde4e1/bootstrap-4-tutorial.png/m/1600x900/filters:quality(70)/", //
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
-    "https://glyapi.turkcell.com.tr/CdnApi/file/educationtitle/2353b82c-bcc7-4297-9a3e-1d17ade77c1b.png", //react
+    "/banner/html.webp", //html
+    "/banner/html.webp", //html
+    "/banner/html.webp", //html
+    "/banner/html.webp", //html
+    "/banner/shadcn.webp", //shadcn
+    "/banner/ts.webp", //ts
+    "/banner/react.webp", //react
+    "/banner/sequelize.webp", //sequeliz
+    "/banner/ts.webp", //ts
+    "/banner/tailwind.webp", //tailwind
+    "/banner/tailwind.webp", //tailwind
+    "/banner/tailwind.webp", //tailwind
+    "/banner/tailwind.webp", //tailwind
+    "/banner/prisma.webp", //prisma
+    "/banner/js.webp", //js
+    "/banner/next.webp", //next.js
+    "/banner/node.webp", //node.js
+    "banner/mysql.webp", //mysql
+    "/banner/css.webp", //css
+    "/banner/prisma.webp", //prisma
+    "/banner/prisma.webp", //prisma
+    "/banner/prisma.webp", //prisma
+    "/banner/prisma.webp", //prisma
+    "/banner/prisma.webp", //prisma
+    "/banner/redux.webp", //redux
+    "/banner/tailwind.webp", //tailwind
+    "/banner/html.webp", //html
+    "/banner/bootstrap.webp", //bootstrap
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
+    "/banner/react.webp", //react
   ];
 
   return (
