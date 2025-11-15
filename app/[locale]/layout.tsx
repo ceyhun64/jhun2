@@ -1,3 +1,4 @@
+// app/[locale]/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import ClientLayoutWrapper from "@/components/layout/clientLayoutWrapper";
@@ -5,11 +6,10 @@ import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",       // text hemen gösterilir, font yüklenirken fallback kullanılır
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -20,7 +20,8 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata({
   params,
-}: {
+}: // pathname, searchParams gibi ek bilgileri Next.js 13.4+ ile kullanabilirsin
+{
   params: { locale: string };
 }) {
   const { locale } = params;
@@ -28,10 +29,14 @@ export async function generateMetadata({
   const htmlLang = locale || "tr";
   const ogLocale = locale === "tr" ? "tr_TR" : "en_US";
 
-  const url = "https://jhun.vercel.app"; // kendi siten
+  const baseUrl = "https://jhun.vercel.app";
+
+  // canonical URL’yi dinamik oluşturuyoruz
+  // Örnek: /tr/hizmetler -> https://jhun.vercel.app/tr/hizmetler
+  const canonicalUrl = `${baseUrl}/${locale}`;
 
   return {
-    metadataBase: new URL(url),
+    metadataBase: new URL(baseUrl),
     title: "Jhun | Web Geliştirme & Dijital Çözümler",
     description:
       "Kurumsal web siteleri, e-ticaret, portföy ve özel dijital çözümler ile markanızı dijitalde büyütün.",
@@ -46,10 +51,10 @@ export async function generateMetadata({
     ],
 
     alternates: {
-      canonical: url,
+      canonical: canonicalUrl, // Her sayfa kendi URL'si
       languages: {
-        tr: `${url}/tr`,
-        en: `${url}/en`,
+        tr: `${baseUrl}/tr`,
+        en: `${baseUrl}/en`,
       },
     },
 
@@ -57,7 +62,7 @@ export async function generateMetadata({
       title: "Jhun | Web Geliştirme Ajansı",
       description:
         "Modern, hızlı ve etkileyici web siteleriyle markanızı dijital dünyada öne çıkarın.",
-      url: url,
+      url: canonicalUrl,
       siteName: "Jhun",
       images: [
         {
@@ -105,13 +110,8 @@ export default function RootLayout({
         <main>{children}</main>
       </ClientLayoutWrapper>
 
-      {/* Sosyal medya sidebar */}
       <SocialSidebar />
-
-      {/* Yukarı kaydır butonu */}
       <ScrollToTopButton />
-
-      {/* Bildirim toasti */}
       <Toaster
         richColors
         position="bottom-right"
