@@ -20,8 +20,7 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata({
   params,
-}: // pathname, searchParams gibi ek bilgileri Next.js 13.4+ ile kullanabilirsin
-{
+}: {
   params: { locale: string };
 }) {
   const { locale } = params;
@@ -32,7 +31,6 @@ export async function generateMetadata({
   const baseUrl = "https://jhun.vercel.app";
 
   // canonical URL’yi dinamik oluşturuyoruz
-  // Örnek: /tr/hizmetler -> https://jhun.vercel.app/tr/hizmetler
   const canonicalUrl = `${baseUrl}/${locale}`;
 
   return {
@@ -51,7 +49,7 @@ export async function generateMetadata({
     ],
 
     alternates: {
-      canonical: canonicalUrl, // Her sayfa kendi URL'si
+      canonical: canonicalUrl,
       languages: {
         tr: `${baseUrl}/tr`,
         en: `${baseUrl}/en`,
@@ -101,22 +99,30 @@ export async function generateMetadata({
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { locale: string };
 }) {
-  return (
-    <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <ClientLayoutWrapper>
-        <main>{children}</main>
-      </ClientLayoutWrapper>
+  const htmlLang = params.locale || "tr";
 
-      <SocialSidebar />
-      <ScrollToTopButton />
-      <Toaster
-        richColors
-        position="bottom-right"
-        toastOptions={{ style: { zIndex: 9999 } }}
-      />
-    </div>
+  return (
+    <html lang={htmlLang}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ClientLayoutWrapper>
+          <main>{children}</main>
+        </ClientLayoutWrapper>
+
+        <SocialSidebar />
+        <ScrollToTopButton />
+        <Toaster
+          richColors
+          position="bottom-right"
+          toastOptions={{ style: { zIndex: 9999 } }}
+        />
+      </body>
+    </html>
   );
 }
