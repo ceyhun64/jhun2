@@ -5,6 +5,7 @@ import ClientLayoutWrapper from "@/components/layout/clientLayoutWrapper";
 import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +18,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
 });
+
+const criticalCSS = `
+  :root{
+    --radius:.625rem;
+    --background:#fff;
+    --foreground:#09090b;
+    --card:#fff;
+    --card-foreground:#09090b;
+    --primary:#18181b;
+    --primary-foreground:#fafafa;
+    --secondary:#f4f4f5;
+    --secondary-foreground:#18181b;
+    --muted:#f4f4f5;
+    --muted-foreground:#71717b;
+  }
+  html{overflow-y:scroll}
+  header, nav, main { padding: 20px; background: var(--background); }
+`;
 
 export async function generateMetadata({
   params,
@@ -106,7 +125,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr">
-      <div
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
+      </head>
+      <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClientLayoutWrapper>
@@ -120,7 +142,10 @@ export default function RootLayout({
           position="bottom-right"
           toastOptions={{ style: { zIndex: 9999 } }}
         />
-      </div>
+
+        {/* Geri kalan CSS’i ertele */}
+        <Script src="/globals.css" strategy="afterInteractive" />
+      </body>
     </html>
   );
 }
