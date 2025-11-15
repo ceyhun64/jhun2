@@ -263,6 +263,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
         <div className="flex gap-3">
           <Button
             size="icon"
+            aria-label="Önceki slayt"
             onClick={() => carouselApi?.scrollPrev()}
             disabled={!canScrollPrev}
             className="bg-zinc-800 hover:bg-zinc-700"
@@ -271,6 +272,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
           </Button>
           <Button
             size="icon"
+            aria-label="Sonraki slayt"
             onClick={() => carouselApi?.scrollNext()}
             disabled={!canScrollNext}
             className="bg-zinc-800 hover:bg-zinc-700"
