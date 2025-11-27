@@ -1,6 +1,9 @@
+// app/layout.tsx (DÜZELTİLMİŞ KÖK LAYOUT)
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// Font tanımlamaları burada kalsın, ancak sınıfları alt düzeye taşıyacağız
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,10 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    // <html> etiketi SADECE BURADA olmalıdır.
+    <html>
+      {/* <body> etiketi SADECE BURADA olmalıdır. */}
+      {/* HATA DÜZELTMESİ: Font sınıfları kaldırıldı. Dinamik dilden gelen dil koduyla çakışmaması için burada lang özniteliği de yok. */}
+      <body>
+        {/*
+          'children' prop'u artık app/[locale]/layout.tsx dosyasını render eder.
+          O dosyadaki üst düzey <div /> etiketi, bu <body> etiketinin çocuğu olur.
+        */}
         {children}
       </body>
     </html>

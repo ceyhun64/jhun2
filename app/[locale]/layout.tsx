@@ -1,4 +1,5 @@
-// app/[locale]/layout.tsx
+// app/[locale]/layout.tsx (DÜZELTİLMİŞ LOKAL LAYOUT)
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import ClientLayoutWrapper from "@/components/layout/clientLayoutWrapper";
@@ -6,6 +7,7 @@ import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
 
+// Font tanımlamaları aynı kalır
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,12 +20,10 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-
-
+// generateMetadata fonksiyonu aynı kalır ve lang özelliğini dinamik olarak ayarlar (Doğru Kullanım)
 export async function generateMetadata({
   params,
-}: // pathname, searchParams gibi ek bilgileri Next.js 13.4+ ile kullanabilirsin
-{
+}: {
   params: { locale: string };
 }) {
   const { locale } = params;
@@ -33,8 +33,6 @@ export async function generateMetadata({
 
   const baseUrl = "https://jhun.vercel.app";
 
-  // canonical URL’yi dinamik oluşturuyoruz
-  // Örnek: /tr/hizmetler -> https://jhun.vercel.app/tr/hizmetler
   const canonicalUrl = `${baseUrl}/${locale}`;
 
   return {
@@ -53,7 +51,7 @@ export async function generateMetadata({
     ],
 
     alternates: {
-      canonical: canonicalUrl, // Her sayfa kendi URL'si
+      canonical: canonicalUrl,
       languages: {
         tr: `${baseUrl}/tr`,
         en: `${baseUrl}/en`,
@@ -101,28 +99,27 @@ export async function generateMetadata({
   };
 }
 
-export default function RootLayout({
+export default function LocaleLayout({
+  // Fonksiyon adı karışıklığı önlemek için değiştirildi
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr">
-      <div
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ClientLayoutWrapper>
-          <main>{children}</main>
-        </ClientLayoutWrapper>
+    // HATA DÜZELTMESİ: <html> ve <body> etiketleri buradan tamamen KALDIRILDI.
+    // Font sınıfları bu üst düzey <div>'e taşındı.
+    <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <ClientLayoutWrapper>
+        <main>{children}</main>
+      </ClientLayoutWrapper>
 
-        <SocialSidebar />
-        <ScrollToTopButton />
-        <Toaster
-          richColors
-          position="bottom-right"
-          toastOptions={{ style: { zIndex: 9999 } }}
-        />
-      </div>
-    </html>
+      <SocialSidebar />
+      <ScrollToTopButton />
+      <Toaster
+        richColors
+        position="bottom-right"
+        toastOptions={{ style: { zIndex: 9999 } }}
+      />
+    </div>
   );
 }

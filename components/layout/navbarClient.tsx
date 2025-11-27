@@ -187,7 +187,8 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.35 }}
-className="fixed inset-0 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden h-screen overflow-y-auto"            aria-label="Mobil menü"
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden h-screen overflow-y-auto"
+            aria-label="Mobil menü"
           >
             {/* 🔹 Kapat Butonu */}
             <button
