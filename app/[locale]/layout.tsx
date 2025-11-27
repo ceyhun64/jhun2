@@ -64,14 +64,7 @@ export async function generateMetadata({
         "Modern, hızlı ve etkileyici web siteleriyle markanızı dijital dünyada öne çıkarın.",
       url: canonicalUrl,
       siteName: "Jhun",
-      images: [
-        {
-          url: "/og-image.webp",
-          width: 1200,
-          height: 630,
-          alt: "Jhun Web Geliştirme Ajansı",
-        },
-      ],
+      images: ["/og-image.webp"],
       locale: ogLocale,
       type: "website",
     },

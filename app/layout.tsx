@@ -1,5 +1,5 @@
 // app/layout.tsx (DÜZELTİLMİŞ KÖK LAYOUT)
-
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -15,6 +15,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
 });
+export const metadata: Metadata = {
+  title: "Jhun | Web Geliştirme & Dijital Çözümler",
+  description:
+    "Kurumsal web siteleri, e-ticaret, portföy ve özel dijital çözümler ile markanızı dijitalde büyütün.",
+  openGraph: {
+    title: "Jhun | Web Geliştirme Ajansı",
+    description:
+      "Modern, hızlı ve etkileyici web siteleriyle markanızı dijital dünyada öne çıkarın.",
+    images: ["/og-image.webp"],
+    type: "website",
+  },
+};
 
 export default function RootLayout({
   children,
