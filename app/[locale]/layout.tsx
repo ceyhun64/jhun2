@@ -1,45 +1,50 @@
-// app/[locale]/layout.tsx (DÜZELTİLMİŞ LOKAL LAYOUT)
 
-import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import ClientLayoutWrapper from "@/components/layout/clientLayoutWrapper";
 import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
 
-// Font tanımlamaları aynı kalır
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-// generateMetadata fonksiyonu aynı kalır ve lang özelliğini dinamik olarak ayarlar (Doğru Kullanım)
 export async function generateMetadata({
   params,
 }: {
   params: { locale: string };
 }) {
   const { locale } = params;
-
   const htmlLang = locale || "tr";
   const ogLocale = locale === "tr" ? "tr_TR" : "en_US";
-
-  const baseUrl = "https://jhun.vercel.app";
-
+  const baseUrl = "https://jhun.com.tr";
   const canonicalUrl = `${baseUrl}/${locale}`;
+
+  // OG Image için tam URL kullanımı
+  const ogImageUrl = `${baseUrl}/og-image.webp`;
+
+  // Dile göre içerik
+  const content = {
+    tr: {
+      title: "Jhun | Web Geliştirme & Dijital Çözümler",
+      description:
+        "Kurumsal web siteleri, e-ticaret, portföy ve özel dijital çözümler ile markanızı dijitalde büyütün.",
+      ogTitle: "Jhun | Web Geliştirme Ajansı",
+      ogDescription:
+        "Modern, hızlı ve etkileyici web siteleriyle markanızı dijital dünyada öne çıkarın.",
+    },
+    en: {
+      title: "Jhun | Web Development & Digital Solutions",
+      description:
+        "Grow your brand digitally with corporate websites, e-commerce, portfolio and custom digital solutions.",
+      ogTitle: "Jhun | Web Development Agency",
+      ogDescription:
+        "Stand out your brand in the digital world with modern, fast and impressive websites.",
+    },
+  };
+
+  const currentContent = content[locale as keyof typeof content] || content.tr;
 
   return {
     metadataBase: new URL(baseUrl),
-    title: "Jhun | Web Geliştirme & Dijital Çözümler",
-    description:
-      "Kurumsal web siteleri, e-ticaret, portföy ve özel dijital çözümler ile markanızı dijitalde büyütün.",
+    title: currentContent.title,
+    description: currentContent.description,
     keywords: [
       "web tasarım",
       "web geliştirme",
@@ -59,21 +64,27 @@ export async function generateMetadata({
     },
 
     openGraph: {
-      title: "Jhun | Web Geliştirme Ajansı",
-      description:
-        "Modern, hızlı ve etkileyici web siteleriyle markanızı dijital dünyada öne çıkarın.",
+      title: currentContent.ogTitle,
+      description: currentContent.ogDescription,
       url: canonicalUrl,
       siteName: "Jhun",
-      images: ["/og-image.webp"],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: currentContent.ogTitle,
+        },
+      ],
       locale: ogLocale,
       type: "website",
     },
 
     twitter: {
       card: "summary_large_image",
-      title: "Jhun | Web Geliştirme Ajansı",
-      description: "Modern, hızlı ve etkili web çözümleriyle işinizi büyütün.",
-      images: ["/og-image.webp"],
+      title: currentContent.ogTitle,
+      description: currentContent.ogDescription,
+      images: [ogImageUrl],
     },
 
     robots: {
@@ -88,20 +99,19 @@ export async function generateMetadata({
       },
     },
 
-    lang: htmlLang,
+    other: {
+      language: htmlLang,
+    },
   };
 }
 
 export default function LocaleLayout({
-  // Fonksiyon adı karışıklığı önlemek için değiştirildi
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    // HATA DÜZELTMESİ: <html> ve <body> etiketleri buradan tamamen KALDIRILDI.
-    // Font sınıfları bu üst düzey <div>'e taşındı.
-    <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <>
       <ClientLayoutWrapper>
         <main>{children}</main>
       </ClientLayoutWrapper>
@@ -113,6 +123,6 @@ export default function LocaleLayout({
         position="bottom-right"
         toastOptions={{ style: { zIndex: 9999 } }}
       />
-    </div>
+    </>
   );
 }
