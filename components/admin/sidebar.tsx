@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {  Package, LogOut, Menu, X } from "lucide-react";
+import { Package, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,7 +29,12 @@ export default function AdminSidebar(): React.ReactElement {
       icon: Package, // Paket simgesi, projeler listesi için uygun
       href: "/admin/projects",
     },
-  
+    {
+      id: "technologies",
+      label: "Teknolojiler",
+      icon: Package, // Paket simgesi, projeler listesi için uygun
+      href: "/admin/technologies",
+    },
   ];
 
   const active =
