@@ -94,6 +94,8 @@ export default function ProjectsClient({ dict, locale }: Props) {
       <ProjectCardSkeleton />
       <ProjectCardSkeleton />
       <ProjectCardSkeleton />
+            <ProjectCardSkeleton />
+
     </div>
   );
 
