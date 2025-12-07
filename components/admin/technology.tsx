@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
 import Sidebar from "./sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import Image from "next/image";
 
 interface Technology {
   id: string;
@@ -195,7 +196,7 @@ export default function Technology() {
           <div className="mb-4 p-3 bg-green-600 rounded-lg">{success}</div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {technologies.map((tech) => (
             <div
               key={tech.id}
@@ -203,7 +204,34 @@ export default function Technology() {
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl">{tech.icon}</span>
+                  <div
+                    className="w-12 h-12 flex items-center justify-center rounded-lg"
+                
+                  >
+                    <Image
+                      src={tech.icon}
+                      alt={tech.name}
+                      width={28}
+                      height={28}
+                      className="object-contain"
+                      style={{
+                        filter: `drop-shadow(0 0 8px ${
+                          ["#000000", "#0b0d0e"].includes(
+                            tech.color?.toLowerCase()
+                          )
+                            ? "#FFFFFF"
+                            : tech.color
+                        }) drop-shadow(0 0 4px ${
+                          ["#000000", "#0b0d0e"].includes(
+                            tech.color?.toLowerCase()
+                          )
+                            ? "#FFFFFF"
+                            : tech.color
+                        })`,
+                      }}
+                    />
+                  </div>
+
                   <div>
                     <h3 className="font-semibold text-lg">{tech.name}</h3>
                     <p className="text-sm text-gray-400">{tech.type}</p>
@@ -214,8 +242,8 @@ export default function Technology() {
                 <span
                   className="text-sm px-3 py-1 rounded-full"
                   style={{
-                    backgroundColor: tech.color + "20",
-                    color: tech.color,
+                    backgroundColor: "black",
+                    color: "#ffffff",
                   }}
                 >
                   {tech.yoe} yıl
