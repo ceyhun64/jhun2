@@ -66,7 +66,7 @@ export default function ProjectsClient({ dict, locale }: Props) {
   const fetchProjects = async () => {
     try {
       // 1 saniyelik yapay gecikme eklendi (Başlık iskeletini görmek için)
-      
+
       const res = await fetch("/api/projects", { cache: "no-store" });
       if (!res.ok) throw new Error(dict.error);
       const data = await res.json();
@@ -88,6 +88,12 @@ export default function ProjectsClient({ dict, locale }: Props) {
       <ProjectCardSkeleton />
       <ProjectCardSkeleton />
       <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
     </div>
   );
 
@@ -96,7 +102,7 @@ export default function ProjectsClient({ dict, locale }: Props) {
     <div className="relative w-full flex flex-col justify-center items-center text-center z-10 mt-5">
       {/* Ana Başlık İskeleti */}
       <Skeleton className="h-20 w-3/4 max-w-xl rounded-lg bg-zinc-800 mb-4" />
-      
+
       {/* Alt Başlık İskeleti */}
       <Skeleton className="h-4 w-1/2 max-w-md rounded bg-zinc-700" />
       <Skeleton className="h-4 w-2/3 max-w-md rounded bg-zinc-700 mt-2 mb-6" />

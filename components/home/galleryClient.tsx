@@ -395,5 +395,4 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
     </section>
   );
 };
-//kdjşlewkdşlewkdşlwkedşewlkdewksdewkdew
 export default GalleryClient;
