@@ -11,7 +11,7 @@ import { ImageZoom } from "../ui/shadcn-io/image-zoom";
 import { cn } from "@/lib/utils";
 import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { TechnologyItem, Technology } from "./technologyItem";
-
+import { Skeleton } from "../ui/skeleton"; // ✅ Skeleton Bileşeni
 import Link from "next/link";
 
 type Props = {
@@ -37,6 +37,73 @@ interface Project {
   technologies: Technology[];
 }
 
+// ✅ YENİ SKELETON BİLEŞENİ
+const ProjectDetailSkeleton = ({ dict }: { dict: any }) => (
+  <div className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden">
+    {/* Sol: Görseller İskeleti */}
+    <div className="w-full lg:w-1/2 flex flex-col gap-6">
+      {/* Ana Görsel İskeleti */}
+      <Skeleton className="relative w-full aspect-video lg:aspect-[16/9] rounded-xl bg-zinc-800" />
+
+      {/* Küçük Görseller İskeleti */}
+      <div className="flex gap-4 overflow-x-hidden">
+        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-zinc-800" />
+        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-zinc-800" />
+        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-zinc-800" />
+      </div>
+
+      {/* Buton İskeletleri (Masaüstü) */}
+      <div className="hidden lg:flex flex-wrap gap-4 mt-4">
+        <Skeleton className="h-10 w-24 rounded-full bg-zinc-700" />
+        <Skeleton className="h-10 w-32 rounded-full bg-zinc-700" />
+      </div>
+    </div>
+
+    {/* Sağ: Bilgi Alanı İskeleti */}
+    <div className="flex-1 flex flex-col justify-center gap-6">
+      {/* Başlık İskeleti */}
+      <Skeleton className="h-12 w-3/4 md:w-4/5 rounded-lg bg-amber-300/50" />
+
+      {/* Alt Çizgi İskeleti */}
+      <Skeleton className="h-1 w-24 rounded-full bg-blue-500/50 mt-2" />
+
+      {/* Özet İskeleti */}
+      <Skeleton className="h-5 w-full rounded bg-zinc-700" />
+      <Skeleton className="h-5 w-11/12 rounded bg-zinc-700" />
+
+      {/* Açıklama İskeleti */}
+      <Skeleton className="h-4 w-full rounded bg-zinc-800" />
+      <Skeleton className="h-4 w-10/12 rounded bg-zinc-800" />
+      <Skeleton className="h-4 w-full rounded bg-zinc-800" />
+      <Skeleton className="h-4 w-8/12 rounded bg-zinc-800" />
+
+      {/* Mobil Buton İskeletleri */}
+      <div className="flex flex-wrap justify-center gap-4 mt-4 lg:hidden">
+        <Skeleton className="h-10 w-24 rounded-full bg-zinc-700" />
+        <Skeleton className="h-10 w-32 rounded-full bg-zinc-700" />
+      </div>
+    </div>
+  </div>
+);
+
+// ✅ TEKNOLOJİ BÖLÜMÜ İSKELETİ
+const TechnologySkeleton = () => (
+  <div className="space-y-4">
+    {[1, 2, 3].map((i) => (
+      <div
+        key={i}
+        className="flex items-center space-x-4 p-2 bg-zinc-900/50 rounded-lg"
+      >
+        <Skeleton className="h-8 w-8 rounded-full bg-zinc-700" />
+        <div className="flex-1">
+          <Skeleton className="h-4 w-2/5 rounded bg-zinc-700" />
+          <Skeleton className="h-3 w-4/5 rounded bg-zinc-800 mt-1" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 export default function ProjectDetailClient({ dict, locale }: Props) {
   const params = useParams();
   const id = params.id;
@@ -44,14 +111,18 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [mainImage, setMainImage] = useState<string>(project?.image || "");
+  const [mainImage, setMainImage] = useState<string>("");
   const [smallImages, setSmallImages] = useState<string[]>([]);
 
-  // Project değiştiğinde mainImage’i resetle
+  // Hook'lar
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
+  // Proje verileri değiştiğinde görsel listesini güncelleyen useEffect
   useEffect(() => {
     if (project) {
       setMainImage(project.image);
+      // Ana görseli hariç tutarak küçük görseller listesini oluştur
       setSmallImages(
         [
           project.subImage1,
@@ -61,22 +132,19 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
           project.subImage5,
         ]
           .filter((img): img is string => Boolean(img))
-          // Büyük görseli çıkarıyoruz, böylece mainImage zaten büyük olduğu için tekrar gözükmez
-          .filter((img) => img !== project.image)
+          .filter((img) => img !== project.image) // Ana görseli listeden çıkar
       );
+    } else {
+      // Project null olduğunda sıfırla
+      setMainImage("");
+      setSmallImages([]);
     }
   }, [project]);
 
   const handleThumbnailClick = (img: string) => {
-    // Küçük görsel tıklanınca büyük görsel ile yer değiştir
     setSmallImages((prev) => prev.map((i) => (i === img ? mainImage : i)));
     setMainImage(img);
   };
-
-  // DÜZELTME 1: Bütün Hook'ları koşulsuz olarak fonksiyonun başına taşıdık.
-  // Bu, React'in Hook sıralama kuralına uyar ve hatayı çözer.
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   // --- Veri Çekme İşlemi (useEffect) ---
   useEffect(() => {
@@ -91,7 +159,8 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
       setLoading(true);
       setError(null);
       try {
-        // Belirtilen API rotasını kullanıyoruz
+        // Yapay gecikme eklendi (Skeleton'ı görebilmek için)
+
         const response = await fetch(`/api/projects/${id}`);
 
         if (!response.ok) {
@@ -102,8 +171,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         }
 
         const data = await response.json();
-        console.log(data);
-        setProject(data.project); // API'dan gelen JSON yapısına göre (data: { project: Project })
+        setProject(data.project);
       } catch (err: any) {
         console.error(err);
         setError(err.message || "Bilinmeyen bir hata oluştu.");
@@ -113,8 +181,9 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     };
 
     fetchProject();
-  }, [id]); // ID değiştiğinde tekrar çalıştır
-  // Proje bulunamazsa gösterilecek placeholder (Proje bulunamadı)
+  }, [id]);
+
+  // Proje bulunamazsa gösterilecek placeholder
   const NotFoundPlaceholder = () => (
     <div className="min-h-screen flex items-center justify-center text-white text-3xl font-bold bg-black/80">
       {dict.notFound}
@@ -122,16 +191,31 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     </div>
   );
 
-  // Yüklenme durumunda gösterilecek placeholder
-  const LoadingPlaceholder = () => (
-    <div className="min-h-screen flex items-center justify-center text-white text-3xl font-bold bg-black">
-      {dict.loading} <Bot className="animate-pulse ml-2" />
-    </div>
-  );
-
   // DÜZELTME 2: Koşullu Çıkışlar (loading, error) tüm Hook'lardan SONRA gelmelidir.
+  // Yüklenme durumunda artık sadece ProjectDetailSkeleton'ı döndürüyoruz.
   if (loading) {
-    return <LoadingPlaceholder />;
+    // Yükleniyor durumunda genel sayfa yapısını iskelet ile gösteriyoruz
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
+        {/* Sadece ana içeriğin iskeletini gösteriyoruz. CTA'yı göstermeye gerek yok. */}
+        <ProjectDetailSkeleton dict={dict} />
+        {/* Teknoloji bölümü iskeleti */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xs shadow-lg"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="flex flex-col space-y-6">
+              <Skeleton className="h-10 w-3/4 rounded-lg bg-zinc-700" />
+              <Skeleton className="h-32 w-full rounded-2xl bg-zinc-950/60" />
+            </div>
+            <TechnologySkeleton />
+          </div>
+        </motion.div>
+      </div>
+    );
   }
 
   if (error || !project) {
@@ -159,30 +243,8 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   };
 
   // API'dan gelen projenin alanları
-  const {
-    title,
-    summary,
-    description,
-    technologies,
-    image,
-    subImage1,
-    subImage2,
-    subImage3,
-    subImage4,
-    subImage5,
-    demoUrl,
-    githubUrl,
-  } = project;
-
-  // Eğer `images` boş gelirse, bu durum için boş dizi ataması yapalım (API'da null/undefined gelirse)
-  // API'dan gelen subImage alanlarını diziye dönüştürelim
-  const projectImages = [
-    project.subImage1,
-    project.subImage2,
-    project.subImage3,
-    project.subImage4,
-    project.subImage5,
-  ].filter((img): img is string => Boolean(img)); // boş olanları çıkar
+  const { title, summary, description, technologies, demoUrl, githubUrl } =
+    project;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
@@ -300,7 +362,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         </div>
 
         {/* Sağ: Bilgi Alanı */}
-        <div className="relative flex-1 flex flex-col justify-center gap-6 md:gap-3  md:p-0 ">
+        <div className="relative flex-1 flex flex-col justify-center gap-6 md:gap-3  md:p-0 ">
           <div className="absolute inset-0 -z-10 overflow-hidden rounded-4xl">
             {/* Büyük yumuşak glow top */}
             <motion.div
@@ -407,46 +469,46 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                 <span className="text-blue-400">&lt;div class=</span>
                 <span className="text-yellow-400">"project-info"</span>
                 <span className="text-blue-400">&gt;</span>
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n    "}
                 {dict.technologiesIntro.p1}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n    "}
                 {dict.technologiesIntro.p2}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n    "}
                 {dict.technologiesIntro.p3}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n    "}
                 {dict.technologiesIntro.p4}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n    "}
                 {dict.technologiesIntro.p5}
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
-                {"\n"} {"\n  "}
+                {"\n"} {"\n  "}
                 <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n    "}
                 {dict.technologiesIntro.p6}
                 <span className="ml-1 animate-blink text-green-400">_</span>
-                {"\n  "}
+                {"\n  "}
                 <span className="text-blue-400">&lt;/p&gt;</span>
                 {"\n"}
                 <span className="text-blue-400">&lt;/div&gt;</span>
@@ -534,7 +596,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         className="mt-32 mb-20 text-center relative z-10"
       >
         <div className="relative inline-block px-10 py-8 rounded-3xl bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-400 border border-amber-500/30 shadow-[0_0_50px_rgba(255,200,0,0.5)] hover:shadow-[0_0_80px_rgba(255,220,100,0.7)] transition-all duration-700 backdrop-blur-md">
-          <h2 className="text-3xl md:text-5xl  font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-white drop-shadow-[0_0_15px_rgba(255,220,100,0.3)]">
+          <h2 className="text-3xl md:text-5xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-white drop-shadow-[0_0_15px_rgba(255,220,100,0.3)]">
             {dict.cta.title}
           </h2>
           <p className="text-gray-200 text-base sm:text-lg mt-3 font-sans leading-relaxed">

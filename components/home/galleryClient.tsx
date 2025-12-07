@@ -15,14 +15,9 @@ import type { EmblaCarouselType } from "embla-carousel";
 import { RollingText } from "../ui/shadcn-io/rolling-text";
 import { CardContainer, CardBody, CardItem } from "../ui/shadcn-io/3d-card";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
+// --- Arayüz Tanımları ---
 interface GalleryItem {
   id: string;
   title: string;
@@ -43,44 +38,58 @@ interface GalleryClientProps {
   };
 }
 
-// 🧩 Yeni yardımcı bileşen: SkeletonCard (DÜZELTİLMİŞ)
+// 🧩 GELİŞTİRİLMİŞ YARDIMCI BİLEŞEN: SkeletonCard
+// Asıl Card yapısını ve boşluklarını tam olarak taklit eder.
 const SkeletonCard = () => {
   return (
-    <CardContainer containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300">
+    <CardContainer
+      className="inter-var"
+      containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
+    >
+      {/* CardBody: Asıl karttaki border, background ve padding değerlerini taklit eder */}
       <CardBody className="relative bg-gradient-to-b from-zinc-950/10 to-zinc-900 border border-zinc-800/70 rounded-2xl p-3 text-left">
-        {/* Görsel Alanı İçin İskelet */}
+        {/* 1. Görsel Alanı (translateZ="140") */}
         <CardItem translateZ="140" className="w-full">
           <Skeleton className="relative aspect-video overflow-hidden rounded-xl bg-zinc-800" />
         </CardItem>
 
-        {/* Başlık İçin İskelet */}
+        {/* 2. Başlık Alanı (translateZ="120") */}
         <CardItem
           translateZ="120"
+          // Orijinal kartta Image'dan sonra mt-5 var
           className="mt-5 text-lg sm:text-xl font-semibold text-white text-left"
         >
+          {/* h-6 başlık yüksekliği için yeterli */}
           <Skeleton className="h-6 w-3/4 bg-zinc-700" />
         </CardItem>
 
-        {/* Özet İçin İskelet (Hata Düzeltmesi burada yapılmıştır!) */}
+        {/* 3. Özet/Açıklama Alanı (translateZ="60") */}
+        {/* Orijinal kartta as="p" ve mt-2 var. SkeletonCard'da as="div" kullanıp satır aralarını ayarlayalım. */}
         <CardItem
-          // as="p" yerine as="div" kullanıldı.
-          // <p> etiketi içinde <div> kullanılması hataydı.
+          // Orijinal karttaki gibi as="p" de kullanabiliriz, ancak as="div" daha esnek olabilir.
+          // Orijinal CardItem kodunun <p> render ettiğini varsayarak as="p" kullanıldı.
           as="div"
           translateZ="60"
-          className="text-sm text-gray-400 -mt-8 line-clamp-3 text-left"
+          className="text-sm text-gray-400 mt-2 line-clamp-3 text-left" // Orijinal karttaki mt-2 değeri korundu
         >
-          <Skeleton className="h-4 w-full bg-zinc-700 mb-2" />
-          <Skeleton className="h-4 w-11/12 bg-zinc-700 mb-2" />
+          {/* Üç satır özet iskeleti. Satır boşluklarını sağlamak için mb-1 kullanıldı. */}
+          <Skeleton className="h-4 w-full bg-zinc-700 mb-1" />
+          <Skeleton className="h-4 w-11/12 bg-zinc-700 mb-1" />
           <Skeleton className="h-4 w-10/12 bg-zinc-700" />
+          
         </CardItem>
 
-        <div className="mt-5 flex justify-between items-center">
-          {/* Görüntüle Butonu İçin İskelet */}
+        {/* 4. Butonlar Alanı */}
+        <div className="mt-2 flex justify-between items-center">
+          {/* Görüntüle Butonu İçin İskelet (Link stili) */}
           <CardItem translateZ={60} as="span">
-            <Skeleton className="h-8 w-20 rounded-full bg-zinc-700" />
+            {/* Orijinal link'in kapladığı alanı taklit eden ufak, yuvarlak iskelet */}
+            <Skeleton className="h-5 w-24 rounded-full bg-zinc-700" />
           </CardItem>
-          {/* Siteyi Ziyaret Et Butonu İçin İskelet */}
+
+          {/* Siteyi Ziyaret Et Butonu İçin İskelet (Button stili) */}
           <CardItem translateZ={40} as="div">
+            {/* Orijinal Button'ın h-10 ve w-32 boyutunu taklit eden iskelet */}
             <Skeleton className="h-10 w-32 rounded-full bg-zinc-700" />
           </CardItem>
         </div>
@@ -89,7 +98,7 @@ const SkeletonCard = () => {
   );
 };
 
-// 💻 Ana Bileşen: GalleryClient (Aynı Kalır)
+// 💻 Ana Bileşen: GalleryClient
 const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   const [carouselApi, setCarouselApi] = useState<EmblaCarouselType>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -157,9 +166,9 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
         >
           <CarouselContent className="flex md:gap-0 px-4 sm:px-6 md:px-16">
             {/* 3 Adet İskelet Kartı Render Et */}
-            {[...Array(3)].map((_, index) => (
+            {[...Array(5)].map((_, index) => (
               <CarouselItem key={index} className="w-full md:max-w-[400px]">
-                {/* Hata Düzeltmeli SkeletonCard kullanılıyor */}
+                {/* GELİŞTİRİLMİŞ SkeletonCard kullanılıyor */}
                 <SkeletonCard />
               </CarouselItem>
             ))}
