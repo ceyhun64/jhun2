@@ -178,12 +178,12 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
               <li className="text-xs md:text-sm">
                 <span className="font-bold">{dict.webLabel}: </span>
                 <a
-                  href="https://jhun.com"
+                  href="https://jhun.com.tr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-amber-300 transition-colors"
                 >
-                  jhun.com
+                  jhun.com.tr
                 </a>
               </li>
             </ul>

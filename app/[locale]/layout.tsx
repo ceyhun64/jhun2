@@ -5,13 +5,67 @@ import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
 import type { Metadata } from "next";
+// Teknolojik fontlar - İstediğiniz kombinasyonu seçin:
+
+// SEÇENEK 1: Orbitron + Space Grotesk (Şu anki)
+import { Orbitron, Space_Grotesk } from "next/font/google";
+const mainFont = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-main",
+  display: "swap",
+});
+const bodyFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+// SEÇENEK 2: Rajdhani (Keskin ve modern)
+// import { Rajdhani, Inter } from "next/font/google";
+// const mainFont = Rajdhani({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   variable: "--font-main",
+//   display: "swap",
+// });
+// const bodyFont = Inter({
+//   subsets: ["latin"],
+//   variable: "--font-body",
+//   display: "swap",
+// });
+
+// SEÇENEK 3: Audiowide (Retro-futuristik)
+// import { Audiowide, Space_Grotesk } from "next/font/google";
+// const mainFont = Audiowide({
+//   subsets: ["latin"],
+//   weight: "400",
+//   variable: "--font-main",
+//   display: "swap",
+// });
+// const bodyFont = Space_Grotesk({
+//   subsets: ["latin"],
+//   variable: "--font-body",
+//   display: "swap",
+// });
+
+// SEÇENEK 4: Exo 2 (Geometrik ve temiz)
+// import { Exo_2, Inter } from "next/font/google";
+// const mainFont = Exo_2({
+//   subsets: ["latin"],
+//   variable: "--font-main",
+//   display: "swap",
+// });
+// const bodyFont = Inter({
+//   subsets: ["latin"],
+//   variable: "--font-body",
+//   display: "swap",
+// });
 
 type Props = {
-  params: Promise<{ locale: string }>; // Next.js 15+ için Promise kullanımı
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // await kullanarak params'ı çöz
   const { locale } = await params;
 
   const htmlLang = locale || "tr";
@@ -110,17 +164,36 @@ type LayoutProps = {
 export default async function LocaleLayout({ children }: LayoutProps) {
   return (
     <>
-      <ClientLayoutWrapper>
-        <main>{children}</main>
-      </ClientLayoutWrapper>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          :root {
+            ${mainFont.style.fontFamily ? `--font-main: ${mainFont.style.fontFamily};` : ''}
+            ${bodyFont.style.fontFamily ? `--font-body: ${bodyFont.style.fontFamily};` : ''}
+          }
+          body {
+            font-family: var(--font-body), system-ui, sans-serif;
+          }
+          h1, h2, h3, h4, h5, h6,p,span,button {
+            font-family: var(--font-main), system-ui, sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+          }
+        `
+      }} />
+      
+      <div className={`${mainFont.variable} ${bodyFont.variable}`}>
+        <ClientLayoutWrapper>
+          <main>{children}</main>
+        </ClientLayoutWrapper>
 
-      <SocialSidebar />
-      <ScrollToTopButton />
-      <Toaster
-        richColors
-        position="bottom-right"
-        toastOptions={{ style: { zIndex: 9999 } }}
-      />
+        <SocialSidebar />
+        <ScrollToTopButton />
+        <Toaster
+          richColors
+          position="bottom-right"
+          toastOptions={{ style: { zIndex: 9999 } }}
+        />
+      </div>
     </>
   );
 }

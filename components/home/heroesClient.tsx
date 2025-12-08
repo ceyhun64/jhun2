@@ -175,7 +175,7 @@ export default function HeroesClient({
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white/90 to-blue-400 drop-shadow-[0_0_6px_rgba(0,255,255,0.25)] transition-all duration-300">
+        <h1 className="text-4xl md:text-7xl font-extrabold mb-6 md:mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white/90 to-blue-400 drop-shadow-[0_0_6px_rgba(0,255,255,0.25)] transition-all duration-300">
           <span>{dict.title1}</span>
           <br />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white/90 to-sky-600">
