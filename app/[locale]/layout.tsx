@@ -173,7 +173,7 @@ export default async function LocaleLayout({ children }: LayoutProps) {
           body {
             font-family: var(--font-body), system-ui, sans-serif;
           }
-          h1, h2, h3, h4, h5, h6,p,span,button {
+          h1, h2, h3, h4, h5, h6,p,span,button{
             font-family: var(--font-main), system-ui, sans-serif;
             font-weight: 700;
             letter-spacing: 0.02em;

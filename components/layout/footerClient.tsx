@@ -72,7 +72,7 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
           <div className="md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
             <GradientText
               className="text-4xl sm:text-5xl font-extrabold font-mono tracking-tight drop-shadow-[0_0_15px_rgba(255,200,100,0.25)]"
-              text=".jhun{}"
+              text=".jhun{ }"
             />
             <p className="text-gray-400 mt-3 text-sm md:text-base max-w-sm leading-relaxed">
               {dict.slogan}
