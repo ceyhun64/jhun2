@@ -56,16 +56,13 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -60 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 120, damping: 20 }}
       className={`fixed top-0 w-full z-[999] transition-all duration-500
-        ${
-          scrolled
-            ? "py-3 bg-black/70 backdrop-blur-xl shadow-lg border-b border-white/10"
-            : "py-5 bg-transparent"
-        }
-      `}
+    ${
+      scrolled
+        ? "py-3 bg-black/70 backdrop-blur-xl shadow-lg border-b border-white/10"
+        : "py-5 bg-transparent"
+    }
+  `}
     >
       <div className="flex items-center justify-between px-5 sm:px-10">
         {/* Logo */}

@@ -183,16 +183,12 @@ export default function HeroesClient({
         </motion.h1>
 
         {/* Description */}
-      <motion.p
-  className="text-sm md:text-xl mb-12 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/60 drop-shadow-[0_0_4px_rgba(0,255,255,0.1)]"
->
-
+        <motion.p className="text-sm md:text-xl mb-12 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/60 drop-shadow-[0_0_4px_rgba(0,255,255,0.1)]">
           {dict.description}
         </motion.p>
 
         {/* CTA Button */}
-     <motion.div className="inline-block relative overflow-visible">
-
+        <motion.div className="inline-block relative overflow-visible">
           {/* 3. Hafif Sallanma Animasyonu (daha estetik) */}
           <motion.div
             animate={{ y: [0, -4, 0] }} // Daha az zıplama
