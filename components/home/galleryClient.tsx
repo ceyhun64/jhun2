@@ -313,9 +313,9 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   return (
     <section className="py-16 md:py-28 bg-linear-to-t from-black to-slate-950 relative font-sans overflow-hidden">
       {/* Title */}
-      <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left px-4 sm:px-6 md:px-16">
+      <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left  md:px-16">
         <RollingText
-          className="inline-block relative w-full text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-extrabold tracking-tight text-white mb-1"
+          className="inline-block relative w-full text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-extrabold tracking-tight text-white mb-1"
           text={dict.title}
         />
         <p className="text-gray-400 max-w-2xl text-sm md:text-md lg:text-lg mt-2">

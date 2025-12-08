@@ -77,7 +77,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
         >
           <GradientText
             className="text-2xl font-bold font-mono tracking-tighter"
-            text=".jhun { }"
+            text=".jhun{ }"
           />
         </Link>
 
