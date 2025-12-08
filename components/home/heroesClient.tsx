@@ -26,10 +26,9 @@ function ElegantShape({
   rotate = 0,
   gradient = "from-white/[0.15]",
 }: ElegantShapeProps) {
-  
   const floatAnimation = useMemo(
     () => ({
-      y: [0, 10, 0], 
+      y: [0, 10, 0],
       opacity: [1, 1, 1],
     }),
     []
@@ -65,7 +64,7 @@ function ElegantShape({
             "shadow-[0_0_40px_rgba(255,255,255,0.3)]",
             // Ortadan yayılan daha güçlü bir ışıma (radial gradient)
             "after:absolute after:inset-0 after:rounded-full",
-            "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]" 
+            "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"
           )}
         />
       </motion.div>
@@ -90,7 +89,6 @@ export default function HeroesClient({
   className,
   locale,
 }: HeroesClientProps) {
-  
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
@@ -121,7 +119,7 @@ export default function HeroesClient({
           width={650}
           height={150}
           rotate={8}
-          gradient="from-cyan-400/30 via-sky-300/25 to-purple-900/20" 
+          gradient="from-cyan-400/30 via-sky-300/25 to-purple-900/20"
           className="left-[-10%] top-[10%]"
         />
         <ElegantShape
@@ -161,13 +159,7 @@ export default function HeroesClient({
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
         {/* Badge */}
-        <motion.div
-          custom={0}
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
-          className="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-8 bg-white/5 backdrop-blur-sm shadow-[0_0_4px_rgba(0,255,255,0.2)] border border-white/10"
-        >
+        <motion.div className="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-8 bg-white/5 backdrop-blur-sm shadow-[0_0_4px_rgba(0,255,255,0.2)] border border-white/10">
           <Circle className="h-2 w-2 fill-sky-400/80 text-sky-400" />
           <span className="text-xs text-white/80 tracking-wide font-medium">
             {dict.badge}
@@ -176,16 +168,11 @@ export default function HeroesClient({
 
         {/* Title: Daha parlak, daha derin ışıltılı başlık */}
         <motion.h1
-          custom={1}
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
           className="text-3xl lg:text-8xl font-black mb-6 md:mb-8 tracking-tighter
-            bg-clip-text text-transparent
-            bg-gradient-to-r from-cyan-300 via-white/95 to-blue-300
-            // Ana ışıltı ve yumuşak gölge
-            drop-shadow-[0_0_12px_rgba(0,255,255,0.35)]
-            transition-all duration-300"
+    bg-clip-text text-transparent
+    bg-gradient-to-r from-cyan-300 via-white/95 to-blue-300
+    drop-shadow-[0_0_12px_rgba(0,255,255,0.35)]
+    transition-all duration-300"
         >
           <span>{dict.title1}</span>
           <br className="hidden md:block" />
@@ -196,24 +183,16 @@ export default function HeroesClient({
         </motion.h1>
 
         {/* Description */}
-        <motion.p
-          custom={2}
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
-          className="text-sm md:text-xl mb-12 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/60 drop-shadow-[0_0_4px_rgba(0,255,255,0.1)]"
-        >
+      <motion.p
+  className="text-sm md:text-xl mb-12 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/60 drop-shadow-[0_0_4px_rgba(0,255,255,0.1)]"
+>
+
           {dict.description}
         </motion.p>
 
         {/* CTA Button */}
-        <motion.div
-          custom={3}
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
-          className="inline-block relative overflow-visible"
-        >
+     <motion.div className="inline-block relative overflow-visible">
+
           {/* 3. Hafif Sallanma Animasyonu (daha estetik) */}
           <motion.div
             animate={{ y: [0, -4, 0] }} // Daha az zıplama
