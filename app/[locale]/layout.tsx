@@ -1,25 +1,25 @@
-
+// app/[locale]/layout.tsx
 import "../globals.css";
 import ClientLayoutWrapper from "@/components/layout/clientLayoutWrapper";
 import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
+import type { Metadata } from "next";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}) {
-  const { locale } = params;
+type Props = {
+  params: Promise<{ locale: string }>; // Next.js 15+ için Promise kullanımı
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  // await kullanarak params'ı çöz
+  const { locale } = await params;
+
   const htmlLang = locale || "tr";
   const ogLocale = locale === "tr" ? "tr_TR" : "en_US";
   const baseUrl = "https://jhun.com.tr";
   const canonicalUrl = `${baseUrl}/${locale}`;
-
-  // OG Image için tam URL kullanımı
   const ogImageUrl = `${baseUrl}/og-image.webp`;
 
-  // Dile göre içerik
   const content = {
     tr: {
       title: "Jhun | Web Geliştirme & Dijital Çözümler",
@@ -93,9 +93,6 @@ export async function generateMetadata({
       googleBot: {
         index: true,
         follow: true,
-        maxSnippet: -1,
-        maxImagePreview: "large",
-        maxVideoPreview: -1,
       },
     },
 
@@ -105,11 +102,12 @@ export async function generateMetadata({
   };
 }
 
-export default function LocaleLayout({
-  children,
-}: {
+type LayoutProps = {
   children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function LocaleLayout({ children }: LayoutProps) {
   return (
     <>
       <ClientLayoutWrapper>

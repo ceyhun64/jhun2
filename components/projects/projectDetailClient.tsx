@@ -13,6 +13,7 @@ import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { TechnologyItem, Technology } from "./technologyItem";
 import { Skeleton } from "../ui/skeleton"; // ✅ Skeleton Bileşeni
 import Link from "next/link";
+import GalleryClient from "../home/galleryClient";
 
 type Props = {
   locale: "tr" | "en";
