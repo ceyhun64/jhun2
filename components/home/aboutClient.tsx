@@ -84,11 +84,10 @@ export default function AboutClient({ dict }: Props) {
       <div className=" mx-auto">
         {/* Başlık ve açıklama */}
         <div className="mb-2 md:mb-4 grid gap-5 text-center md:grid-cols-2 md:text-left px-2 md:px-12">
-          <TypingText
-            className="text-3xl sm:text-4xl md:text-5xl font-sans font-semibold tracking-tight text-white"
-            text={dict.typingTitle}
-            cursorClassName="h-8 sm:h-9"
-          />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-semibold tracking-tight text-white">
+            <TypingText text={dict.typingTitle} cursorClassName="h-8 sm:h-9" />
+          </h1>
+
           <p className=" text-sm sm:text-base md:text-lg mb-6 md:mb-0 mt-1 md:not-first:mt-4 text-white">
             {dict.lead}
           </p>
@@ -234,9 +233,9 @@ export default function AboutClient({ dict }: Props) {
                     text={dict.title}
                   />
                 </Link>
-                <h3 className="text-lg sm:text-xl font-semibold tracking-tight">
+                <h2 className="text-lg sm:text-xl font-semibold tracking-tight">
                   {dict.projects_heading}
-                </h3>
+                </h2>
                 <p className="leading-7 text-sm sm:text-base">
                   {dict.projects_description}
                 </p>
