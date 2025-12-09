@@ -26,13 +26,13 @@ export default function ChatHeader({
     <div className="bg-gradient-to-r from-black via-slate-700 to-black text-white p-4 rounded-t-2xl flex items-center justify-between">
       <div className="flex items-center gap-3">
         <div className="relative">
-          <div className="w-11 h-11 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
             <Image
-              src="/chatbot/assistant2.webp"
+              src="/chatbot/assistant9.png"
               alt="jhunTech"
               width={40}
               height={40}
-              className="w-11 h-11  rounded-full"
+              className="w-12 h-12  rounded-full"
             />
           </div>
           <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-600 rounded-full border-2 border-white" />
