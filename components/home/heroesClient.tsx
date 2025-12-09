@@ -174,7 +174,7 @@ export default function HeroesClient({
     drop-shadow-[0_0_12px_rgba(0,255,255,0.35)]
     transition-all duration-300"
         >
-          <span>{dict.title1}</span>
+          <span>{dict.title1}{" "}</span>
           <br className="hidden md:block" />
           {/* İkinci kısım için daha sıcak ve derin bir ton deniyorum */}
           <span className="bg-clip-text 	text-transparent bg-gradient-to-r from-blue-400 via-white to-sky-600">
