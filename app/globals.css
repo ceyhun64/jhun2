@@ -132,7 +132,7 @@
 /* Scrollbar genel boyut */
 /* Scrollbar genel boyut */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 6px;
   height: 12px;
 }
 
@@ -145,7 +145,7 @@
 ::-webkit-scrollbar-thumb {
   background-color: #1e3a8a; /* Parlak lacivert (Tailwind: blue-800) */
   border-radius: 6px;
-  border: 2px solid #000; /* Siyah arka planla boşluk oluşturur */
+  border: 1px solid #000; /* Siyah arka planla boşluk oluşturur */
 }
 
 /* Hover efekti */
