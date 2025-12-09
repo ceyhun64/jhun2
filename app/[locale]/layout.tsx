@@ -5,6 +5,8 @@ import ScrollToTopButton from "@/components/layout/scroll";
 import { Toaster } from "sonner";
 import SocialSidebar from "@/components/layout/socialSidebar";
 import type { Metadata } from "next";
+import Chatbot from "@/components/chatbot/chatBot";
+
 // Teknolojik fontlar - İstediğiniz kombinasyonu seçin:
 
 // SEÇENEK 1: Orbitron + Space Grotesk (Şu anki)
@@ -19,47 +21,6 @@ const bodyFont = Space_Grotesk({
   variable: "--font-body",
   display: "swap",
 });
-
-// SEÇENEK 2: Rajdhani (Keskin ve modern)
-// import { Rajdhani, Inter } from "next/font/google";
-// const mainFont = Rajdhani({
-//   subsets: ["latin"],
-//   weight: ["400", "500", "600", "700"],
-//   variable: "--font-main",
-//   display: "swap",
-// });
-// const bodyFont = Inter({
-//   subsets: ["latin"],
-//   variable: "--font-body",
-//   display: "swap",
-// });
-
-// SEÇENEK 3: Audiowide (Retro-futuristik)
-// import { Audiowide, Space_Grotesk } from "next/font/google";
-// const mainFont = Audiowide({
-//   subsets: ["latin"],
-//   weight: "400",
-//   variable: "--font-main",
-//   display: "swap",
-// });
-// const bodyFont = Space_Grotesk({
-//   subsets: ["latin"],
-//   variable: "--font-body",
-//   display: "swap",
-// });
-
-// SEÇENEK 4: Exo 2 (Geometrik ve temiz)
-// import { Exo_2, Inter } from "next/font/google";
-// const mainFont = Exo_2({
-//   subsets: ["latin"],
-//   variable: "--font-main",
-//   display: "swap",
-// });
-// const bodyFont = Inter({
-//   subsets: ["latin"],
-//   variable: "--font-body",
-//   display: "swap",
-// });
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -164,11 +125,20 @@ type LayoutProps = {
 export default async function LocaleLayout({ children }: LayoutProps) {
   return (
     <>
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           :root {
-            ${mainFont.style.fontFamily ? `--font-main: ${mainFont.style.fontFamily};` : ''}
-            ${bodyFont.style.fontFamily ? `--font-body: ${bodyFont.style.fontFamily};` : ''}
+            ${
+              mainFont.style.fontFamily
+                ? `--font-main: ${mainFont.style.fontFamily};`
+                : ""
+            }
+            ${
+              bodyFont.style.fontFamily
+                ? `--font-body: ${bodyFont.style.fontFamily};`
+                : ""
+            }
           }
           body {
             font-family: var(--font-body), system-ui, sans-serif;
@@ -178,12 +148,14 @@ export default async function LocaleLayout({ children }: LayoutProps) {
             font-weight: 700;
             letter-spacing: 0.02em;
           }
-        `
-      }} />
-      
+        `,
+        }}
+      />
+
       <div className={`${mainFont.variable} ${bodyFont.variable}`}>
         <ClientLayoutWrapper>
           <main>{children}</main>
+          <Chatbot /> {/* ← HER SAYFADA ÇIKAR */}
         </ClientLayoutWrapper>
 
         <SocialSidebar />

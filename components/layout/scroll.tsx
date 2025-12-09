@@ -31,7 +31,7 @@ export default function ScrollToTopButton(): React.JSX.Element {
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.12, y: -6 }} // 🔹 yukarı doğru çıkış efekti
           whileTap={{ scale: 0.92, y: 2 }} // 🔹 tıklarken hafif aşağı bastırma efekti
-          className="fixed bottom-6 right-6 z-50 p-[1px] rounded-full 
+          className="fixed bottom-24 right-8 z-50 p-[1px] rounded-full 
              bg-gradient-to-br from-blue-700 via-blue-600 to-cyan-500
              shadow-[0_0_8px_rgba(100,180,255,0.15)] 
              hover:shadow-[0_0_28px_rgba(120,200,255,0.65)] 
