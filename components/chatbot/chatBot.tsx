@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import ChatButton from "./chatButton";
 import MessageBubble from "./messageBubble";
 import ChatHeader from "./chatHeader";
-import StatsPanel from "./statsPanel";
 import ChatInput from "./chatInput";
 import TypingIndicator from "./typingIndıcator";
 import keywords from "@/data/keywords.json";
 import responses from "@/data/responses.json";
+
 // types/chatbot.ts
 export interface Message {
   role: "user" | "assistant";
@@ -350,7 +350,7 @@ export default function PortfolioChatbot() {
 
   return (
     <div
-      className={`fixed right-0 bottom-6 md:right-6 bg-white rounded-2xl shadow-2xl z-1000 transition-all duration-300 ${
+      className={`fixed right-0 px-4 md:px-0 bottom-6 md:right-6 rounded-2xl shadow-2xl z-1000 transition-all duration-300 ${
         isMinimized ? "w-80 h-16" : "w-96 h-[600px]"
       }`}
       style={{ maxHeight: "calc(100vh - 100px)" }}
