@@ -53,9 +53,9 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-[#0a0f25] to-[#101a3b]">
+    <div className="relative min-h-screen flex items-center justify-center bg-linear-to-b from-[#0a0f25] to-[#101a3b]">
       {/* Minimal glow arka plan */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#0f1326] to-[#081024] opacity-60 blur-[60px]"></div>
+      <div className="absolute inset-0 bg-linear-to-tr from-[#0f1326] to-[#081024] opacity-60 blur-[60px]"></div>
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -124,7 +124,7 @@ export default function AdminLogin() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-sky-500/40 transition-all"
+            className="w-full bg-linear-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-sky-500/40 transition-all"
           >
             {isLoading ? "Yükleniyor..." : "Giriş Yap"}
           </Button>

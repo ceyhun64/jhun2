@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-    images: {
+  images: {
     remotePatterns: [
       {
         protocol: "https",
@@ -10,6 +9,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  
+  // Prisma için ekleyin
+  turbopack: {},
+  serverExternalPackages: ['@prisma/client', 'prisma'],
 };
 
 export default nextConfig;

@@ -100,12 +100,12 @@ export function HeroGeometric({
   return (
     <div
       className={cn(
-        "relative w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#010101] via-[#0d0d0d] to-[#030303] min-h-[80vh] md:min-h-screen",
+        "relative w-full flex items-center justify-center overflow-hidden bg-linear-to-br from-[#010101] via-[#0d0d0d] to-[#030303] min-h-[80vh] md:min-h-screen",
         className
       )}
     >
       {/* Soft blur layer */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-purple-900/5 to-pink-800/5 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-br from-blue-900/5 via-purple-900/5 to-pink-800/5 blur-3xl pointer-events-none" />
 
       {/* Elegant Shapes */}
       <div className="absolute inset-0 overflow-hidden">
@@ -189,10 +189,10 @@ export function HeroGeometric({
             initial="hidden"
             animate="visible"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white/90 to-blue-400 drop-shadow-[0_0_6px_rgba(0,255,255,0.25)] transition-all duration-300">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight bg-clip-text text-transparent bg-linear-to-r from-cyan-400 via-white/90 to-blue-400 drop-shadow-[0_0_6px_rgba(0,255,255,0.25)] transition-all duration-300">
               <span>{title1}</span>
               <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white/90 to-sky-600">
+              <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-300 via-white/90 to-sky-600">
                 {title2}
               </span>
             </h1>
@@ -230,10 +230,10 @@ export function HeroGeometric({
                 <MagneticButton
                   onClick={() => (window.location.href = ctaHref)}
                   className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
-                     bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300
+                     bg-linear-to-r from-amber-500 via-orange-400 to-yellow-300
                      shadow-[0_0_10px_rgba(255,200,0,0.4)]
                      hover:shadow-[0_0_20px_rgba(255,220,50,0.5)]
-                     after:absolute after:inset-0 after:rounded-full after:blur-xl after:bg-gradient-to-r after:from-yellow-400/20 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
+                     after:absolute after:inset-0 after:rounded-full after:blur-xl after:bg-linear-to-r after:from-yellow-400/20 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
                      transition-all duration-300"
                 >
                   <Sparkles className="w-5 h-5 mr-2 text-white/80" />
@@ -245,7 +245,7 @@ export function HeroGeometric({
         </div>
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
     </div>
   );
 }

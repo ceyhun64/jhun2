@@ -1,8 +1,10 @@
+// app/api/auth/[...nextauth]/route.ts
 export const runtime = "nodejs";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import prisma from "@/lib/db";
-import bcrypt from "bcrypt"; // bcryptjs önerilir
+import connectDB from "@/lib/mongoose";
+import Admin from "@/models/admin";
+import bcrypt from "bcrypt";
 import type { NextAuthOptions } from "next-auth";
 
 const authOptions: NextAuthOptions = {
@@ -16,23 +18,32 @@ const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const admin = await prisma.admin.findUnique({
-          where: { email: credentials.email },
-        });
-        if (!admin) return null;
+        try {
+          await connectDB();
 
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          admin.password
-        );
-        if (!isValid) return null;
+          const admin = await Admin.findOne({
+            email: credentials.email,
+          }).lean();
 
-        return {
-          id: admin.id.toString(),
-          name: admin.name,
-          surname: admin.surname,
-          email: admin.email,
-        };
+          if (!admin) return null;
+
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            admin.password
+          );
+
+          if (!isValid) return null;
+
+          return {
+            id: admin._id.toString(),
+            name: admin.name,
+            surname: admin.surname,
+            email: admin.email,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
+        }
       },
     }),
   ],

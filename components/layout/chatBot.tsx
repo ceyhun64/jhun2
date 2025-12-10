@@ -453,7 +453,7 @@ export default function PortfolioChatbot() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-110 z-50 group"
+        className="fixed bottom-6 right-6 bg-linear-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-110 z-50 group"
         aria-label="Sohbeti Aç"
       >
         <MessageCircle className="w-6 h-6" />
@@ -475,7 +475,7 @@ export default function PortfolioChatbot() {
       style={{ maxHeight: "calc(100vh - 100px)" }}
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
+      <div className="bg-linear-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
@@ -522,7 +522,7 @@ export default function PortfolioChatbot() {
         <>
           {/* Stats Panel */}
           {showStats && (
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 border-b">
+            <div className="bg-linear-to-r from-blue-50 to-purple-50 p-4 border-b">
               <h4 className="font-semibold text-sm mb-2">
                 📊 Öğrenme İstatistikleri
               </h4>
@@ -570,7 +570,7 @@ export default function PortfolioChatbot() {
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                     msg.role === "user"
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-none"
+                      ? "bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-br-none"
                       : "bg-white text-gray-800 shadow-md rounded-bl-none"
                   }`}
                 >
@@ -625,7 +625,7 @@ export default function PortfolioChatbot() {
               <button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
+                className="bg-linear-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
                 aria-label="Gönder"
               >
                 <Send className="w-5 h-5" />

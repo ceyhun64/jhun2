@@ -35,7 +35,7 @@ export default function LanguageSwitcher() {
           layout
           transition={{ type: "spring", stiffness: 300, damping: 26 }}
           className={`absolute top-[4px] bottom-[4px] w-[calc(50%-4px)] rounded-full 
-            bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 shadow-[0_0_10px_rgba(255,193,7,0.5)]
+            bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 shadow-[0_0_10px_rgba(255,193,7,0.5)]
             ${currentLocale === "tr" ? "left-[4px]" : "left-[calc(50%+2px)]"}`}
         />
 
@@ -73,7 +73,7 @@ export default function LanguageSwitcher() {
 
         {/* 🌀 Hover glow effect */}
         <motion.div
-          className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-400/10 opacity-0"
+          className="absolute inset-0 rounded-full bg-linear-to-r from-amber-500/10 to-amber-400/10 opacity-0"
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         />

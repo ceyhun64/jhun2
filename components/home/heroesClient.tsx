@@ -110,7 +110,7 @@ export default function HeroesClient({
       )}
     >
       {/* 1. Daha Estetik Arka Plan: Daha az keskin, daha derin bir gradyan */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/10 via-purple-900/10 to-blue-900/10 blur-3xl pointer-events-none opacity-50" />
+      <div className="absolute inset-0 bg-linear-to-br from-gray-900/10 via-purple-900/10 to-blue-900/10 blur-3xl pointer-events-none opacity-50" />
 
       {/* Elegant Shapes - Opaklık ve Yoğunluk Artırıldı (Gölge Beyaz) */}
       <div className="absolute inset-0 overflow-hidden opacity-100">
@@ -170,14 +170,14 @@ export default function HeroesClient({
         <motion.h1
           className="text-3xl lg:text-8xl font-black mb-6 md:mb-8 tracking-tighter
     bg-clip-text text-transparent
-    bg-gradient-to-r from-cyan-300 via-white/95 to-blue-300
+    bg-linear-to-r from-cyan-300 via-white/95 to-blue-300
     drop-shadow-[0_0_12px_rgba(0,255,255,0.35)]
     transition-all duration-300"
         >
-          <span>{dict.title1}{" "}</span>
+          <span>{dict.title1} </span>
           <br className="hidden md:block" />
           {/* İkinci kısım için daha sıcak ve derin bir ton deniyorum */}
-          <span className="bg-clip-text 	text-transparent bg-gradient-to-r from-blue-400 via-white to-sky-600">
+          <span className="bg-clip-text 	text-transparent bg-linear-to-r from-blue-400 via-white to-sky-600">
             {dict.title2}
           </span>
         </motion.h1>
@@ -203,11 +203,11 @@ export default function HeroesClient({
               <MagneticButton
                 className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
                     // Daha belirgin ve canlı bir gradyan
-                    bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-400
+                    bg-linear-to-r from-amber-400 via-orange-500 to-yellow-400
                     shadow-[0_0_15px_rgba(255,180,0,0.6)]
                     hover:shadow-[0_0_25px_rgba(255,200,50,0.8)]
                     // Arka ışıltıyı daha da yumuşatıyorum
-                    after:absolute after:inset-0 after:rounded-full after:blur-2xl after:bg-gradient-to-r after:from-yellow-400/15 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
+                    after:absolute after:inset-0 after:rounded-full after:blur-2xl after:bg-linear-to-r after:from-yellow-400/15 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
                     transition-all duration-300 transform hover:scale-[1.03]"
               >
                 <Sparkles className="w-5 h-5 mr-2 text-white/90" />
@@ -219,7 +219,7 @@ export default function HeroesClient({
       </div>
 
       {/* Alttaki gölgeyi daha yumuşak ve derin yapıyorum */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#010101] via-transparent to-[#010101]/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#010101] via-transparent to-[#010101]/80 pointer-events-none" />
     </div>
   );
 }

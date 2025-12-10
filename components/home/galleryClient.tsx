@@ -1,4 +1,5 @@
-// "use client" kısmı ve tüm import'lar aynı kalır
+// components/home/galleryClient.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -17,11 +18,15 @@ import { CardContainer, CardBody, CardItem } from "../ui/shadcn-io/3d-card";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// --- Arayüz Tanımları ---
+// --- Arayüz Tanımları (Güncellendi) ---
 interface GalleryItem {
   id: string;
   title: string;
+  titleEng?: string; // İngilizce başlık
   summary: string;
+  summaryEng?: string; // İngilizce özet
+  description: string;
+  descriptionEng?: string;
   url: string;
   image: string;
 }
@@ -39,57 +44,44 @@ interface GalleryClientProps {
 }
 
 // 🧩 GELİŞTİRİLMİŞ YARDIMCI BİLEŞEN: SkeletonCard
-// Asıl Card yapısını ve boşluklarını tam olarak taklit eder.
 const SkeletonCard = () => {
   return (
     <CardContainer
       className="inter-var"
       containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
     >
-      {/* CardBody: Asıl karttaki border, background ve padding değerlerini taklit eder */}
-      <CardBody className="relative bg-gradient-to-b from-zinc-950/10 to-zinc-900 border border-zinc-800/70 rounded-2xl p-3 text-left">
-        {/* 1. Görsel Alanı (translateZ="140") */}
+      <CardBody className="relative bg-linear-to-b from-zinc-950/10 to-zinc-900 border border-zinc-800/70 rounded-2xl p-3 text-left">
+        {/* 1. Görsel Alanı */}
         <CardItem translateZ="140" className="w-full">
           <Skeleton className="relative aspect-video overflow-hidden rounded-xl bg-zinc-800" />
         </CardItem>
 
-        {/* 2. Başlık Alanı (translateZ="120") */}
+        {/* 2. Başlık Alanı */}
         <CardItem
           translateZ="120"
-          // Orijinal kartta Image'dan sonra mt-5 var
           className="mt-5 text-lg sm:text-xl font-semibold text-white text-left"
         >
-          {/* h-6 başlık yüksekliği için yeterli */}
           <Skeleton className="h-6 w-3/4 bg-zinc-700" />
         </CardItem>
 
-        {/* 3. Özet/Açıklama Alanı (translateZ="60") */}
-        {/* Orijinal kartta as="p" ve mt-2 var. SkeletonCard'da as="div" kullanıp satır aralarını ayarlayalım. */}
+        {/* 3. Özet/Açıklama Alanı */}
         <CardItem
-          // Orijinal karttaki gibi as="p" de kullanabiliriz, ancak as="div" daha esnek olabilir.
-          // Orijinal CardItem kodunun <p> render ettiğini varsayarak as="p" kullanıldı.
           as="div"
           translateZ="60"
-          className="text-sm text-gray-400 mt-2 line-clamp-3 text-left" // Orijinal karttaki mt-2 değeri korundu
+          className="text-sm text-gray-400 mt-2 line-clamp-3 text-left"
         >
-          {/* Üç satır özet iskeleti. Satır boşluklarını sağlamak için mb-1 kullanıldı. */}
           <Skeleton className="h-4 w-full bg-zinc-700 mb-1" />
           <Skeleton className="h-4 w-11/12 bg-zinc-700 mb-1" />
           <Skeleton className="h-4 w-10/12 bg-zinc-700" />
-          
         </CardItem>
 
         {/* 4. Butonlar Alanı */}
         <div className="mt-2 flex justify-between items-center">
-          {/* Görüntüle Butonu İçin İskelet (Link stili) */}
           <CardItem translateZ={60} as="span">
-            {/* Orijinal link'in kapladığı alanı taklit eden ufak, yuvarlak iskelet */}
             <Skeleton className="h-5 w-24 rounded-full bg-zinc-700" />
           </CardItem>
 
-          {/* Siteyi Ziyaret Et Butonu İçin İskelet (Button stili) */}
           <CardItem translateZ={40} as="div">
-            {/* Orijinal Button'ın h-10 ve w-32 boyutunu taklit eden iskelet */}
             <Skeleton className="h-10 w-32 rounded-full bg-zinc-700" />
           </CardItem>
         </div>
@@ -117,6 +109,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
         );
         if (!res.ok) throw new Error("Fetch failed");
         const data = await res.json();
+        console.log("Projects fetch data:", data);
         setItems(data.projects || []);
       } catch (error) {
         console.error("Projects fetch error:", error);
@@ -165,9 +158,12 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
           }}
         >
           <CarouselContent className="flex md:gap-0 px-4 sm:px-6 md:px-16">
-            {/* 3 Adet İskelet Kartı Render Et */}
+            {/* Hata Düzeltme Uygulandı: Benzersiz key (skeleton-index) kullanıldı */}
             {[...Array(5)].map((_, index) => (
-              <CarouselItem key={index} className="w-full md:max-w-[400px]">
+              <CarouselItem
+                key={`skeleton-${index}`}
+                className="w-full md:max-w-[400px]"
+              >
                 {/* GELİŞTİRİLMİŞ SkeletonCard kullanılıyor */}
                 <SkeletonCard />
               </CarouselItem>
@@ -183,7 +179,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
       );
     }
 
-    // ✅ Yükleme bitti ve ürünler var (Mevcut Carousel yapısı)
+    // ✅ Yükleme bitti ve ürünler var
     return (
       <Carousel
         setApi={setCarouselApi}
@@ -201,110 +197,120 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
         }}
       >
         <CarouselContent className="flex md:gap-0 px-4 sm:px-6 md:px-16">
-          {items.map((item) => (
-            <CarouselItem
-              key={item.id}
-              className="w-full md:max-w-[400px] cursor-pointer"
-            >
-              {isMobile ? (
-                // Mobil kart (Aynı kalır)
-                <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 text-left mt-6">
-                  <div className="relative aspect-video overflow-hidden rounded-xl">
-                    <Link href={`/projects/${item.id}`}>
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover transition-transform duration-500 hover:scale-105"
-                      />
-                    </Link>
-                  </div>
-                  <div className="p-1.5">
-                    <h3 className="mt-4 text-lg font-semibold text-white">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-gray-400 mt-2 line-clamp-3">
-                      {item.summary}
-                    </p>
+          {items.map((item) => {
+            // Dil Kontrolü: Hangi başlık ve özeti göstereceğimizi belirle
+            const displayTitle =
+              locale === "en" && item.titleEng ? item.titleEng : item.title;
+            const displaySummary =
+              locale === "en" && item.summaryEng
+                ? item.summaryEng
+                : item.summary;
 
-                    <div className="mt-4 flex justify-between items-center">
-                      <Link
-                        href={`/projects/${item.id}`}
-                        className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
-                      >
-                        <Eye className="w-4 h-4" /> {dict.view}
+            return (
+              <CarouselItem
+                key={item.id}
+                className="w-full md:max-w-[400px] cursor-pointer"
+              >
+                {isMobile ? (
+                  // Mobil kart
+                  <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 text-left mt-6">
+                    <div className="relative aspect-video overflow-hidden rounded-xl">
+                      <Link href={`/projects/${item.id}`}>
+                        <Image
+                          src={item.image}
+                          alt={displayTitle} // Alt metin de güncellendi
+                          fill
+                          className="object-cover transition-transform duration-500 hover:scale-105"
+                        />
                       </Link>
-                      <Button
-                        onClick={() => window.open(item.url, "_blank")}
-                        className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
-                      >
-                        {dict.visitSite} <ArrowRight className="w-4 h-4" />
-                      </Button>
                     </div>
-                  </div>
-                </div>
-              ) : (
-                // Masaüstü 3D Card efekti (Aynı kalır)
-                <CardContainer
-                  className="inter-var"
-                  containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
-                >
-                  <CardBody className="relative bg-gradient-to-b from-zinc-950/10 to-zinc-900 border border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
-                    <CardItem translateZ="140" className="w-full">
-                      <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
-                        <Link href={`/projects/${item.id}`}>
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            fill
-                            className="object-cover object-center transition-transform duration-500 group-hover/card:brightness-110"
-                          />
-                        </Link>
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-transparent to-orange-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
-                      </div>
-                    </CardItem>
+                    <div className="p-1.5">
+                      <h3 className="mt-4 text-lg font-semibold text-white">
+                        {displayTitle} {/* Güncellenmiş başlık */}
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-2 line-clamp-3">
+                        {displaySummary} {/* Güncellenmiş özet */}
+                      </p>
 
-                    <CardItem
-                      translateZ="120"
-                      className="mt-5 text-lg sm:text-xl font-semibold text-white group-hover/card:text-blue-400 transition-colors text-left"
-                    >
-                      {item.title}
-                    </CardItem>
-
-                    <CardItem
-                      as="p"
-                      translateZ="60"
-                      className="text-sm text-gray-400 mt-2 line-clamp-3 text-left"
-                    >
-                      {item.summary}
-                    </CardItem>
-
-                    <div className="mt-5 flex justify-between items-center">
-                      <CardItem translateZ={60} as="span">
+                      <div className="mt-4 flex justify-between items-center">
                         <Link
-                          href={`/${locale}/projects/${item.id}`}
-                          className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-transform"
+                          href={`/projects/${item.id}`}
+                          className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
                         >
                           <Eye className="w-4 h-4" /> {dict.view}
                         </Link>
-                      </CardItem>
-
-                      <CardItem translateZ={40} as="div">
                         <Button
                           onClick={() => window.open(item.url, "_blank")}
-                          className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all"
+                          className="bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
                         >
                           {dict.visitSite} <ArrowRight className="w-4 h-4" />
                         </Button>
-                      </CardItem>
+                      </div>
                     </div>
+                  </div>
+                ) : (
+                  // Masaüstü 3D Card efekti
+                  <CardContainer
+                    className="inter-var"
+                    containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
+                  >
+                    <CardBody className="relative bg-linear-to-b from-zinc-950/10 to-zinc-900 border border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                      <CardItem translateZ="140" className="w-full">
+                        <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
+                          <Link href={`/projects/${item.id}`}>
+                            <Image
+                              src={item.image}
+                              alt={displayTitle} // Alt metin de güncellendi
+                              fill
+                              className="object-cover object-center transition-transform duration-500 group-hover/card:brightness-110"
+                            />
+                          </Link>
+                          <div className="absolute inset-0 bg-linear-to-tr from-blue-600/20 via-transparent to-orange-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
+                        </div>
+                      </CardItem>
 
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-orange-500/20 to-blue-500/20 opacity-0 group-hover/card:opacity-100 blur-[25px] transition-opacity duration-700"></div>
-                  </CardBody>
-                </CardContainer>
-              )}
-            </CarouselItem>
-          ))}
+                      <CardItem
+                        translateZ="120"
+                        className="mt-5 text-lg sm:text-xl font-semibold text-white group-hover/card:text-blue-400 transition-colors text-left"
+                      >
+                        {displayTitle} {/* Güncellenmiş başlık */}
+                      </CardItem>
+
+                      <CardItem
+                        as="p"
+                        translateZ="60"
+                        className="text-sm text-gray-400 mt-2 line-clamp-3 text-left"
+                      >
+                        {displaySummary} {/* Güncellenmiş özet */}
+                      </CardItem>
+
+                      <div className="mt-5 flex justify-between items-center">
+                        <CardItem translateZ={60} as="span">
+                          <Link
+                            href={`/${locale}/projects/${item.id}`}
+                            className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-transform"
+                          >
+                            <Eye className="w-4 h-4" /> {dict.view}
+                          </Link>
+                        </CardItem>
+
+                        <CardItem translateZ={40} as="div">
+                          <Button
+                            onClick={() => window.open(item.url, "_blank")}
+                            className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all"
+                          >
+                            {dict.visitSite} <ArrowRight className="w-4 h-4" />
+                          </Button>
+                        </CardItem>
+                      </div>
+
+                      <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-blue-500/20 via-orange-500/20 to-blue-500/20 opacity-0 group-hover/card:opacity-100 blur-[25px] transition-opacity duration-700"></div>
+                    </CardBody>
+                  </CardContainer>
+                )}
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
       </Carousel>
     );
@@ -313,7 +319,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   return (
     <section className="py-16 md:py-28 bg-linear-to-t from-black to-slate-950 relative font-sans overflow-hidden">
       {/* Title */}
-      <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left  md:px-16">
+      <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left md:px-16">
         <RollingText
           className="inline-block relative w-full text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-extrabold tracking-tight text-white mb-1"
           text={dict.title}
@@ -355,7 +361,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
             </div>
 
             <Link href={`/${locale}/projects`}>
-              <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
+              <Button className="flex items-center gap-2 bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
                 {dict.exploreProjects}
               </Button>
             </Link>
@@ -385,7 +391,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
             </div>
 
             <Link href={`/${locale}/projects`}>
-              <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
+              <Button className="flex items-center gap-2 bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
                 {dict.exploreProjects} <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
@@ -395,4 +401,5 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
     </section>
   );
 };
+
 export default GalleryClient;

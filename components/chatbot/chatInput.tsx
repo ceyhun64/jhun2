@@ -24,10 +24,10 @@ export default function ChatInput({
           disabled={isLoading}
           className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
         />
-        <button 
+        <button
           onClick={onSend}
           disabled={!value.trim() || isLoading}
-          className="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-3 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
+          className="bg-linear-to-r from-amber-500 to-amber-600 text-white p-3 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
           aria-label="Gönder"
         >
           <Send className="w-5 h-5" />

@@ -1,9 +1,5 @@
 "use client";
-import {
-
-  Trash2,
-} from "lucide-react";
-
+import { Trash2 } from "lucide-react";
 
 interface Stats {
   learned: number;
@@ -19,7 +15,7 @@ export default function StatsPanel({
   onReset: () => void;
 }) {
   return (
-    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 border-b">
+    <div className="bg-linear-to-r from-blue-50 to-purple-50 p-4 border-b">
       <h4 className="font-semibold text-sm mb-2">📊 Öğrenme İstatistikleri</h4>
       <div className="grid grid-cols-3 gap-2 text-xs">
         <div className="bg-white p-2 rounded-lg text-center">

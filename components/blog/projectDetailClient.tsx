@@ -1,5 +1,3 @@
-// components/projects/projectDetailClient.tsx
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -13,7 +11,7 @@ import { ImageZoom } from "../ui/shadcn-io/image-zoom";
 import { cn } from "@/lib/utils";
 import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { TechnologyItem, Technology } from "./technologyItem";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../ui/skeleton"; // ✅ Skeleton Bileşeni
 import Link from "next/link";
 import GalleryClient from "../home/galleryClient";
 
@@ -22,15 +20,12 @@ type Props = {
   dict: any;
 };
 
-// --- Arayüz Güncellemesi ---
+// API'dan gelecek proje yapısını tanımlayalım (Prisma modeline uygun olmalı)
 interface Project {
   id: string;
   title: string;
-  titleEng?: string; // İngilizce Başlık Eklendi
   summary: string;
-  summaryEng?: string; // İngilizce Özet Eklendi
   description: string;
-  descriptionEng?: string; // İngilizce Açıklama Eklendi
   image: string;
   subImage1?: string;
   subImage2?: string;
@@ -39,6 +34,7 @@ interface Project {
   subImage5?: string;
   demoUrl?: string | null;
   githubUrl?: string | null;
+  // Technology: TechnologyItem'ın beklediği tip olmalı
   technologies: Technology[];
 }
 
@@ -196,7 +192,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     </div>
   );
 
-  // Düzeltme: Koşullu Çıkışlar (loading, error) tüm Hook'lardan SONRA gelmelidir.
+  // DÜZELTME 2: Koşullu Çıkışlar (loading, error) tüm Hook'lardan SONRA gelmelidir.
   // Yüklenme durumunda artık sadece ProjectDetailSkeleton'ı döndürüyoruz.
   if (loading) {
     // Yükleniyor durumunda genel sayfa yapısını iskelet ile gösteriyoruz
@@ -227,25 +223,6 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     return <NotFoundPlaceholder />;
   }
 
-  // --- Dil Seçimi için Alanları Belirleme ---
-  const {
-    title,
-    titleEng,
-    summary,
-    summaryEng,
-    description,
-    descriptionEng,
-    technologies,
-    demoUrl,
-    githubUrl,
-  } = project;
-
-  const displayTitle = locale === "en" && titleEng ? titleEng : title;
-  const displaySummary = locale === "en" && summaryEng ? summaryEng : summary;
-  const displayDescription =
-    locale === "en" && descriptionEng ? descriptionEng : description;
-  // ------------------------------------------
-
   // --- Carousel kaydırma işlevi (Hook değil, kalabilir) ---
   const scroll = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
@@ -265,6 +242,10 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     });
     setScrollPosition(newScrollPosition);
   };
+
+  // API'dan gelen projenin alanları
+  const { title, summary, description, technologies, demoUrl, githubUrl } =
+    project;
 
   return (
     <div className="min-h-screen bg-linear-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
@@ -301,7 +282,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                 <div className="relative w-full aspect-video lg:aspect-[16/9] rounded-xl overflow-hidden">
                   <Image
                     src={mainImage}
-                    alt={displayTitle} // Güncellenmiş başlık
+                    alt={title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 1000px"
                     className="object-cover object-center"
@@ -424,7 +405,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
           <h1 className=" p-0 md:p-4 text-3xl md:text-6xl font-extrabold tracking-tight font-mono text-transparent bg-clip-text bg-linear-to-r from-amber-500 via-amber-300 to-yellow-100 drop-shadow-[0_0_12px_rgba(255,180,0,0.7)] hover:drop-shadow-[0_0_20px_rgba(255,200,0,0.9)] transition-shadow duration-300">
             <GradientText
               gradient="linear-gradient(90deg, #f59e0b 0%, #fbbf24 40%, #fef3c7 60%, #fbbf24 80%, #f59e0b 100%)"
-              text={displayTitle} // Güncellenmiş başlık
+              text={title}
               className="inline font-mono"
             />
           </h1>
@@ -434,12 +415,12 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
 
           {/* Özet */}
           <p className="text-gray-200 text-lg md:text-xl leading-relaxed font-sans p-0 md:p-4 ">
-            {displaySummary} {/* Güncellenmiş özet */}
+            {summary}
           </p>
 
           {/* Açıklama */}
           <p className="text-gray-300 leading-relaxed text-sm md:text-md font-mono whitespace-pre-line p-0 md:p-4 ">
-            {displayDescription} {/* Güncellenmiş açıklama */}
+            {description}
           </p>
 
           {/* Butonlar (sadece mobilde, en altta) */}

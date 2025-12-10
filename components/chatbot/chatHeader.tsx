@@ -23,7 +23,7 @@ export default function ChatHeader({
   onClose: () => void;
 }) {
   return (
-    <div className="bg-gradient-to-r from-black via-slate-700 to-black text-white p-4 rounded-t-2xl flex items-center justify-between">
+    <div className="bg-linear-to-r from-black via-slate-700 to-black text-white p-4 rounded-t-2xl flex items-center justify-between">
       <div className="flex items-center gap-3">
         <div className="relative">
           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">

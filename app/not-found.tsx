@@ -6,7 +6,7 @@ import { Home, Search, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white px-6 overflow-hidden">
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-linear-to-b from-black via-slate-950 to-black text-white px-6 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Grid pattern */}
@@ -59,13 +59,13 @@ export default function NotFound() {
         >
           <h1 className="text-9xl md:text-[200px] font-black tracking-tighter">
             <span className="relative inline-block">
-              <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-blue-500 to-cyan-500 opacity-50" />
-              <span className="relative bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <span className="absolute inset-0 blur-2xl bg-linear-to-r from-blue-500 to-cyan-500 opacity-50" />
+              <span className="relative bg-linear-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 404
               </span>
             </span>
           </h1>
-          
+
           {/* Glitch lines */}
           <motion.div
             animate={{ x: [-5, 5, -5] }}
@@ -97,7 +97,9 @@ export default function NotFound() {
           className="mt-8 flex items-center justify-center gap-2 text-cyan-400"
         >
           <Search className="w-5 h-5" />
-          <span className="text-sm">URL'yi kontrol edin veya ana sayfaya dönün</span>
+          <span className="text-sm">
+            URL'yi kontrol edin veya ana sayfaya dönün
+          </span>
         </motion.div>
 
         {/* Action buttons */}
@@ -112,14 +114,14 @@ export default function NotFound() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg shadow-lg shadow-blue-500/50 overflow-hidden"
+              className="group relative px-8 py-4 rounded-full bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg shadow-lg shadow-blue-500/50 overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
                 <Home className="w-5 h-5" />
                 Ana Sayfaya Dön
               </span>
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600"
+                className="absolute inset-0 bg-linear-to-r from-cyan-600 to-blue-600"
                 initial={{ x: "100%" }}
                 whileHover={{ x: 0 }}
                 transition={{ duration: 0.3 }}
@@ -167,7 +169,7 @@ export default function NotFound() {
       </div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-32 bg-linear-to-t from-black to-transparent pointer-events-none" />
     </div>
   );
 }

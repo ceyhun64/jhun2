@@ -70,7 +70,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
 
   return (
     <motion.section
-      className="relative py-10 md:py-24 text-white overflow-hidden font-mono bg-gradient-to-b from-black  via-amber-950 to-black px-4 md:px-32"
+      className="relative py-10 md:py-24 text-white overflow-hidden font-mono bg-linear-to-b from-black  via-amber-950 to-black px-4 md:px-32"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -142,7 +142,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
           variants={itemVariants}
         >
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl md:text-6xl font-extrabold tracking-tight font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-200 to-white drop-shadow-[0_0_15px_rgba(255,220,120,0.7)] hover:drop-shadow-[0_0_30px_rgba(255,200,100,0.9)] transition-all duration-500 mb-3">
+            <h1 className="text-3xl md:text-6xl font-extrabold tracking-tight font-mono text-transparent bg-clip-text bg-linear-to-r from-amber-400 via-yellow-200 to-white drop-shadow-[0_0_15px_rgba(255,220,120,0.7)] hover:drop-shadow-[0_0_30px_rgba(255,200,100,0.9)] transition-all duration-500 mb-3">
               <GradientText
                 gradient="linear-gradient(90deg,#fbbf24 0%,#fef3c7 50%,#fbbf24 100%)"
                 text={dict.title}
@@ -290,7 +290,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
             <Button
               type="submit"
               disabled={loading}
-              className="w-full justify-center bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-400 hover:from-amber-500 hover:via-orange-400 hover:to-yellow-300 text-white font-semibold shadow-[0_0_20px_rgba(255,200,100,0.6)] transition-all rounded-lg py-3 text-sm sm:text-base md:text-base"
+              className="w-full justify-center bg-linear-to-r from-amber-600 via-orange-500 to-yellow-400 hover:from-amber-500 hover:via-orange-400 hover:to-yellow-300 text-white font-semibold shadow-[0_0_20px_rgba(255,200,100,0.6)] transition-all rounded-lg py-3 text-sm sm:text-base md:text-base"
             >
               {loading ? dict.form.sending : dict.form.submit}
             </Button>

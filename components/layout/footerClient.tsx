@@ -58,7 +58,7 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-black via-zinc-950 to-black text-white font-sans border-t border-zinc-800/50">
+    <footer className="relative overflow-hidden bg-linear-to-b from-black via-zinc-950 to-black text-white font-sans border-t border-zinc-800/50">
       {/* Neon blur background */}
       <div className="absolute inset-0 opacity-40">
         <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-amber-500/20 rounded-full blur-[120px]" />

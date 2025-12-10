@@ -1,5 +1,3 @@
-// components/projects/projectsClient.tsx
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -29,13 +27,10 @@ interface Technology {
   name: string;
 }
 
-// --- Arayüz Güncellemesi ---
 interface Project {
   id: number;
   title: string;
-  titleEng?: string; // İngilizce Başlık Eklendi
   summary: string;
-  summaryEng?: string; // İngilizce Özet Eklendi
   url: string;
   image: string;
   description: string;
@@ -75,8 +70,6 @@ export default function ProjectsClient({ dict, locale }: Props) {
       const res = await fetch("/api/projects", { cache: "no-store" });
       if (!res.ok) throw new Error(dict.error);
       const data = await res.json();
-
-      // API'den gelen verilerin Project arayüzüne uyduğundan emin olun
       setProjects(data.projects || []);
     } catch (err) {
       console.error(err);
@@ -170,124 +163,113 @@ export default function ProjectsClient({ dict, locale }: Props) {
         {/* Projeler Grid'i */}
         {!loading && projects.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center mt-10">
-            {projects.map((proj, index) => {
-              // Dil Kontrolü: Hangi başlık ve özeti göstereceğimizi belirle
-              const displayTitle =
-                locale === "en" && proj.titleEng ? proj.titleEng : proj.title;
-              const displaySummary =
-                locale === "en" && proj.summaryEng
-                  ? proj.summaryEng
-                  : proj.summary;
+            {projects.map((proj, index) => (
+              <motion.div
+                key={proj.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="w-full max-w-[400px]"
+              >
+                {isMobile ? (
+                  // Mobil: sade Tailwind kart
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-2xl p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 text-left">
+                    <div className="relative aspect-video overflow-hidden rounded-xl ">
+                      <Link href={`/${locale}/projects/${proj.id}`}>
+                        <Image
+                          src={proj.image}
+                          alt={proj.title}
+                          fill
+                          className="object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      </Link>
+                    </div>
+                    <div className="p-1.5">
+                      <h3 className="mt-4 text-lg font-semibold text-white">
+                        {proj.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-2 line-clamp-3">
+                        {proj.summary}
+                      </p>
 
-              return (
-                <motion.div
-                  key={proj.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="w-full max-w-[400px]"
-                >
-                  {isMobile ? (
-                    // Mobil: sade Tailwind kart
-                    <div className="bg-zinc-950/50 border border-zinc-800 rounded-2xl p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 text-left">
-                      <div className="relative aspect-video overflow-hidden rounded-xl ">
-                        <Link href={`/${locale}/projects/${proj.id}`}>
-                          <Image
-                            src={proj.image}
-                            alt={displayTitle} // Alt metin de güncellendi
-                            fill
-                            className="object-cover transition-transform duration-500 hover:scale-105"
-                          />
+                      <div className="mt-4 flex justify-between items-center">
+                        <Link
+                          href={`/${locale}/projects/${proj.id}`}
+                          className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                        >
+                          <Eye className="w-4 h-4" /> {dict.view_project}
                         </Link>
+                        <Button
+                          onClick={() => window.open(proj.url, "_blank")}
+                          className="bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
+                        >
+                          {dict.visit_site} <ArrowRight className="w-4 h-4" />
+                        </Button>
                       </div>
-                      <div className="p-1.5">
-                        <h3 className="mt-4 text-lg font-semibold text-white">
-                          {displayTitle} {/* Güncellenmiş başlık */}
-                        </h3>
-                        <p className="text-sm text-gray-400 mt-2 line-clamp-3">
-                          {displaySummary} {/* Güncellenmiş özet */}
-                        </p>
+                    </div>
+                  </div>
+                ) : (
+                  // Masaüstü: 3D Card efekti
+                  <CardContainer
+                    className="inter-var"
+                    containerClassName="py-6 scale-95 md:scale-100 transition-transform duration-300"
+                  >
+                    <CardBody className="relative bg-linear-to-b from-zinc-950/50 to-zinc-900/70 border border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                      <CardItem translateZ="140" className="w-full">
+                        <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
+                          <Link href={`/${locale}/projects/${proj.id}`}>
+                            <Image
+                              src={proj.image}
+                              alt={proj.title}
+                              fill
+                              className="object-cover object-center transition-transform duration-500 group-hover/card:brightness-110"
+                            />
+                          </Link>
+                          <div className="absolute inset-0 bg-linear-to-tr from-blue-600/20 via-transparent to-orange-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
+                        </div>
+                      </CardItem>
 
-                        <div className="mt-4 flex justify-between items-center">
+                      <CardItem
+                        translateZ="120"
+                        className="mt-5 text-lg sm:text-xl font-semibold text-white group-hover/card:text-blue-400 transition-colors text-left"
+                      >
+                        {proj.title}
+                      </CardItem>
+
+                      <CardItem
+                        as="p"
+                        translateZ="60"
+                        className="text-sm text-gray-400 mt-2 line-clamp-3 text-left"
+                      >
+                        {proj.summary}
+                      </CardItem>
+
+                      <div className="mt-5 flex justify-between items-center">
+                        <CardItem translateZ={60} as="span">
                           <Link
                             href={`/${locale}/projects/${proj.id}`}
-                            className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                            className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-transform"
                           >
                             <Eye className="w-4 h-4" /> {dict.view_project}
                           </Link>
+                        </CardItem>
+
+                        <CardItem translateZ={40} as="div">
                           <Button
                             onClick={() => window.open(proj.url, "_blank")}
-                            className="bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold"
+                            className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all"
                           >
                             {dict.visit_site} <ArrowRight className="w-4 h-4" />
                           </Button>
-                        </div>
+                        </CardItem>
                       </div>
-                    </div>
-                  ) : (
-                    // Masaüstü: 3D Card efekti
-                    <CardContainer
-                      className="inter-var"
-                      containerClassName="py-6 scale-95 md:scale-100 transition-transform duration-300"
-                    >
-                      <CardBody className="relative bg-linear-to-b from-zinc-950/50 to-zinc-900/70 border border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
-                        <CardItem translateZ="140" className="w-full">
-                          <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
-                            <Link href={`/${locale}/projects/${proj.id}`}>
-                              <Image
-                                src={proj.image}
-                                alt={displayTitle} // Alt metin de güncellendi
-                                fill
-                                className="object-cover object-center transition-transform duration-500 group-hover/card:brightness-110"
-                              />
-                            </Link>
-                            <div className="absolute inset-0 bg-linear-to-tr from-blue-600/20 via-transparent to-orange-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
-                          </div>
-                        </CardItem>
 
-                        <CardItem
-                          translateZ="120"
-                          className="mt-5 text-lg sm:text-xl font-semibold text-white group-hover/card:text-blue-400 transition-colors text-left"
-                        >
-                          {displayTitle} {/* Güncellenmiş başlık */}
-                        </CardItem>
-
-                        <CardItem
-                          as="p"
-                          translateZ="60"
-                          className="text-sm text-gray-400 mt-2 line-clamp-3 text-left"
-                        >
-                          {displaySummary} {/* Güncellenmiş özet */}
-                        </CardItem>
-
-                        <div className="mt-5 flex justify-between items-center">
-                          <CardItem translateZ={60} as="span">
-                            <Link
-                              href={`/${locale}/projects/${proj.id}`}
-                              className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-transform"
-                            >
-                              <Eye className="w-4 h-4" /> {dict.view_project}
-                            </Link>
-                          </CardItem>
-
-                          <CardItem translateZ={40} as="div">
-                            <Button
-                              onClick={() => window.open(proj.url, "_blank")}
-                              className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all"
-                            >
-                              {dict.visit_site}{" "}
-                              <ArrowRight className="w-4 h-4" />
-                            </Button>
-                          </CardItem>
-                        </div>
-
-                        <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-blue-500/20 via-orange-500/20 to-blue-500/20 opacity-0 group-hover/card:opacity-100 blur-[25px] transition-opacity duration-700"></div>
-                      </CardBody>
-                    </CardContainer>
-                  )}
-                </motion.div>
-              );
-            })}
+                      <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-blue-500/20 via-orange-500/20 to-blue-500/20 opacity-0 group-hover/card:opacity-100 blur-[25px] transition-opacity duration-700"></div>
+                    </CardBody>
+                  </CardContainer>
+                )}
+              </motion.div>
+            ))}
           </div>
         )}
       </div>

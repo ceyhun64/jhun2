@@ -19,7 +19,7 @@ export async function POST() {
     path: "/", // tüm pathlerde geçerli
     httpOnly: true, // client JS erişimi yok
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production", // prod’da secure
+    secure: process.env.NODE_ENV === "production", // prod'da secure
   });
 
   return res;

@@ -1,11 +1,14 @@
+// ================================================
 // app/api/projects/[id]/route.ts
+// ================================================
 export const runtime = "nodejs";
 import { NextResponse } from "next/server";
-import prisma from "@/lib/db";
 import type { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import connectDB from "@/lib/mongoose";
+import Project from "@/models/projects";
+import Technology from "@/models/technology";
 
-// Cloudinary config
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -51,31 +54,43 @@ export async function GET(
 ) {
   const { id } = await context.params;
 
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: { technologies: { include: { technology: true } } }, // join ile tech bilgisi
-  });
+  try {
+    await connectDB();
 
-  if (!project)
-    return NextResponse.json({ message: "Proje bulunamadı" }, { status: 404 });
+    // ✅ Teknolojileri populate et
+    const project = await Project.findById(id).populate("technologies").lean();
 
-  // Tüm technology objularını dön
-  const result = {
-    ...project,
-    technologies: project.technologies.map((pt) => {
-      const tech = pt.technology;
-      return {
-        _id: tech.id,
-        name: tech.name,
-        icon: tech.icon,
-        type: tech.type,
-        yoe: tech.yoe,
-        color: tech.color,
-      };
-    }),
-  };
+    if (!project)
+      return NextResponse.json(
+        { message: "Proje bulunamadı" },
+        { status: 404 }
+      );
 
-  return NextResponse.json({ project: result });
+    const result = {
+      ...project,
+      id: project._id.toString(),
+      technologies: Array.isArray(project.technologies)
+        ? project.technologies
+            .map((tech: any) => {
+              if (!tech || !tech._id) return null;
+              return {
+                id: tech._id.toString(),
+                name: tech.name,
+                icon: tech.icon,
+                type: tech.type,
+                yoe: tech.yoe,
+                color: tech.color,
+              };
+            })
+            .filter(Boolean)
+        : [],
+    };
+
+    return NextResponse.json({ project: result });
+  } catch (err) {
+    console.error("Proje getirme hatası:", err);
+    return NextResponse.json({ message: "Proje alınamadı" }, { status: 500 });
+  }
 }
 
 // ------------------------- DELETE -------------------------
@@ -86,23 +101,27 @@ export async function DELETE(
   const { id } = await context.params;
 
   try {
-    const project = await prisma.project.findUnique({ where: { id } });
+    await connectDB();
+
+    const project = await Project.findById(id).lean();
     if (!project)
       return NextResponse.json(
         { message: "Proje bulunamadı" },
         { status: 404 }
       );
 
+    // ✅ ÇOK ÖNEMLİ: İlişkiyi teknolojilerden de temizle
+    await Technology.updateMany({ projects: id }, { $pull: { projects: id } });
+
+    // Cloudinary'den görselleri sil
     await deleteImageFromCloudinary(project.image);
-    for (let i = 1; i <= 5; i++)
+    for (let i = 1; i <= 5; i++) {
       await deleteImageFromCloudinary(
         project[`subImage${i}` as keyof typeof project] as string | null
       );
+    }
 
-    // Join tabloları sil
-    await prisma.projectTechnology.deleteMany({ where: { projectId: id } });
-
-    await prisma.project.delete({ where: { id } });
+    await Project.findByIdAndDelete(id);
     return NextResponse.json({ message: "Proje ve görseller silindi" });
   } catch (err) {
     console.error("Proje Silme Hatası:", err);
@@ -122,9 +141,12 @@ export async function PUT(
   const formData = await req.formData();
 
   const title = formData.get("title") as string;
+  const titleEng = formData.get("titleEng") as string;
   const summary = formData.get("summary") as string;
+  const summaryEng = formData.get("summaryEng") as string;
   const url = formData.get("url") as string;
   const description = formData.get("description") as string;
+  const descriptionEng = formData.get("descriptionEng") as string;
   const demoUrl = (formData.get("demoUrl") || null) as string | null;
   const githubUrl = (formData.get("githubUrl") || null) as string | null;
 
@@ -140,7 +162,12 @@ export async function PUT(
 
   const technologyIds = formData
     .getAll("technologies")
-    .map((t) => t.toString());
+    .map((t) => t.toString())
+    .filter(
+      (id) => id && id !== "undefined" && id !== "null" && id.trim() !== ""
+    );
+
+  console.log("Gelen teknoloji ID'leri:", technologyIds);
 
   if (!title || !summary || !url || !description)
     return NextResponse.json(
@@ -155,12 +182,39 @@ export async function PUT(
     );
 
   try {
-    const project = await prisma.project.findUnique({ where: { id } });
+    await connectDB();
+
+    const project = await Project.findById(id).lean();
     if (!project)
       return NextResponse.json(
         { message: "Proje bulunamadı" },
         { status: 404 }
       );
+
+    // ✅ ÇOK ÖNEMLİ: Eski ve yeni teknolojileri karşılaştır
+    const oldTechIds = project.technologies.map((t: any) => t.toString());
+    const removedTechIds = oldTechIds.filter(
+      (oldId: string) => !technologyIds.includes(oldId)
+    );
+    const addedTechIds = technologyIds.filter(
+      (newId: string) => !oldTechIds.includes(newId)
+    );
+
+    // Kaldırılan teknolojilerden bu projeyi çıkar
+    if (removedTechIds.length > 0) {
+      await Technology.updateMany(
+        { _id: { $in: removedTechIds } },
+        { $pull: { projects: id } }
+      );
+    }
+
+    // Eklenen teknolojilere bu projeyi ekle
+    if (addedTechIds.length > 0) {
+      await Technology.updateMany(
+        { _id: { $in: addedTechIds } },
+        { $addToSet: { projects: id } }
+      );
+    }
 
     // Ana görsel
     let finalImageUrl: string | null = existingImage;
@@ -188,14 +242,17 @@ export async function PUT(
       }
     }
 
-    // 1️⃣ Project update
-    const updatedProject = await prisma.project.update({
-      where: { id },
-      data: {
+    // Project update
+    const updatedProject = await Project.findByIdAndUpdate(
+      id,
+      {
         title,
+        titleEng,
         summary,
+        summaryEng,
         url,
         description,
+        descriptionEng,
         demoUrl,
         githubUrl,
         image: finalImageUrl ?? project.image,
@@ -204,31 +261,27 @@ export async function PUT(
         subImage3: finalSubImages[2],
         subImage4: finalSubImages[3],
         subImage5: finalSubImages[4],
+        technologies: technologyIds.length > 0 ? technologyIds : [],
       },
-    });
+      { new: true }
+    )
+      .populate("technologies")
+      .lean();
 
-    // 2️⃣ Join table: önce sil
-    await prisma.projectTechnology.deleteMany({ where: { projectId: id } });
-
-    // 3️⃣ Yeni ilişkileri ekle (MongoDB için safe)
-    for (const techId of technologyIds) {
-      await prisma.projectTechnology.create({
-        data: { projectId: id, technologyId: techId },
-      });
-    }
-
-    // 4️⃣ Güncel project ve teknolojiler
-    const projectWithTech = await prisma.project.findUnique({
-      where: { id },
-      include: { technologies: { include: { technology: true } } },
-    });
-
-    const result = projectWithTech
+    const result = updatedProject
       ? {
-          ...projectWithTech,
-          technologies: projectWithTech.technologies.map(
-            (pt: { technology: { id: string; name: string } }) => pt.technology
-          ),
+          ...updatedProject,
+          id: updatedProject._id.toString(),
+          technologies: Array.isArray(updatedProject.technologies)
+            ? updatedProject.technologies.map((tech: any) => ({
+                id: tech._id.toString(),
+                name: tech.name,
+                icon: tech.icon,
+                type: tech.type,
+                yoe: tech.yoe,
+                color: tech.color,
+              }))
+            : [],
         }
       : null;
 
@@ -241,4 +294,3 @@ export async function PUT(
     );
   }
 }
-

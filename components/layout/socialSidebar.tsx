@@ -116,7 +116,7 @@ export default function SocialSidebar() {
       >
         {/* Çok yumuşak aura efekti */}
         <motion.span
-          className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400/5 via-blue-600/5 to-transparent blur-[2px]"
+          className="absolute inset-0 rounded-full bg-linear-to-tr from-cyan-400/5 via-blue-600/5 to-transparent blur-[2px]"
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
         />
