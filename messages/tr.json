@@ -158,5 +158,29 @@
       "subtitle": "Sadece birkaç adımda kendi markanı dijitalde öne çıkarabilirsin.",
       "button": "Evet, iletisime geçelim"
     }
+  },
+  "chatbot": {
+    "title": "AI Asistan",
+    "subtitle": "AI Destekli",
+    "online": "Çevrimiçi",
+    "welcomeMessage": "Merhaba! Ben Ceyhun'un Akıllı Asistanıyım! 😁\n\nSizinle her konuşmadan öğreniyor ve gelişiyorum. Web geliştirme projeleri, fiyatlandırma, teknolojiler ve daha fazlası hakkında sorularınızı yanıtlayabilirim.\n\nNasıl yardımcı olabilirim?",
+    "placeholder": "Mesajınızı yazın...",
+    "send": "Gönder",
+    "typing": "Yazıyor...",
+    "error": "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.",
+    "minimize": "Küçült",
+    "close": "Kapat",
+    "aiAssistant": "AI Assistant",
+    "stats": {
+      "title": "Öğrenme İstatistikleri",
+      "learned": "Öğrenilen",
+      "conversations": "Konuşma",
+      "confidence": "Güven",
+      "reset": "Verileri Sıfırla"
+    },
+    "resetConfirm": "Tüm öğrenilmiş veriler silinecek. Emin misiniz?",
+    "resetSuccess": "Veriler sıfırlandı!",
+    "learnedPrefix": "🧠",
+    "similarPrefix": "💡"
   }
 }

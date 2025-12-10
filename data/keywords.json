@@ -1,194 +1,609 @@
 {
-  "price": [
-    "fiyat",
-    "ücret",
-    "maliyet",
-    "kaç para",
-    "ne kadar",
-    "para",
-    "fiyatlandırma",
-    "ücretlendirme",
-    "ortalama fiyat",
-    "bütçe",
-    "pahalı mı",
-    "maliyet hesabı",
-    "fiyat listesi"
-  ],
-  "project": [
-    "proje",
-    "portfolio",
-    "çalışma",
-    "örnek",
-    "yaptığın",
-    "deneyim",
-    "projelerinizi göster",
-    "biten işler",
-    "referans proje",
-    "eski işler",
-    "daha önce ne yaptın"
-  ],
-  "contact": [
-    "iletişim",
-    "mail",
-    "ulaş",
-    "e-posta",
-    "telefon",
-    "ara",
-    "bilgi al",
-    "görüşme",
-    "toplantı",
-    "iletişime geçmek istiyorum",
-    "nasıl ulaşırım",
-    "irtibat"
-  ],
-  "tech": [
-    "teknoloji",
-    "kullan",
-    "skill",
-    "bilgi",
-    "yetenekler",
-    "programlama",
-    "altyapı",
-    "hangi dil",
-    "framework",
-    "database",
-    "kullandığın araçlar",
-    "yazılım",
-    "stack"
-  ],
-  "time": [
-    "süre",
-    "zaman",
-    "ne kadar sürer",
-    "teslim",
-    "deadline",
-    "tamamlama süresi",
-    "teslimat",
-    "bitiş tarihi",
-    "hız",
-    "termin",
-    "ne zaman biter"
-  ],
-  "seo": [
-    "seo",
-    "google",
-    "arama motoru",
-    "optimizasyon",
-    "sıralama",
-    "görünürlük",
-    "arama",
-    "organik trafik",
-    "anahtar kelime",
-    "arama motoru optimizasyonu"
-  ],
-  "hosting": [
-    "hosting",
-    "sunucu",
-    "domain",
-    "alan adı",
-    "barındırma",
-    "server",
-    "ssl",
-    "altyapı",
-    "güvenlik",
-    "site barındırma"
-  ],
-  "design": [
-    "tasarım",
-    "design",
-    "arayüz",
-    "ui",
-    "ux",
-    "görsel",
-    "konsept",
-    "renk",
-    "prototip",
-    "maket",
-    "kullanıcı deneyimi",
-    "tasarım süreci"
-  ],
-  "mobile": [
-    "mobil",
-    "responsive",
-    "telefon",
-    "tablet",
-    "adaptif",
-    "uyumlu",
-    "cep telefonu",
-    "ekran",
-    "mobile uyum",
-    "mobil uyumluluk"
-  ],
-  "maintenance": [
-    "bakım",
-    "güncelleme",
-    "destek",
-    "support",
-    "yardım",
-    "garanti",
-    "sonrası",
-    "teknik destek",
-    "hata",
-    "sürdürme",
-    "aylık destek"
-  ],
-  "reference": [
-    "referans",
-    "müşteri",
-    "kim",
-    "çalıştın",
-    "firma",
-    "önceki işler",
-    "güven",
-    "memnuniyet",
-    "çalıştığım yerler",
-    "kimlerle çalıştın"
-  ],
-  "payment": [
-    "ödeme",
-    "taksit",
-    "avans",
-    "fatura",
-    "nasıl öderim",
-    "ödeme planı",
-    "banka",
-    "sözleşme",
-    "kdv",
-    "peşinat"
-  ],
-  "greeting": [
-    "merhaba",
-    "selam",
-    "hey",
-    "günaydın",
-    "iyi günler",
-    "naber",
-    "hoş geldiniz",
-    "slm",
-    "selamlar"
-  ],
-  "thanks": [
-    "teşekkür",
-    "sağol",
-    "güzel",
-    "harika",
-    "süper",
-    "eline sağlık",
-    "mükemmel",
-    "çok iyi",
-    "tamamdır",
-    "teşekkürler"
-  ],
-  "casual": [
-    "nasılsın",
-    "ne yapıyorsun",
-    "iyi misin",
-    "naber",
-    "durumun nasıl",
-    "selam nasılsın",
-    "günlük soru",
-    "merak ettim"
-  ],
-  "short_question": ["tek kelime", "kısa soru", "netleştir", "detay"],
-  "default": ["başka bir şey", "anlamadım", "ne yapıyorsun", "hakkında"]
+  "tr": {
+    "greeting": [
+      "merhaba",
+      "selam",
+      "hey",
+      "günaydın",
+      "iyi günler",
+      "hoş geldin",
+      "selamlar",
+      "naber",
+      "nasılsın",
+      "merhabalar"
+    ],
+
+    "pricing": [
+      "fiyat",
+      "ücret",
+      "maliyet",
+      "ne kadar",
+      "para",
+      "bütçe",
+      "tutar",
+      "ödeme",
+      "kaç lira",
+      "kaç para",
+      "ücretlendirme",
+      "fiyatlandırma",
+      "teklif",
+      "hesaplama"
+    ],
+
+    "services": [
+      "hizmet",
+      "servis",
+      "ne yapıyorsun",
+      "neler yapabilirsin",
+      "ne sunuyorsun",
+      "hizmetler",
+      "çözüm",
+      "çözümler",
+      "ne tür",
+      "hangi hizmetler"
+    ],
+
+    "portfolio": [
+      "portföy",
+      "proje",
+      "çalışma",
+      "örnek",
+      "projeler",
+      "işler",
+      "örnekler",
+      "referans",
+      "çalışmalar",
+      "tamamlanan",
+      "yaptıkların",
+      "göster"
+    ],
+
+    "contact": [
+      "iletişim",
+      "ulaş",
+      "telefon",
+      "email",
+      "adres",
+      "nasıl ulaşırım",
+      "iletişime geç",
+      "whatsapp",
+      "mail",
+      "mesaj",
+      "ara",
+      "görüş"
+    ],
+
+    "technology": [
+      "teknoloji",
+      "tech stack",
+      "kullandığın",
+      "yazılım",
+      "dil",
+      "framework",
+      "kütüphane",
+      "araç",
+      "programlama",
+      "kod",
+      "hangi teknoloji"
+    ],
+
+    "experience": [
+      "deneyim",
+      "tecrübe",
+      "kaç yıl",
+      "ne zamandan beri",
+      "ne kadar süredir",
+      "başlangıç",
+      "mezun",
+      "kariyer"
+    ],
+
+    "help": [
+      "yardım",
+      "help",
+      "nasıl",
+      "ne yapmalıyım",
+      "destek",
+      "sorun",
+      "problem",
+      "anlamadım",
+      "bilgi"
+    ],
+
+    "ecommerce": [
+      "e-ticaret",
+      "online satış",
+      "mağaza",
+      "shop",
+      "ürün satışı",
+      "sepet",
+      "ödeme sistemi",
+      "kargo",
+      "woocommerce",
+      "shopify"
+    ],
+
+    "corporate": [
+      "kurumsal",
+      "şirket",
+      "firma",
+      "kurum",
+      "kurumsal site",
+      "corporate",
+      "business",
+      "b2b"
+    ],
+
+    "seo": [
+      "seo",
+      "google",
+      "arama motoru",
+      "sıralama",
+      "optimizasyon",
+      "görünürlük",
+      "üst sıra",
+      "ilk sayfa"
+    ],
+
+    "mobile": [
+      "mobil",
+      "responsive",
+      "telefon",
+      "tablet",
+      "uyumlu",
+      "mobile",
+      "app",
+      "uygulama"
+    ],
+
+    "maintenance": [
+      "bakım",
+      "güncelleme",
+      "destek",
+      "maintenance",
+      "yönetim",
+      "hosting",
+      "sunucu",
+      "domain"
+    ],
+
+    "design": [
+      "tasarım",
+      "dizayn",
+      "design",
+      "arayüz",
+      "ui",
+      "ux",
+      "görsel",
+      "modern",
+      "tema"
+    ],
+
+    "speed": [
+      "hız",
+      "performans",
+      "yavaş",
+      "hızlı",
+      "optimize",
+      "yükleme",
+      "speed",
+      "performance"
+    ],
+
+    "security": [
+      "güvenlik",
+      "security",
+      "ssl",
+      "güvenli",
+      "koruma",
+      "siber",
+      "hack",
+      "şifre"
+    ],
+
+    "cms": [
+      "cms",
+      "yönetim paneli",
+      "admin",
+      "içerik",
+      "düzenleme",
+      "wordpress",
+      "editör"
+    ],
+
+    "api": [
+      "api",
+      "entegrasyon",
+      "bağlantı",
+      "integration",
+      "üçüncü parti",
+      "harici"
+    ],
+
+    "database": [
+      "veritabanı",
+      "database",
+      "veri",
+      "kayıt",
+      "storage",
+      "depolama"
+    ],
+
+    "timeline": [
+      "süre",
+      "zaman",
+      "ne kadar sürer",
+      "deadline",
+      "teslim",
+      "termin",
+      "kaç gün",
+      "kaç hafta"
+    ],
+
+    "payment": [
+      "ödeme",
+      "kredi kartı",
+      "paypal",
+      "stripe",
+      "banka",
+      "taksit",
+      "nakit",
+      "havale"
+    ],
+
+    "languages": [
+      "dil",
+      "language",
+      "çoklu dil",
+      "türkçe",
+      "ingilizce",
+      "çeviri",
+      "i18n"
+    ],
+
+    "hosting": [
+      "hosting",
+      "sunucu",
+      "server",
+      "barındırma",
+      "alan adı",
+      "domain"
+    ],
+
+    "revision": [
+      "revizyon",
+      "değişiklik",
+      "düzeltme",
+      "revision",
+      "değiştir",
+      "güncelle"
+    ],
+
+    "contract": ["sözleşme", "kontrat", "anlaşma", "contract", "agreement"],
+
+    "meeting": [
+      "görüşme",
+      "toplantı",
+      "meeting",
+      "randevu",
+      "görüşelim",
+      "buluşalım"
+    ],
+
+    "process": ["süreç", "process", "aşama", "nasıl çalışır", "adım", "flow"],
+
+    "team": ["ekip", "team", "çalışan", "personel", "kim", "kimsin"],
+
+    "location": ["konum", "nerede", "location", "şehir", "adres", "ofis"],
+
+    "social": [
+      "sosyal medya",
+      "instagram",
+      "facebook",
+      "linkedin",
+      "twitter",
+      "youtube"
+    ],
+
+    "blog": ["blog", "makale", "article", "yazı", "içerik", "content"],
+
+    "analytics": [
+      "analitik",
+      "analytics",
+      "istatistik",
+      "rapor",
+      "veri analizi",
+      "metrik"
+    ],
+
+    "accessibility": ["erişilebilirlik", "accessibility", "engelli", "a11y"],
+
+    "legal": [
+      "yasal",
+      "legal",
+      "kvkk",
+      "gdpr",
+      "gizlilik",
+      "kullanım şartları"
+    ],
+
+    "testimonial": [
+      "referans",
+      "müşteri yorumu",
+      "testimonial",
+      "yorum",
+      "geri bildirim"
+    ],
+
+    "consultation": ["danışmanlık", "consultation", "fikir", "öneri", "tavsiye"]
+  },
+
+  "en": {
+    "greeting": [
+      "hello",
+      "hi",
+      "hey",
+      "good morning",
+      "good day",
+      "greetings",
+      "howdy",
+      "what's up",
+      "how are you"
+    ],
+
+    "pricing": [
+      "price",
+      "cost",
+      "how much",
+      "money",
+      "budget",
+      "rate",
+      "payment",
+      "pricing",
+      "quote",
+      "estimate",
+      "fees"
+    ],
+
+    "services": [
+      "service",
+      "what do you do",
+      "what can you do",
+      "offerings",
+      "solutions",
+      "what services",
+      "provide"
+    ],
+
+    "portfolio": [
+      "portfolio",
+      "project",
+      "work",
+      "example",
+      "projects",
+      "works",
+      "samples",
+      "reference",
+      "showcase",
+      "completed"
+    ],
+
+    "contact": [
+      "contact",
+      "reach",
+      "phone",
+      "email",
+      "address",
+      "how to reach",
+      "message",
+      "call",
+      "whatsapp",
+      "mail"
+    ],
+
+    "technology": [
+      "technology",
+      "tech stack",
+      "what you use",
+      "software",
+      "language",
+      "framework",
+      "library",
+      "tools",
+      "programming",
+      "code"
+    ],
+
+    "experience": [
+      "experience",
+      "how many years",
+      "since when",
+      "career",
+      "background",
+      "expertise"
+    ],
+
+    "help": [
+      "help",
+      "how",
+      "what should i do",
+      "support",
+      "issue",
+      "problem",
+      "don't understand",
+      "info"
+    ],
+
+    "ecommerce": [
+      "ecommerce",
+      "online store",
+      "shop",
+      "selling products",
+      "cart",
+      "payment system",
+      "shipping",
+      "woocommerce",
+      "shopify"
+    ],
+
+    "corporate": [
+      "corporate",
+      "company",
+      "business",
+      "firm",
+      "enterprise",
+      "b2b"
+    ],
+
+    "seo": [
+      "seo",
+      "google",
+      "search engine",
+      "ranking",
+      "optimization",
+      "visibility",
+      "first page"
+    ],
+
+    "mobile": [
+      "mobile",
+      "responsive",
+      "phone",
+      "tablet",
+      "compatible",
+      "app",
+      "application"
+    ],
+
+    "maintenance": [
+      "maintenance",
+      "update",
+      "support",
+      "management",
+      "hosting",
+      "server",
+      "domain"
+    ],
+
+    "design": [
+      "design",
+      "interface",
+      "ui",
+      "ux",
+      "visual",
+      "modern",
+      "theme",
+      "layout"
+    ],
+
+    "speed": [
+      "speed",
+      "performance",
+      "slow",
+      "fast",
+      "optimize",
+      "loading",
+      "quick"
+    ],
+
+    "security": [
+      "security",
+      "ssl",
+      "secure",
+      "protection",
+      "cyber",
+      "hack",
+      "password",
+      "safe"
+    ],
+
+    "cms": [
+      "cms",
+      "admin panel",
+      "content management",
+      "editing",
+      "wordpress",
+      "editor"
+    ],
+
+    "api": ["api", "integration", "connection", "third party", "external"],
+
+    "database": ["database", "data", "records", "storage", "sql"],
+
+    "timeline": [
+      "timeline",
+      "duration",
+      "how long",
+      "deadline",
+      "delivery",
+      "days",
+      "weeks"
+    ],
+
+    "payment": [
+      "payment",
+      "credit card",
+      "paypal",
+      "stripe",
+      "bank",
+      "installment",
+      "transfer"
+    ],
+
+    "languages": [
+      "language",
+      "multilingual",
+      "translation",
+      "english",
+      "turkish",
+      "i18n"
+    ],
+
+    "hosting": ["hosting", "server", "domain", "web hosting"],
+
+    "revision": ["revision", "change", "modification", "update", "edit"],
+
+    "contract": ["contract", "agreement", "terms"],
+
+    "meeting": [
+      "meeting",
+      "appointment",
+      "schedule",
+      "let's meet",
+      "discussion"
+    ],
+
+    "process": ["process", "workflow", "steps", "how it works", "procedure"],
+
+    "team": ["team", "staff", "who", "who are you", "people"],
+
+    "location": ["location", "where", "city", "address", "office"],
+
+    "social": [
+      "social media",
+      "instagram",
+      "facebook",
+      "linkedin",
+      "twitter",
+      "youtube"
+    ],
+
+    "blog": ["blog", "article", "post", "content", "writing"],
+
+    "analytics": [
+      "analytics",
+      "statistics",
+      "report",
+      "metrics",
+      "data analysis"
+    ],
+
+    "accessibility": ["accessibility", "a11y", "disabled"],
+
+    "legal": ["legal", "privacy", "gdpr", "terms", "policy"],
+
+    "testimonial": ["testimonial", "review", "feedback", "client review"],
+
+    "consultation": ["consultation", "advice", "suggestion", "recommendation"]
+  }
 }

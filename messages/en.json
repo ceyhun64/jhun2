@@ -163,5 +163,25 @@
       "subtitle": "You can highlight your brand online in just a few steps.",
       "button": "Yes, let’s get in touch"
     }
+  },
+  "chatbot": {
+    "title": "Smart Assistant",
+    "subtitle": "AI Powered",
+    "welcomeMessage": "Hello! I'm Ceyhun's Smart Assistant! 😁\n\nI learn and improve from every conversation with you. I can answer your questions about web development projects, pricing, technologies and more.\n\nHow can I help you?",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "typing": "Typing...",
+    "error": "Sorry, an error occurred. Please try again.",
+    "stats": {
+      "title": "Learning Statistics",
+      "learned": "Learned",
+      "conversations": "Conversations",
+      "confidence": "Confidence",
+      "reset": "Reset Data"
+    },
+    "resetConfirm": "All learned data will be deleted. Are you sure?",
+    "resetSuccess": "Data has been reset!",
+    "learnedPrefix": "🧠",
+    "similarPrefix": "💡"
   }
 }

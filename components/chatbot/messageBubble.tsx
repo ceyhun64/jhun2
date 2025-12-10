@@ -1,12 +1,27 @@
 "use client";
-// Types
+import { useParams } from "next/navigation";
+
 interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
 }
 
-export default function MessageBubble({ message }: { message: Message }) {
+interface MessageBubbleProps {
+  message: Message;
+}
+
+export default function MessageBubble({ message }: MessageBubbleProps) {
+  const params = useParams();
+  const locale = (params?.locale as string) || "tr";
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString(locale === "tr" ? "tr-TR" : "en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <div
       className={`flex ${
@@ -24,10 +39,7 @@ export default function MessageBubble({ message }: { message: Message }) {
           {message.content}
         </p>
         <span className="text-xs opacity-70 mt-1 block">
-          {message.timestamp.toLocaleTimeString("tr-TR", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+          {formatTime(message.timestamp)}
         </span>
       </div>
     </div>
