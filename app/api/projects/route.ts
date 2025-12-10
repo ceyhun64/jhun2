@@ -47,7 +47,6 @@ export async function GET(request: NextRequest) {
       .populate("technologies")
       .lean();
 
-    console.log("Projeler:", projects);
 
     const transformedProjects: ProjectWithTech[] = projects.map(
       (project: any) => ({
@@ -105,7 +104,6 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const formData = await request.formData();
-    console.log("formData:", formData);
 
     const title = formData.get("title") as string;
     const titleEng = formData.get("titleEng") as string;

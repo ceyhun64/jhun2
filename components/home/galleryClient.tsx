@@ -109,7 +109,6 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
         );
         if (!res.ok) throw new Error("Fetch failed");
         const data = await res.json();
-        console.log("Projects fetch data:", data);
         setItems(data.projects || []);
       } catch (error) {
         console.error("Projects fetch error:", error);

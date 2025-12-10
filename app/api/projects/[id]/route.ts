@@ -167,7 +167,6 @@ export async function PUT(
       (id) => id && id !== "undefined" && id !== "null" && id.trim() !== ""
     );
 
-  console.log("Gelen teknoloji ID'leri:", technologyIds);
 
   if (!title || !summary || !url || !description)
     return NextResponse.json(
