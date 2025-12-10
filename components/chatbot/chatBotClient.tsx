@@ -44,27 +44,38 @@ interface PortfolioChatbotProps {
   messages: any;
 }
 
-export const getContextualResponse = (userInput: string, locale: string): string => {
+export const getContextualResponse = (
+  userInput: string,
+  locale: string
+): string => {
   const input = userInput.toLowerCase();
-  
+
   // Locale'e göre keywords ve responses yükle
-  const localeKeywords = keywords[locale as keyof typeof keywords] || keywords.tr;
-  const localeResponses = responses[locale as keyof typeof responses] || responses.tr;
+  const localeKeywords =
+    keywords[locale as keyof typeof keywords] || keywords.tr;
+  const localeResponses =
+    responses[locale as keyof typeof responses] || responses.tr;
 
   // Anahtar kelime eşleştirme
   for (const [category, words] of Object.entries(localeKeywords)) {
     if (words.some((word: string) => input.includes(word))) {
-      return localeResponses[category as keyof typeof localeResponses];
+      const response =
+        localeResponses[category as keyof typeof localeResponses];
+      if (response) return response as string;
     }
   }
 
-  // Kısa soru kontrolü
+  // Kısa soru kontrolü - güvenli erişim
   if (input.length < 15) {
-    return localeResponses.short_question;
+    const shortQuestion = (localeResponses as any).short_question;
+    if (shortQuestion) return shortQuestion;
+    // short_question yoksa default'a düş
   }
 
   // Varsayılan yanıt
-  return localeResponses.default;
+  return (
+    (localeResponses as any).default || "Daha fazla bilgi verebilir misiniz?"
+  );
 };
 
 export default function ChatBotClient({
