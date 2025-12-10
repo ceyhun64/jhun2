@@ -1,7 +1,8 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import prisma from "./db";
-import bcrypt from "bcrypt"; // bcrypt yerine bcryptjs kullanmak genelde daha sorunsuzdur
+import connectDB from "@/lib/mongoose";
+import Admin from "@/models/admin"; // Admin modelinizi import edin
+import bcrypt from "bcrypt";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -16,10 +17,11 @@ export const authOptions: AuthOptions = {
           throw new Error("Email ve şifre gereklidir.");
         }
 
-        // 🔍 Admin tablosundan kullanıcıyı bul
-        const admin = await prisma.admin.findUnique({
-          where: { email: credentials.email },
-        });
+        // 🔌 MongoDB'ye bağlan
+        await connectDB();
+
+        // 🔍 Admin modelinden kullanıcıyı bul
+        const admin = await Admin.findOne({ email: credentials.email });
 
         if (!admin) {
           throw new Error("Admin bulunamadı.");
@@ -34,9 +36,9 @@ export const authOptions: AuthOptions = {
           throw new Error("Geçersiz şifre.");
         }
 
-        // Giriş başarılı → session’a dönecek veri
+        // Giriş başarılı → session'a dönecek veri
         return {
-          id: admin.id.toString(),
+          id: admin._id.toString(), // Mongoose'da _id kullanılır
           name: admin.name,
           surname: admin.surname,
           email: admin.email,
@@ -66,10 +68,10 @@ export const authOptions: AuthOptions = {
 
     async session({ session, token }) {
       session.user = {
-        id: token.id,
-        name: token.name,
-        surname: token.surname,
-        email: token.email,
+        id: token.id as string,
+        name: token.name as string,
+        surname: token.surname as string,
+        email: token.email as string,
       };
       return session;
     },

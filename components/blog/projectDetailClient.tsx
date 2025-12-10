@@ -20,7 +20,6 @@ type Props = {
   dict: any;
 };
 
-// API'dan gelecek proje yapısını tanımlayalım (Prisma modeline uygun olmalı)
 interface Project {
   id: string;
   title: string;
