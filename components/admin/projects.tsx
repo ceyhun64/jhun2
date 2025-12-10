@@ -51,11 +51,15 @@ export default function Projects() {
   const isMobile = useIsMobile();
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
-  const [modalProject, setModalProject] = useState<string | null>(null);
+  const [modalProjectId, setModalProjectId] = useState<string | null>(null);
+  const [modalProjectData, setModalProjectData] = useState<Project | null>(
+    null
+  );
   const [projectToEdit, setProjectToEdit] = useState<Project | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [modalLoading, setModalLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
 
@@ -74,9 +78,33 @@ export default function Projects() {
     }
   }, []);
 
+  const fetchProjectDetail = useCallback(async (id: string) => {
+    try {
+      setModalLoading(true);
+      const res = await fetch(`/api/projects/${id}`);
+      if (!res.ok) throw new Error("Proje detayı alınamadı.");
+      const data = await res.json();
+      setModalProjectData(data.project);
+    } catch (err) {
+      console.error("Proje detayı alınamadı:", err);
+      toast.error("Proje detayı yüklenirken bir sorun oluştu.");
+      closeDetailModal();
+    } finally {
+      setModalLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+
+  useEffect(() => {
+    if (modalProjectId) {
+      fetchProjectDetail(modalProjectId);
+    } else {
+      setModalProjectData(null);
+    }
+  }, [modalProjectId, fetchProjectDetail]);
 
   const handleCheckboxChange = (id: string) => {
     setSelectedProjects((prev) =>
@@ -92,8 +120,14 @@ export default function Projects() {
     }
   };
 
-  const openDetailModal = (id: string) => setModalProject(id);
-  const closeDetailModal = () => setModalProject(null);
+  const openDetailModal = (id: string) => {
+    setModalProjectId(id);
+  };
+
+  const closeDetailModal = () => {
+    setModalProjectId(null);
+    setModalProjectData(null);
+  };
 
   const openEditModal = (project: Project) => {
     setProjectToEdit(project);
@@ -151,8 +185,6 @@ export default function Projects() {
       </div>
     );
   }
-
-  const currentProject = projects.find((p) => p.id === modalProject) || null;
 
   return (
     <>
@@ -280,9 +312,10 @@ export default function Projects() {
         </main>
 
         <ProjectModal
-          isOpen={!!modalProject}
+          isOpen={!!modalProjectId}
           onClose={closeDetailModal}
-          project={currentProject}
+          project={modalProjectData}
+          loading={modalLoading}
         />
       </div>
 

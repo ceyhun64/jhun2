@@ -190,7 +190,9 @@ export default function AddProjectsModal({
           projectToEdit.subImage4,
           projectToEdit.subImage5,
         ]);
-        setTechnologies(projectToEdit.technologies.map((t) => t.id));
+        // ✅ id kullan
+        const techIds = projectToEdit.technologies.map((t) => t.id);
+        setTechnologies([...techIds]);
       } else {
         setForm(initialFormState);
         setExistingImage(null);
@@ -206,7 +208,16 @@ export default function AddProjectsModal({
     fetch("/api/technology")
       .then((res) => res.json())
       .then((data) => {
-        setTechOptions(data.technologies || []);
+        // ✅ API'den gelen teknolojileri transform et
+        const transformedTechs = (data.technologies || []).map((tech: any) => ({
+          id: tech.id || tech._id,
+          name: tech.name,
+          icon: tech.icon,
+          type: tech.type,
+          yoe: tech.yoe,
+          color: tech.color,
+        }));
+        setTechOptions(transformedTechs);
       })
       .catch((err) => console.error("Teknolojiler yüklenemedi:", err));
   }, []);
@@ -255,9 +266,12 @@ export default function AddProjectsModal({
   );
 
   const handleTechnologyToggle = (id: string) => {
-    setTechnologies((prev) =>
-      prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]
-    );
+    setTechnologies((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((techId) => techId !== id);
+      }
+      return [...prev, id];
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -297,6 +311,7 @@ export default function AddProjectsModal({
         (img, idx) => img && formData.append(`subImage${idx + 1}`, img)
       );
 
+      // ✅ id kullan
       const apiUrl = isEditing
         ? `/api/projects/${projectToEdit!.id}`
         : "/api/projects";
@@ -422,6 +437,39 @@ export default function AddProjectsModal({
 
           <div>
             <Label className="text-lg font-semibold mb-2 block">
+              Teknolojiler
+            </Label>
+            <p className="text-xs text-neutral-400 mb-3">
+              Seçmek istediğiniz teknolojilere tek tek tıklayın.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {techOptions.map((tech) => {
+                const isSelected = technologies.includes(tech.id);
+                return (
+                  <button
+                    key={tech.id}
+                    type="button"
+                    onClick={() => handleTechnologyToggle(tech.id)}
+                    className={`px-4 py-2 rounded-full border text-sm font-medium transition-all ${
+                      isSelected
+                        ? "bg-blue-600 border-blue-500 hover:bg-blue-700"
+                        : "bg-neutral-800 border-neutral-700 hover:bg-neutral-700"
+                    }`}
+                  >
+                    {tech.name}
+                  </button>
+                );
+              })}
+            </div>
+            {technologies.length > 0 && (
+              <p className="text-xs text-green-400 mt-2">
+                {technologies.length} teknoloji seçildi
+              </p>
+            )}
+          </div>
+
+          <div>
+            <Label className="text-lg font-semibold mb-2 block">
               Görseller
             </Label>
             <p className="text-xs text-neutral-400 mb-3">
@@ -455,33 +503,10 @@ export default function AddProjectsModal({
             </div>
           </div>
 
-          <div>
-            <Label className="text-lg font-semibold mb-2 block">
-              Teknolojiler
-            </Label>
-            <div className="flex flex-wrap gap-2">
-              {techOptions.map((tech) => (
-                <button
-                  key={tech.id}
-                  type="button"
-                  onClick={() => handleTechnologyToggle(tech.id)}
-                  className={`px-4 py-2 rounded-full border text-sm font-medium transition-all ${
-                    technologies.includes(tech.id)
-                      ? "bg-blue-600 border-blue-500 hover:bg-blue-700"
-                      : "bg-neutral-800 border-neutral-700 hover:bg-neutral-700"
-                  }`}
-                >
-                  {tech.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div className="flex justify-end gap-3 pt-4 border-t border-neutral-800">
             <DialogClose asChild>
               <Button
                 type="button"
-                variant="outline"
                 className="border-neutral-700 hover:bg-neutral-800"
               >
                 İptal
