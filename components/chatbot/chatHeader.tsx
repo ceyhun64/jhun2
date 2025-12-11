@@ -36,7 +36,7 @@ export default function ChatHeader({
           <div className="relative">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
               <Image
-                src="/chatbot/assistan.webp"
+                src="/chatbot/assistant.webp"
                 alt="jhunTech"
                 width={40}
                 height={40}

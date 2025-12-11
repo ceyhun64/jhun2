@@ -160,7 +160,7 @@
     }
   },
   "chatbot": {
-    "title": "AI Asistan",
+    "title": "Akıllı Asistan",
     "subtitle": "AI Destekli",
     "online": "Çevrimiçi",
     "welcomeMessage": "Merhaba! Ben Ceyhun'un Akıllı Asistanıyım! 😁\n\nSizinle her konuşmadan öğreniyor ve gelişiyorum. Web geliştirme projeleri, fiyatlandırma, teknolojiler ve daha fazlası hakkında sorularınızı yanıtlayabilirim.\n\nNasıl yardımcı olabilirim?",
