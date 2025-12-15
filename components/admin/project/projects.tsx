@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import Sidebar from "./sidebar";
+import Sidebar from "../sidebar";
 import ProjectModal from "./projectModal";
 import AddProjectsModal from "./addProjectModal";
 import { Button } from "@/components/ui/button";

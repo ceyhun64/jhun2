@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
-import Sidebar from "./sidebar";
+import Sidebar from "../sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Image from "next/image";
 

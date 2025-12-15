@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
-import Contact from "@/components/contact/contact";
+import Blog from "@/components/blog/blogs";
 
 type Props = {
   params: { locale: "tr" | "en" };
@@ -12,9 +12,9 @@ export default async function BlogPage({ params }: Props) {
     <div className="bg-black">
       <Navbar locale={locale} />
       <div className="py-15">
-        <Contact locale={locale} />
+        <Blog locale={locale} />
       </div>
-      <Footer locale={locale}  />
+      <Footer locale={locale} />
     </div>
   );
 }

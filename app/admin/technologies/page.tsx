@@ -1,4 +1,4 @@
-import Technology from "@/components/admin/technology";
+import Technology from "@/components/admin/technology/technology";
 
 export default function AdminTechnologies() {
   return (

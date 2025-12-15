@@ -1,5 +1,5 @@
 import Navbar from "@/components/layout/navbar";
-import ProjectDetail from "@/components/projects/projectDetail";
+import BlogDetail from "@/components/blog/blogDetail";
 import Footer from "@/components/layout/footer";
 
 type Props = {
@@ -11,7 +11,7 @@ export default async function BlogDetailPage({ params }: Props) {
   return (
     <div className="bg-black">
       <Navbar locale={locale} />
-      <ProjectDetail locale={locale} />
+      <BlogDetail locale={locale} />
       <Footer locale={locale} />
     </div>
   );

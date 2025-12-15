@@ -1,4 +1,4 @@
-// models/Blog.ts
+// models/blog.ts
 import mongoose, { Schema, Document, models } from 'mongoose';
 
 export interface IBlog extends Document {

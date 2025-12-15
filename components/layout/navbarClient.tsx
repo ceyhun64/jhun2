@@ -19,6 +19,7 @@ type NavbarClientProps = {
     projects: string;
     about: string;
     contact: string;
+    blogs: string;
   };
 };
 
@@ -34,6 +35,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
     { name: dict.projects, href: "projects" },
     { name: dict.about, href: "about" },
     { name: dict.contact, href: "contact" },
+    { name: dict.blogs, href: "blog" },
   ];
 
   useEffect(() => {

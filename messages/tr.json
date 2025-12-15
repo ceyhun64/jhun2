@@ -2,7 +2,8 @@
   "navbar": {
     "projects": "Projelerimiz",
     "about": "Biz Kimiz",
-    "contact": "Iletisime Geçin"
+    "contact": "Iletisime Geçin",
+    "blogs": "Blog"
   },
   "heroes": {
     "badge": ".jhun",
@@ -182,5 +183,36 @@
     "resetSuccess": "Veriler sıfırlandı!",
     "learnedPrefix": "🧠",
     "similarPrefix": "💡"
+  },
+
+  "blogs": {
+    "header": {
+      "title": "Teknoloji Yazıları & Hikayeler",
+      "subtitle": "Kıdemli Yazılım Geliştirici & Teknik Yazar",
+      "description": "React, TypeScript ve ölçeklenebilir web uygulamaları geliştirme hakkında yazıyorum. Karmaşık konuları anlaşılır hale getirmeyi ve geliştiricilerin pratik eğitimler ve derinlemesine içeriklerle becerilerini geliştirmelerine yardımcı olmayı seviyorum.",
+      "articlesLabel": "Makale",
+      "viewsLabel": "Toplam Görüntülenme",
+      "followersLabel": "Takipçi",
+      "joined": "Katılım",
+      "activeLabel": "Aktif yazar"
+    },
+    "tabs": {
+      "all": "Tüm Makaleler",
+      "popular": "En Popüler",
+      "recent": "Son Yazılar"
+    },
+    "searchPlaceholder": "Makalelerde ara...",
+    "readMore": "Devamını oku",
+    "viewsCount": "görüntülenme",
+    "minRead": "dk okuma",
+    "empty": "Henüz blog yazısı yok. Yakında tekrar kontrol edin!",
+    "noResults": "Aramanızla eşleşen makale bulunamadı.",
+    "error": "Makaleler yüklenirken hata oluştu. Lütfen tekrar deneyin.",
+    "loading": "Makaleler yükleniyor...",
+    "cta": {
+      "title": "İşbirliği Yapmak İster Misiniz?",
+      "text": "İlginç projelere ve konuşmalara her zaman açığım. Birlikte harika bir şeyler yaratالım.",
+      "button": "İletişime Geç"
+    }
   }
 }

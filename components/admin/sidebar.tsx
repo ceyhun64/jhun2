@@ -35,6 +35,12 @@ export default function AdminSidebar(): React.ReactElement {
       icon: Package, // Paket simgesi, projeler listesi için uygun
       href: "/admin/technologies",
     },
+    {
+      id: "blogs",
+      label: "Bloglar",
+      icon: Package, // Paket simgesi, projeler listesi için uygun
+      href: "/admin/blogs",
+    },
   ];
 
   const active =

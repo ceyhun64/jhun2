@@ -2,7 +2,8 @@
   "navbar": {
     "projects": "Projects",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "blogs": "Blog"
   },
   "heroes": {
     "badge": ".jhun",
@@ -183,5 +184,36 @@
     "resetSuccess": "Data has been reset!",
     "learnedPrefix": "🧠",
     "similarPrefix": "💡"
+  },
+
+  "blogs": {
+    "header": {
+      "title": "Tech Insights & Stories",
+      "subtitle": "Senior Software Engineer & Technical Writer",
+      "description": "I write about React, TypeScript, and building scalable web applications. Previously at Stripe and Vercel. I love making complex topics accessible and helping developers level up their skills through practical tutorials and deep-dives.",
+      "articlesLabel": "Articles",
+      "viewsLabel": "Total Views",
+      "followersLabel": "Followers",
+      "joined": "Joined",
+      "activeLabel": "Active writer"
+    },
+    "tabs": {
+      "all": "All Articles",
+      "popular": "Most Popular",
+      "recent": "Recent Posts"
+    },
+    "searchPlaceholder": "Search articles...",
+    "readMore": "Read more",
+    "viewsCount": "views",
+    "minRead": "min read",
+    "empty": "No blog posts yet. Check back soon!",
+    "noResults": "No articles found matching your search.",
+    "error": "Failed to load articles. Please try again.",
+    "loading": "Loading articles...",
+    "cta": {
+      "title": "Want to Collaborate?",
+      "text": "I'm always open to interesting projects and conversations. Let's create something amazing together.",
+      "button": "Get in Touch"
+    }
   }
 }

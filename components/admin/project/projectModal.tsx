@@ -3,7 +3,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, Github, X, Loader2 } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
