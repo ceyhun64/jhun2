@@ -164,22 +164,22 @@
     "title": "Akıllı Asistan",
     "subtitle": "AI Destekli",
     "online": "Çevrimiçi",
-    "welcomeMessage": "Merhaba! Ben Ceyhun'un Akıllı Asistanıyım! 😁\n\nSizinle her konuşmadan öğreniyor ve gelişiyorum. Web geliştirme projeleri, fiyatlandırma, teknolojiler ve daha fazlası hakkında sorularınızı yanıtlayabilirim.\n\nNasıl yardımcı olabilirim?",
+    "welcomeMessage": "Merhaba! Ben Ceyhun'un Akıllı Asistanıyım! 😁\n\nSizinle her konusmadan ögreniyor ve gelisiyorum. Web gelistirme projeleri, fiyatlandırma, teknolojiler ve daha fazlası hakkında sorularınızı yanıtlayabilirim.\n\nNasıl yardımcı olabilirim?",
     "placeholder": "Mesajınızı yazın...",
     "send": "Gönder",
     "typing": "Yazıyor...",
-    "error": "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.",
+    "error": "Üzgünüm, bir hata olustu. Lütfen tekrar deneyin.",
     "minimize": "Küçült",
     "close": "Kapat",
     "aiAssistant": "AI Assistant",
     "stats": {
-      "title": "Öğrenme İstatistikleri",
-      "learned": "Öğrenilen",
-      "conversations": "Konuşma",
+      "title": "Ögrenme Istatistikleri",
+      "learned": "Ögrenilen",
+      "conversations": "Konusma",
       "confidence": "Güven",
       "reset": "Verileri Sıfırla"
     },
-    "resetConfirm": "Tüm öğrenilmiş veriler silinecek. Emin misiniz?",
+    "resetConfirm": "Tüm ögrenilmis veriler silinecek. Emin misiniz?",
     "resetSuccess": "Veriler sıfırlandı!",
     "learnedPrefix": "🧠",
     "similarPrefix": "💡"
@@ -188,8 +188,8 @@
   "blogs": {
     "header": {
       "title": "Teknoloji Yazıları & Hikayeler",
-      "subtitle": "Kıdemli Yazılım Geliştirici & Teknik Yazar",
-      "description": "React, TypeScript ve ölçeklenebilir web uygulamaları geliştirme hakkında yazıyorum. Karmaşık konuları anlaşılır hale getirmeyi ve geliştiricilerin pratik eğitimler ve derinlemesine içeriklerle becerilerini geliştirmelerine yardımcı olmayı seviyorum.",
+      "subtitle": "Yazılım Gelistirici & Teknik Yazar",
+      "description": "React, TypeScript ve ölçeklenebilir web uygulamaları gelistirme hakkında yazıyorum. Karmasık konuları anlasılır hale getirmeyi ve gelistiricilerin pratik egitimler ve derinlemesine içeriklerle becerilerini gelistirmelerine yardımcı olmayı seviyorum.",
       "articlesLabel": "Makale",
       "viewsLabel": "Toplam Görüntülenme",
       "followersLabel": "Takipçi",
@@ -206,13 +206,13 @@
     "viewsCount": "görüntülenme",
     "minRead": "dk okuma",
     "empty": "Henüz blog yazısı yok. Yakında tekrar kontrol edin!",
-    "noResults": "Aramanızla eşleşen makale bulunamadı.",
-    "error": "Makaleler yüklenirken hata oluştu. Lütfen tekrar deneyin.",
+    "noResults": "Aramanızla eslesen makale bulunamadı.",
+    "error": "Makaleler yüklenirken hata olustu. Lütfen tekrar deneyin.",
     "loading": "Makaleler yükleniyor...",
     "cta": {
-      "title": "İşbirliği Yapmak İster Misiniz?",
-      "text": "İlginç projelere ve konuşmalara her zaman açığım. Birlikte harika bir şeyler yaratالım.",
-      "button": "İletişime Geç"
+      "title": "Isbirligi Yapmak Ister Misiniz",
+      "text": "Ilginç projelere ve konusmalara her zaman açıgım. Birlikte harika bir seyler yaratalım.",
+      "button": "Iletisime Geç"
     }
   }
 }

@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, Bot, Calendar } from "lucide-react";
+import {
+  ArrowRight,
+  Bot,
+  Calendar,
+  Clock,
+  Share2,
+  ChevronLeft,
+} from "lucide-react";
 import { GradientText } from "@/components/ui/shadcn-io/gradient-text";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { Skeleton } from "../ui/skeleton";
@@ -24,43 +31,20 @@ interface Blog {
   summaryEng: string | null;
   description: string;
   descriptionEng: string | null;
-  url: string;
   image: string;
   createdAt: string;
-  updatedAt: string;
 }
 
-// Blog Detail Skeleton Bileşeni
-const BlogDetailSkeleton = ({ dict }: { dict: any }) => (
-  <div className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col gap-12 relative overflow-hidden">
-    {/* Ana Görsel İskeleti */}
-    <Skeleton className="relative w-full aspect-video lg:aspect-[21/9] rounded-xl bg-zinc-800" />
-
-    {/* İçerik İskeleti */}
-    <div className="flex flex-col gap-6">
-      {/* Başlık İskeleti */}
-      <Skeleton className="h-12 w-3/4 md:w-4/5 rounded-lg bg-amber-300/50" />
-
-      {/* Tarih İskeleti */}
-      <Skeleton className="h-5 w-48 rounded bg-zinc-700" />
-
-      {/* Alt Çizgi İskeleti */}
-      <Skeleton className="h-1 w-24 rounded-full bg-blue-500/50 mt-2" />
-
-      {/* Özet İskeleti */}
-      <div className="space-y-2">
-        <Skeleton className="h-5 w-full rounded bg-zinc-700" />
-        <Skeleton className="h-5 w-11/12 rounded bg-zinc-700" />
-      </div>
-
-      {/* Açıklama İskeleti */}
-      <div className="space-y-2 mt-4">
-        <Skeleton className="h-4 w-full rounded bg-zinc-800" />
-        <Skeleton className="h-4 w-10/12 rounded bg-zinc-800" />
-        <Skeleton className="h-4 w-full rounded bg-zinc-800" />
-        <Skeleton className="h-4 w-8/12 rounded bg-zinc-800" />
-        <Skeleton className="h-4 w-full rounded bg-zinc-800" />
-        <Skeleton className="h-4 w-9/12 rounded bg-zinc-800" />
+const BlogDetailSkeleton = () => (
+  <div className="max-w-5xl mx-auto mt-32 px-6">
+    <Skeleton className="w-full aspect-[21/9] rounded-3xl bg-white/5" />
+    <div className="mt-12 space-y-6">
+      <Skeleton className="h-16 w-3/4 bg-white/5" />
+      <Skeleton className="h-6 w-1/4 bg-white/5" />
+      <div className="space-y-4 pt-10">
+        <Skeleton className="h-4 w-full bg-white/5" />
+        <Skeleton className="h-4 w-full bg-white/5" />
+        <Skeleton className="h-4 w-2/3 bg-white/5" />
       </div>
     </div>
   </div>
@@ -68,65 +52,60 @@ const BlogDetailSkeleton = ({ dict }: { dict: any }) => (
 
 export default function BlogDetailClient({ dict, locale }: Props) {
   const params = useParams();
+  const router = useRouter();
   const id = params.id;
 
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const content = dict?.blogs || {};
 
   useEffect(() => {
-    if (id === null) {
-      setLoading(false);
-      setError("Geçersiz blog ID'si.");
-      return;
-    }
-
     const fetchBlog = async () => {
-      setLoading(true);
-      setError(null);
       try {
         const response = await fetch(`/api/blog/${id}`);
-
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error("Blog bulunamadı.");
-          }
-          throw new Error("Veri çekme sırasında bir hata oluştu.");
-        }
-
         const data = await response.json();
         setBlog(data.blog);
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
-        setError(err.message || "Bilinmeyen bir hata oluştu.");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchBlog();
+    if (id) fetchBlog();
   }, [id]);
 
-  const NotFoundPlaceholder = () => (
-    <div className="min-h-screen flex items-center justify-center text-white text-3xl font-bold bg-black/80">
-      {dict.notFound || "Blog bulunamadı"}
-      <Bot className="animate-pulse ml-2" />
-    </div>
-  );
-
-  if (loading) {
+  if (loading)
     return (
-      <div className="min-h-screen bg-linear-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
-        <BlogDetailSkeleton dict={dict} />
+      <div className="min-h-screen bg-[#030303]">
+        <BlogDetailSkeleton />
       </div>
     );
-  }
 
-  if (error || !blog) {
-    return <NotFoundPlaceholder />;
-  }
+  if (!blog)
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#030303] text-white">
+        <Bot className="w-16 h-16 text-amber-500 mb-6" />
+        <h1 className="text-2xl font-light tracking-widest uppercase">
+          {content.notFound || "Blog Not Found"}
+        </h1>
+        <button
+          onClick={() => router.back()}
+          className="mt-8 text-amber-500 hover:text-amber-400 flex items-center gap-2 transition-all"
+        >
+          <ChevronLeft className="w-4 h-4" />{" "}
+          {locale === "tr" ? "Geri Dön" : "Go Back"}
+        </button>
+      </div>
+    );
 
-  // Locale'e göre içerik seçimi
   const title = locale === "en" && blog.titleEng ? blog.titleEng : blog.title;
   const summary =
     locale === "en" && blog.summaryEng ? blog.summaryEng : blog.summary;
@@ -136,147 +115,172 @@ export default function BlogDetailClient({ dict, locale }: Props) {
       : blog.description;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
-      <SparklesCore
-        id="tsparticlesfullpage1"
-        background="transparent"
-        minSize={1}
-        maxSize={2}
-        particleDensity={50}
-        className="absolute inset-0 w-full h-full"
-        particleColor="#FFFFFF"
-        speed={1}
+    <div className="relative min-h-screen bg-linear-to-br from-black  to-black text-zinc-300 selection:bg-amber-500/30 selection:text-amber-200">
+      {/* Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-amber-500 origin-left z-50"
+        style={{ scaleX }}
       />
 
-      {/* Ana İçerik */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col gap-12 relative overflow-hidden"
-      >
-        {/* Ana Görsel */}
-        <motion.div
-          className="relative rounded-xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl"
-          whileHover={{ scale: 1.01 }}
-        >
-          <div className="relative w-full aspect-video lg:aspect-[21/9] rounded-xl overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <SparklesCore
+          id="blogParticles"
+          background="transparent"
+          minSize={0.4}
+          maxSize={1}
+          particleDensity={30}
+          className="w-full h-full"
+          particleColor="#fbbf24"
+        />
+      </div>
+
+      <main className="relative z-10 pt-32 pb-24 px-6 md:px-10">
+        <div className="max-w-5xl mx-auto">
+          {/* Back Button & Category */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center justify-between mb-8"
+          >
+            <button
+              onClick={() => router.back()}
+              className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors uppercase tracking-tighter text-xs"
+            >
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              {locale === "tr" ? "Bloglara Dön" : "Back to Blog"}
+            </button>
+            <div className="px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-[10px] uppercase tracking-[0.2em] font-bold">
+              Insight
+            </div>
+          </motion.div>
+
+          {/* Hero Header */}
+          <motion.header
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6 mb-12"
+          >
+            <h1 className="text-4xl md:text-7xl font-medium tracking-tight text-white leading-[1.1]">
+              <GradientText
+                gradient="linear-gradient(to right, #ffffff, #a1a1aa)"
+                text={title}
+                className="inline"
+              />
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-500 font-light">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-amber-500/70" />
+                {new Date(blog.createdAt).toLocaleDateString(
+                  locale === "tr" ? "tr-TR" : "en-US",
+                  { day: "numeric", month: "long", year: "numeric" }
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-amber-500/70" />5 min read
+              </div>
+              <button className="flex items-center gap-2 hover:text-white transition-colors">
+                <Share2 className="w-4 h-4" />
+                Share
+              </button>
+            </div>
+          </motion.header>
+
+          {/* Featured Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl mb-16"
+          >
             <Image
               src={blog.image}
               alt={title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
-              className="object-cover object-center"
+              className="object-cover transition-transform duration-700 hover:scale-105"
               priority
             />
-          </div>
-        </motion.div>
-
-        {/* İçerik Alanı */}
-        <div className="relative flex flex-col gap-6">
-          <div className="absolute inset-0 -z-10 overflow-hidden rounded-4xl">
-            <motion.div
-              animate={{ x: [-100, 100, -100], y: [-50, 50, -50] }}
-              transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
-              className="absolute top-1/4 left-1/2 w-[600px] h-[600px] bg-linear-to-tr from-amber-400 via-amber-500 to-amber-300 opacity-20 rounded-full filter blur-3xl"
-            ></motion.div>
-
-            <motion.div
-              animate={{ x: [50, -50, 50], y: [-30, 30, -30] }}
-              transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
-              className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-linear-to-br from-amber-300 via-amber-400 to-amber-500 opacity-15 rounded-full filter blur-2xl"
-            ></motion.div>
-          </div>
-
-          {/* Başlık */}
-          <h1 className="text-3xl md:text-6xl font-extrabold tracking-tight font-mono text-transparent bg-clip-text bg-linear-to-r from-amber-500 via-amber-300 to-yellow-100 drop-shadow-[0_0_12px_rgba(255,180,0,0.7)] hover:drop-shadow-[0_0_20px_rgba(255,200,0,0.9)] transition-shadow duration-300">
-            <GradientText
-              gradient="linear-gradient(90deg, #f59e0b 0%, #fbbf24 40%, #fef3c7 60%, #fbbf24 80%, #f59e0b 100%)"
-              text={title}
-              className="inline font-mono"
-            />
-          </h1>
-
-          {/* Tarih */}
-          <div className="flex items-center gap-2 text-sm text-gray-400">
-            <Calendar className="w-4 h-4" />
-            <span>
-              {new Date(blog.createdAt).toLocaleDateString(
-                locale === "tr" ? "tr-TR" : "en-US",
-                {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                }
-              )}
-            </span>
-          </div>
-
-          {/* Neon alt çizgi */}
-          <div className="h-1 w-24 bg-linear-to-r from-blue-400 via-blue-500 to-blue-600 rounded-full"></div>
-
-          {/* Özet */}
-          <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-            <p className="text-gray-200 text-lg md:text-xl leading-relaxed font-sans">
-              {summary}
-            </p>
-          </div>
-
-          {/* Açıklama */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-semibold text-white">
-              {locale === "tr" ? "İçerik" : "Content"}
-            </h3>
-            <div className="prose prose-invert max-w-none">
-              <p className="text-gray-300 leading-relaxed text-sm md:text-base font-mono whitespace-pre-line">
-                {description}
-              </p>
-            </div>
-          </div>
-
-          {/* URL Bilgisi */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="pt-6 border-t border-white/10"
-          >
-            <p className="text-sm text-gray-400">
-              Blog URL: <span className="text-blue-400">{blog.url}</span>
-            </p>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent opacity-60" />
           </motion.div>
-        </div>
-      </motion.div>
 
-      {/* CTA (Call To Action) Bölümü */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="mt-32 mb-20 text-center relative z-10"
-      >
-        <div className="relative inline-block px-10 py-8 rounded-3xl bg-linear-to-r from-amber-400 via-orange-500 to-yellow-400 border border-amber-500/30 shadow-[0_0_50px_rgba(255,200,0,0.5)] hover:shadow-[0_0_80px_rgba(255,220,100,0.7)] transition-all duration-700 backdrop-blur-md">
-          <h2 className="text-3xl md:text-5xl font-extrabold font-mono text-transparent bg-clip-text bg-linear-to-r from-amber-200 via-yellow-100 to-white drop-shadow-[0_0_15px_rgba(255,220,100,0.3)]">
-            {dict.cta?.title || "Birlikte Çalışalım"}
-          </h2>
-          <p className="text-gray-200 text-base sm:text-lg mt-3 font-sans leading-relaxed">
-            {dict.cta?.subtitle || "Projeleriniz için benimle iletişime geçin"}
-          </p>
+          {/* Content Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="lg:col-span-8 space-y-12"
+            >
+              {/* Summary Block */}
+              <div className="relative pl-8 border-l-2 border-amber-500/50">
+                <p className="text-xl md:text-2xl text-zinc-200 leading-relaxed font-light italic">
+                  {summary}
+                </p>
+              </div>
 
-          <Link
-            href={`/${locale}/contact`}
-            className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-amber-500 via-orange-400 to-yellow-300 rounded-full text-black font-semibold text-base md:text-lg shadow-[0_0_20px_rgba(255,200,0,0.7)] hover:scale-105 hover:shadow-[0_0_40px_rgba(255,220,100,0.8)] transition-all duration-300"
-          >
-            {dict.cta?.button || "İletişime Geç"}{" "}
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+              {/* Main Text */}
+              <article className="prose prose-invert prose-amber max-w-none">
+                <div className="text-zinc-400 leading-[1.8] text-lg font-light whitespace-pre-line space-y-6">
+                  {description}
+                </div>
+              </article>
+            </motion.div>
+
+            {/* Sidebar / Extra Info */}
+            <aside className="lg:col-span-4 space-y-8">
+              <div className="sticky top-32 p-8 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
+                <h3 className="text-white font-medium mb-4 uppercase tracking-widest text-xs text-amber-500">
+                  About this article
+                </h3>
+                <p className="text-sm text-zinc-400 leading-relaxed mb-6 font-light">
+                  {locale === "tr"
+                    ? "Bu içerik yapay zeka ve dijital dönüşümün geleceği üzerine derinlemesine bir bakış sunmaktadır."
+                    : "This content provides an in-depth look at the future of AI and digital transformation."}
+                </p>
+                <div className="h-[1px] w-full bg-white/10 mb-6" />
+                <Link
+                  href={`/${locale}/blog`}
+                  className="group flex items-center justify-between text-white text-sm hover:text-amber-500 transition-colors"
+                >
+                  <span>Explore more</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </aside>
+          </div>
         </div>
 
-        <div className="absolute inset-0 flex justify-center items-center -z-10">
-          <div className="w-[400px] h-[400px] bg-linear-to-r from-amber-400 via-yellow-500 to-orange-400 opacity-20 blur-3xl rounded-full"></div>
-        </div>
-      </motion.div>
+        {/* Premium CTA */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-40 max-w-4xl mx-auto"
+        >
+          <div className="relative p-12 md:p-20 rounded-[3rem] overflow-hidden border border-amber-500/20 text-center">
+            {/* CTA Background Gradient */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1),transparent)]" />
+
+            <h2 className="text-3xl md:text-5xl font-medium text-white mb-6 tracking-tight">
+              {content.cta?.title || "Let's Shape the Future"}
+            </h2>
+            <p className="text-zinc-400 text-lg mb-10 max-w-lg mx-auto font-light leading-relaxed">
+              {content.cta?.text ||
+                "Elevate your business with cutting-edge digital solutions tailored to your needs."}
+            </p>
+
+            <Link
+              href={`/${locale}/contact`}
+              className="relative inline-flex items-center gap-3 px-10 py-5 bg-white text-black rounded-full font-bold text-sm uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all duration-500 group overflow-hidden"
+            >
+              <span className="relative z-10">
+                {content.cta?.button || "Get in Touch"}
+              </span>
+              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </motion.section>
+      </main>
     </div>
   );
 }
