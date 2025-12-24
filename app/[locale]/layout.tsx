@@ -153,18 +153,18 @@ export default async function LocaleLayout({ children }: LayoutProps) {
       />
 
       <div className={`${mainFont.variable} ${bodyFont.variable}`}>
-        <ClientLayoutWrapper>
-          <main>{children}</main>
-          <Chatbot /> {/* ← HER SAYFADA ÇIKAR */}
-        </ClientLayoutWrapper>
+          <ClientLayoutWrapper>
+            <main>{children}</main>
+            <Chatbot /> {/* ← HER SAYFADA ÇIKAR */}
+          </ClientLayoutWrapper>
 
-        <SocialSidebar />
-        <ScrollToTopButton />
-        <Toaster
-          richColors
-          position="bottom-right"
-          toastOptions={{ style: { zIndex: 9999 } }}
-        />
+          <SocialSidebar />
+          <ScrollToTopButton />
+          <Toaster
+            richColors
+            position="bottom-right"
+            toastOptions={{ style: { zIndex: 9999 } }}
+          />
       </div>
     </>
   );

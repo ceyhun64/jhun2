@@ -360,7 +360,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
             </div>
 
             <Link href={`/${locale}/projects`}>
-              <Button className="flex items-center gap-2 bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
+              <Button className="flex items-center text-white gap-2 bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
                 {dict.exploreProjects}
               </Button>
             </Link>
@@ -390,7 +390,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
             </div>
 
             <Link href={`/${locale}/projects`}>
-              <Button className="flex items-center gap-2 bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
+              <Button className="flex items-center text-white  gap-2 bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700">
                 {dict.exploreProjects} <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>

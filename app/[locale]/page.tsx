@@ -12,12 +12,11 @@ type Props = {
 };
 
 export default async function Home({ params }: Props) {
-  const { locale } = await params; 
+  const { locale } = await params;
 
   return (
-    <div className="relative bg-black">
+    <div>
       <Navbar locale={locale} />
-
       <div className="pt-10">
         <Heroes locale={locale} />
         <Banner locale={locale} />
@@ -26,7 +25,6 @@ export default async function Home({ params }: Props) {
         <ContactSection locale={locale} />
         <Footer locale={locale} />
       </div>
-
       <Scroll />
     </div>
   );

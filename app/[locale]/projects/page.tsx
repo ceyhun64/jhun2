@@ -9,7 +9,7 @@ type Props = {
 export default async function ProjectsPage({ params }: Props) {
   const { locale } = await params;
   return (
-    <div className="bg-black">
+    <div >
       <Navbar locale={locale} />
       <Projects locale={locale} />
       <Footer locale={locale} />
