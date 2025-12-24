@@ -1,4 +1,3 @@
-//compon
 "use client";
 
 import { motion } from "framer-motion";
@@ -17,7 +16,6 @@ type ElegantShapeProps = {
   gradient?: string;
 };
 
-// ElegantShape bileşenini güncelliyoruz: Gölgeyi beyaza çeviriyoruz.
 function ElegantShape({
   className,
   delay = 0,
@@ -60,12 +58,106 @@ function ElegantShape({
           className={cn(
             "absolute inset-0 rounded-full",
             gradient,
-            // 💡 Burası Güncellendi: Beyaz renkli, yumuşak bir dış gölge
-            "shadow-[0_0_40px_rgba(255,255,255,0.3)]",
-            // Ortadan yayılan daha güçlü bir ışıma (radial gradient)
+            // Light: mavi tonlu, Dark: beyaz tonlu gölgeler
+            "shadow-[0_0_40px_rgba(59,130,246,0.4)] dark:shadow-[0_0_40px_rgba(255,255,255,0.3)]",
             "after:absolute after:inset-0 after:rounded-full",
-            "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"
+            "after:bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.25),transparent_70%)]",
+            "dark:after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"
           )}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+type CloudShapeProps = {
+  className?: string;
+  delay?: number;
+  width?: number;
+  height?: number;
+};
+
+function CloudShape({
+  className,
+  delay = 0,
+  width = 420,
+  height = 150,
+}: CloudShapeProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 1.4,
+        delay,
+        ease: "easeOut",
+      }}
+      className={cn("absolute", className)}
+    >
+      <motion.div
+        animate={{ x: [0, 25, 0] }}
+        transition={{
+          duration: 22 + Math.random() * 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{ width, height }}
+        className="relative"
+      >
+        {/* ANA BULUT GÖVDESİ */}
+        <div
+          className="
+            absolute inset-0 rounded-full
+            bg-gradient-to-b from-white via-sky-100 to-blue-100
+            border border-sky-300/50
+            shadow-[0_25px_60px_rgba(59,130,246,0.25)]
+            backdrop-blur-sm
+          "
+        />
+
+        {/* SOL POFUDUK */}
+        <div
+          className="
+            absolute -left-12 bottom-6
+            w-1/2 h-2/3
+            rounded-full
+            bg-gradient-to-b from-white via-sky-100 to-blue-100
+            border border-sky-300/40
+            shadow-[0_20px_50px_rgba(59,130,246,0.2)]
+          "
+        />
+
+        {/* ORTA POFUDUK */}
+        <div
+          className="
+            absolute left-1/4 -top-6
+            w-1/3 h-1/2
+            rounded-full
+            bg-gradient-to-b from-white via-sky-100 to-blue-100
+            border border-sky-300/40
+            shadow-[0_15px_40px_rgba(59,130,246,0.18)]
+          "
+        />
+
+        {/* SAĞ POFUDUK */}
+        <div
+          className="
+            absolute right-0 bottom-8
+            w-1/3 h-1/2
+            rounded-full
+            bg-gradient-to-b from-white via-sky-100 to-blue-100
+            border border-sky-300/40
+            shadow-[0_15px_40px_rgba(59,130,246,0.18)]
+          "
+        />
+
+        {/* SOFT OUTLINE GLOW */}
+        <div
+          className="
+            absolute inset-0 rounded-full
+            ring-1 ring-sky-200/40
+            blur-sm
+            pointer-events-none
+          "
         />
       </motion.div>
     </motion.div>
@@ -89,109 +181,141 @@ export default function HeroesClient({
   className,
   locale,
 }: HeroesClientProps) {
-  const fadeUpVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.9,
-        delay: 0.4 + i * 0.15,
-        ease: [0.25, 0.4, 0.25, 1] as const,
-      },
-    }),
-  };
-
   return (
     <div
       className={cn(
-        "relative w-full flex items-center justify-center overflow-hidden bg-black min-h-[80vh] md:min-h-screen",
+        "relative w-full flex mt-20 items-center justify-center overflow-hidden",
+        // Light: Yumuşak pastel gradyan, Dark: Derin siyah
+        "bg-gradient-to-b from-sky-200 via-sky-200 to-sky-200",
+        "dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-black",
+        "min-h-[80vh] md:min-h-screen transition-colors duration-500",
         className
       )}
     >
-      {/* 1. Daha Estetik Arka Plan: Daha az keskin, daha derin bir gradyan */}
-      <div className="absolute inset-0 bg-linear-to-br from-gray-900/10 via-purple-900/10 to-blue-900/10 blur-3xl pointer-events-none opacity-50" />
+      {/* Arka Plan Gradyanı - Her iki tema için optimize */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/40 via-purple-100/30 to-cyan-100/40 dark:from-gray-900/20 dark:via-purple-900/15 dark:to-blue-900/20 blur-3xl pointer-events-none opacity-60 dark:opacity-50" />
 
-      {/* Elegant Shapes - Opaklık ve Yoğunluk Artırıldı (Gölge Beyaz) */}
-      <div className="absolute inset-0 overflow-hidden opacity-100">
-        <ElegantShape
-          delay={0.3}
-          width={650}
-          height={150}
-          rotate={8}
-          gradient="from-cyan-400/30 via-sky-300/25 to-purple-900/20"
-          className="left-[-10%] top-[10%]"
-        />
-        <ElegantShape
-          delay={0.5}
-          width={400}
-          height={100}
-          rotate={-20}
-          gradient="from-purple-700/25 via-blue-800/20 to-cyan-300/20"
-          className="right-[-5%] top-[50%]"
-        />
-        <ElegantShape
-          delay={0.4}
-          width={320}
-          height={80}
-          rotate={-12}
-          gradient="from-blue-800/25 via-cyan-400/20"
-          className="left-[5%] bottom-[15%]"
-        />
-        <ElegantShape
-          delay={0.6}
-          width={200}
-          height={60}
-          rotate={20}
-          gradient="from-cyan-400/20 via-purple-700/15"
-          className="right-[15%] top-[25%]"
-        />
-        <ElegantShape
-          delay={0.7}
-          width={150}
-          height={40}
-          rotate={-35}
-          gradient="from-purple-900/20 via-sky-300/15"
-          className="left-[25%] top-[5%]"
-        />
+      {/* Elegant Shapes - Tema bazlı renk geçişleri */}
+      {/* BACKGROUND SHAPES */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* LIGHT THEME – SKY & CLOUDS */}
+        <div className="block dark:hidden">
+          <CloudShape
+            delay={0.2}
+            width={600}
+            height={180}
+            className="left-[-10%] top-[15%]"
+          />
+          <CloudShape
+            delay={0.4}
+            width={420}
+            height={140}
+            className="right-[-5%] top-[45%]"
+          />
+          <CloudShape
+            delay={0.6}
+            width={360}
+            height={120}
+            className="left-[10%] bottom-[20%]"
+          />
+        </div>
+
+        {/* DARK THEME – GALAXY */}
+        <div className="hidden dark:block">
+          <ElegantShape
+            delay={0.3}
+            width={650}
+            height={150}
+            rotate={8}
+            gradient="from-cyan-400/30 via-sky-400/25 to-purple-900/20"
+            className="left-[-10%] top-[10%]"
+          />
+          <ElegantShape
+            delay={0.5}
+            width={400}
+            height={100}
+            rotate={-20}
+            gradient="from-purple-700/25 via-blue-800/20 to-cyan-400/20"
+            className="right-[-5%] top-[50%]"
+          />
+          <ElegantShape
+            delay={0.6}
+            width={200}
+            height={60}
+            rotate={20}
+            gradient="from-cyan-400/20 via-purple-700/15"
+            className="right-[15%] top-[25%]"
+          />
+        </div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
-        {/* Badge */}
-        <motion.div className="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-8 bg-white/5 backdrop-blur-sm shadow-[0_0_4px_rgba(0,255,255,0.2)] border border-white/10">
-          <Circle className="h-2 w-2 fill-sky-400/80 text-sky-400" />
-          <span className="text-xs text-white/80 tracking-wide font-medium">
+        {/* Badge - İyileştirilmiş tema uyumu */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 
+            bg-black/5 dark:bg-white/5 
+            backdrop-blur-md 
+            shadow-lg shadow-blue-500/20 dark:shadow-cyan-500/10
+            border border-black/10 dark:border-white/10
+            transition-all duration-300"
+        >
+          <Circle className="h-2 w-2 fill-blue-500 dark:fill-sky-400/80 text-blue-500 dark:text-sky-400 animate-pulse" />
+          <span className="text-xs text-gray-800 dark:text-white/80 tracking-wide font-medium">
             {dict.badge}
           </span>
         </motion.div>
 
-        {/* Title: Daha parlak, daha derin ışıltılı başlık */}
+        {/* Title - Geliştirilmiş gradyan ve animasyon */}
         <motion.h1
-          className="text-3xl lg:text-8xl font-black mb-6 md:mb-8 tracking-tighter
-    bg-clip-text text-transparent
-    bg-linear-to-r from-cyan-300 via-white/95 to-blue-300
-    drop-shadow-[0_0_12px_rgba(0,255,255,0.35)]
-    transition-all duration-300"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-4xl sm:text-5xl lg:text-8xl font-black mb-6 md:mb-8 tracking-tighter
+            bg-clip-text text-transparent
+            bg-gradient-to-r from-cyan-300 via-black/95 to-blue-300
+            dark:from-cyan-600 dark:via-white/95 dark:to-blue-600
+            drop-shadow-[0_4px_12px_rgba(59,130,246,0.3)]
+            dark:drop-shadow-[0_0_16px_rgba(0,255,255,0.4)]
+            transition-all duration-500"
         >
           <span>{dict.title1} </span>
           <br className="hidden md:block" />
-          {/* İkinci kısım için daha sıcak ve derin bir ton deniyorum */}
-          <span className="bg-clip-text 	text-transparent bg-linear-to-r from-blue-400 via-white to-sky-600">
+          <span
+            className="bg-clip-text text-transparent 
+            bg-gradient-to-r from-blue-500 via-black to-sky-300
+            dark:from-blue-400 dark:via-white dark:to-sky-600"
+          >
             {dict.title2}
           </span>
         </motion.h1>
 
-        {/* Description */}
-        <motion.p className="text-sm md:text-xl mb-12 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4 text-white/60 drop-shadow-[0_0_4px_rgba(0,255,255,0.1)]">
+        {/* Description - İyileştirilmiş okunabilirlik */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-sm md:text-xl mb-12 leading-relaxed font-light tracking-wide 
+            max-w-2xl mx-auto px-4 
+            text-gray-700/80 dark:text-gray-300/80 
+            drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.15)]
+            transition-colors duration-300"
+        >
           {dict.description}
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.div className="inline-block relative overflow-visible">
-          {/* 3. Hafif Sallanma Animasyonu (daha estetik) */}
+        {/* CTA Button - Geliştirilmiş hover efektleri */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="inline-block relative overflow-visible"
+        >
           <motion.div
-            animate={{ y: [0, -4, 0] }} // Daha az zıplama
+            animate={{ y: [0, -4, 0] }}
             transition={{
               duration: 4,
               repeat: Infinity,
@@ -202,15 +326,21 @@ export default function HeroesClient({
             <Link href={`/${locale}/contact`}>
               <MagneticButton
                 className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
-                    // Daha belirgin ve canlı bir gradyan
-                    bg-linear-to-r from-amber-400 via-orange-500 to-yellow-400
-                    shadow-[0_0_15px_rgba(255,180,0,0.6)]
-                    hover:shadow-[0_0_25px_rgba(255,200,50,0.8)]
-                    // Arka ışıltıyı daha da yumuşatıyorum
-                    after:absolute after:inset-0 after:rounded-full after:blur-2xl after:bg-linear-to-r after:from-yellow-400/15 after:via-orange-400/10 after:to-amber-300/10 after:pointer-events-none
-                    transition-all duration-300 transform hover:scale-[1.03]"
+                    bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500
+                    dark:from-amber-400 dark:via-orange-500 dark:to-yellow-400
+                    shadow-[0_4px_20px_rgba(251,146,60,0.5)]
+                    dark:shadow-[0_4px_20px_rgba(255,180,0,0.6)]
+                    hover:shadow-[0_8px_30px_rgba(251,146,60,0.7)]
+                    dark:hover:shadow-[0_8px_30px_rgba(255,200,50,0.8)]
+                    after:absolute after:inset-0 after:rounded-full after:blur-2xl 
+                    after:bg-gradient-to-r 
+                    after:from-yellow-400/20 after:via-orange-400/15 after:to-amber-300/15
+                    dark:after:from-yellow-400/15 dark:after:via-orange-400/10 dark:after:to-amber-300/10
+                    after:pointer-events-none
+                    transition-all duration-300 transform hover:scale-105
+                    border border-orange-400/20 dark:border-yellow-400/20"
               >
-                <Sparkles className="w-5 h-5 mr-2 text-white/90" />
+                <Sparkles className="w-5 h-5 mr-2 text-white inline-block animate-pulse" />
                 {dict.ctaText}
               </MagneticButton>
             </Link>
@@ -218,8 +348,14 @@ export default function HeroesClient({
         </motion.div>
       </div>
 
-      {/* Alttaki gölgeyi daha yumuşak ve derin yapıyorum */}
-      <div className="absolute inset-0 bg-linear-to-t from-[#010101] via-transparent to-[#010101]/80 pointer-events-none" />
+      {/* Alt Gölge - İyileştirilmiş geçişler */}
+      <div
+        className="absolute inset-0 
+        bg-gradient-to-t 
+        from-slate-50 via-transparent to-slate-50/60
+        dark:from-black dark:via-transparent dark:to-black/80 
+        pointer-events-none transition-colors duration-500"
+      />
     </div>
   );
 }

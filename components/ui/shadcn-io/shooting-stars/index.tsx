@@ -20,9 +20,12 @@ interface ShootingStarsProps {
   maxDelay?: number;
   starColor?: string;
   trailColor?: string;
+  starColorLight?: string;
+  trailColorLight?: string;
   starWidth?: number;
   starHeight?: number;
   className?: string;
+  disableInLightMode?: boolean;
 }
 
 const getRandomStartPoint = () => {
@@ -50,14 +53,44 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
   maxDelay = 4200,
   starColor = "#9E00FF",
   trailColor = "#2EB9DF",
+  starColorLight = "#F59E0B",
+  trailColorLight = "#FCD34D",
   starWidth = 10,
   starHeight = 1,
   className,
+  disableInLightMode = false,
 }) => {
   const [star, setStar] = useState<ShootingStar | null>(null);
+  const [isDark, setIsDark] = useState(true);
   const svgRef = useRef<SVGSVGElement>(null);
 
+  // Detect theme changes
   useEffect(() => {
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      setIsDark(isDarkMode);
+    };
+
+    // Initial check
+    checkTheme();
+
+    // Watch for theme changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    // Don't create stars in light mode if disabled
+    if (disableInLightMode && !isDark) {
+      setStar(null);
+      return;
+    }
+
     const createStar = () => {
       const { x, y, angle } = getRandomStartPoint();
       const newStar: ShootingStar = {
@@ -78,7 +111,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
     createStar();
 
     return () => {};
-  }, [minSpeed, maxSpeed, minDelay, maxDelay]);
+  }, [minSpeed, maxSpeed, minDelay, maxDelay, disableInLightMode, isDark]);
 
   useEffect(() => {
     const moveStar = () => {
@@ -116,6 +149,14 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
     return () => cancelAnimationFrame(animationFrame);
   }, [star]);
 
+  // Don't render in light mode if disabled
+  if (disableInLightMode && !isDark) {
+    return null;
+  }
+
+  const currentStarColor = isDark ? starColor : starColorLight;
+  const currentTrailColor = isDark ? trailColor : trailColorLight;
+
   return (
     <svg
       ref={svgRef}
@@ -128,20 +169,37 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
           y={star.y}
           width={starWidth * star.scale}
           height={starHeight}
-          fill="url(#gradient)"
+          fill={`url(#gradient-${star.id})`}
           transform={`rotate(${star.angle}, ${
             star.x + (starWidth * star.scale) / 2
           }, ${star.y + starHeight / 2})`}
         />
       )}
       <defs>
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: trailColor, stopOpacity: 0 }} />
-          <stop
-            offset="100%"
-            style={{ stopColor: starColor, stopOpacity: 1 }}
-          />
-        </linearGradient>
+        {star && (
+          <linearGradient 
+            id={`gradient-${star.id}`} 
+            x1="0%" 
+            y1="0%" 
+            x2="100%" 
+            y2="100%"
+          >
+            <stop 
+              offset="0%" 
+              style={{ 
+                stopColor: currentTrailColor, 
+                stopOpacity: 0 
+              }} 
+            />
+            <stop
+              offset="100%"
+              style={{ 
+                stopColor: currentStarColor, 
+                stopOpacity: isDark ? 1 : 0.6 
+              }}
+            />
+          </linearGradient>
+        )}
       </defs>
     </svg>
   );

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { GradientText } from "@/components/ui/shadcn-io/gradient-text";
 import LanguageSwitcher from "./languageSwitcher";
 import { useParams, usePathname } from "next/navigation";
+import ThemeToggle from "./themeToggle";
 
 type NavbarClientProps = {
   dict: {
@@ -43,6 +44,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -50,7 +52,6 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
       document.body.style.overflow = "";
     }
 
-    // Temizlik
     return () => {
       document.body.style.overflow = "";
     };
@@ -61,7 +62,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
       className={`fixed top-0 w-full z-[999] transition-all duration-500
     ${
       scrolled
-        ? "py-3 bg-black/70 backdrop-blur-xl shadow-lg border-b border-white/10"
+        ? "py-3 bg-white/80 dark:bg-black/70 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-white/10"
         : "py-5 bg-transparent"
     }
   `}
@@ -101,9 +102,9 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
                           variant="ghost"
                           className={`px-4 py-2 font-medium transition-all duration-300 bg-transparent ${
                             isActive
-                              ? "text-orange-500"
-                              : "text-white hover:text-white"
-                          } hover:bg-amber-600/90`}
+                              ? "text-orange-500 dark:text-orange-400"
+                              : "text-gray-800 dark:text-white hover:text-gray-900 dark:hover:text-white"
+                          } hover:bg-amber-100 dark:hover:bg-amber-600/90`}
                         >
                           {link.name}
                         </Button>
@@ -117,7 +118,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
         </div>
 
         {/* Sağ Taraf */}
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-0.5 md:gap-4">
           <Link
             href="https://github.com/ceyhun64"
             target="_blank"
@@ -129,7 +130,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="text-white hover:text-purple-400"
+                className="text-gray-700 dark:text-white hover:text-purple-600 dark:hover:text-purple-400"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" aria-hidden="true" />
@@ -148,7 +149,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="text-white hover:text-blue-400"
+                className="text-gray-700 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" aria-hidden="true" />
@@ -156,6 +157,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
             </motion.div>
           </Link>
 
+          <ThemeToggle />
           <LanguageSwitcher />
 
           {/* Mobil Menü Butonu */}
@@ -164,7 +166,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
               variant="ghost"
               size="icon"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="text-white"
+              className="text-gray-700 dark:text-white"
               aria-label={mobileOpen ? "Mobil menüyü kapat" : "Mobil menüyü aç"}
               title={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
             >
@@ -178,7 +180,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
         </div>
       </div>
 
-      {/* 🌙 Mobile Menü */}
+      {/* Mobile Menü */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -186,13 +188,13 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.35 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden h-screen overflow-y-auto"
+            className="fixed inset-0 bg-white/95 dark:bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden h-screen overflow-y-auto"
             aria-label="Mobil menü"
           >
-            {/* 🔹 Kapat Butonu */}
+            {/* Kapat Butonu */}
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-5 right-6 text-gray-300 hover:text-amber-400 transition-all"
+              className="absolute top-5 right-6 text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-all"
               aria-label="Menüyü kapat"
               title="Menüyü kapat"
             >
@@ -217,7 +219,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
                     <Button
                       variant="ghost"
                       size="lg"
-                      className="text-white text-xl tracking-wide hover:text-amber-400"
+                      className="text-gray-800 dark:text-white text-xl tracking-wide hover:text-amber-600 dark:hover:text-amber-400"
                     >
                       {link.name}
                     </Button>
@@ -236,7 +238,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
                 title="GitHub"
               >
                 <Github
-                  className="h-7 w-7 text-gray-300 hover:text-purple-400 transition-colors"
+                  className="h-7 w-7 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                   aria-hidden="true"
                 />
               </Link>
@@ -248,7 +250,7 @@ export default function NavbarClient({ dict }: NavbarClientProps) {
                 title="LinkedIn"
               >
                 <Linkedin
-                  className="h-7 w-7 text-gray-300 hover:text-blue-400 transition-colors"
+                  className="h-7 w-7 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   aria-hidden="true"
                 />
               </Link>

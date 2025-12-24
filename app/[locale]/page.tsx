@@ -17,14 +17,12 @@ export default async function Home({ params }: Props) {
   return (
     <div>
       <Navbar locale={locale} />
-      <div className="pt-10">
         <Heroes locale={locale} />
         <Banner locale={locale} />
         <Gallery locale={locale} />
         <About locale={locale} />
         <ContactSection locale={locale} />
         <Footer locale={locale} />
-      </div>
       <Scroll />
     </div>
   );

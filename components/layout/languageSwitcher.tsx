@@ -27,15 +27,19 @@ export default function LanguageSwitcher() {
         layout
         whileHover={{ scale: 1.04 }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        className="hidden sm:flex relative items-center gap-1 backdrop-blur-md bg-gray-900/40 
-                   rounded-full p-[6px] border border-gray-700/40 shadow-inner"
+        className="hidden sm:flex relative items-center gap-1 backdrop-blur-md 
+                   bg-gray-200/60 dark:bg-gray-900/40
+                   rounded-full p-[6px] 
+                   border border-gray-300/50 dark:border-gray-700/40 
+                   shadow-inner transition-colors duration-300"
       >
         {/* 💎 Animated gradient background */}
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 300, damping: 26 }}
           className={`absolute top-[4px] bottom-[4px] w-[calc(50%-4px)] rounded-full 
-            bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 shadow-[0_0_10px_rgba(255,193,7,0.5)]
+            bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 
+            shadow-[0_0_10px_rgba(251,146,60,0.4)] dark:shadow-[0_0_10px_rgba(255,193,7,0.5)]
             ${currentLocale === "tr" ? "left-[4px]" : "left-[calc(50%+2px)]"}`}
         />
 
@@ -48,8 +52,8 @@ export default function LanguageSwitcher() {
             rounded-full transition-all duration-300
             ${
               currentLocale === "tr"
-                ? "text-black"
-                : "text-gray-300 hover:text-black"
+                ? "text-black dark:text-black"
+                : "text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-black"
             }`}
         >
           TR
@@ -64,8 +68,8 @@ export default function LanguageSwitcher() {
             rounded-full transition-all duration-300
             ${
               currentLocale === "en"
-                ? "text-black"
-                : "text-gray-300 hover:text-black"
+                ? "text-black dark:text-black"
+                : "text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-black"
             }`}
         >
           EN
@@ -73,7 +77,10 @@ export default function LanguageSwitcher() {
 
         {/* 🌀 Hover glow effect */}
         <motion.div
-          className="absolute inset-0 rounded-full bg-linear-to-r from-amber-500/10 to-amber-400/10 opacity-0"
+          className="absolute inset-0 rounded-full 
+                     bg-gradient-to-r from-amber-400/10 to-amber-500/10
+                     dark:from-amber-500/10 dark:to-amber-400/10 
+                     opacity-0"
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         />
@@ -89,9 +96,14 @@ export default function LanguageSwitcher() {
           variant="ghost"
           size="sm"
           onClick={toggleLanguage}
-          className="px-2 py-[3px] text-[12px] font-semibold text-amber-400 
-                     bg-gray-900/40 rounded-full border border-gray-700/40
-                     hover:bg-amber-500 hover:text-black transition-all"
+          className="px-2 py-[3px] text-[12px] font-semibold 
+                     text-amber-600 dark:text-amber-400
+                     bg-gray-200/60 dark:bg-gray-900/40 
+                     rounded-full 
+                     border border-gray-300/50 dark:border-gray-700/40
+                     hover:bg-amber-500 hover:text-black 
+                     dark:hover:bg-amber-500 dark:hover:text-black 
+                     transition-all duration-300"
         >
           {currentLocale.toUpperCase()}
         </Button>

@@ -11,6 +11,7 @@ import Chatbot from "@/components/chatbot/chatBot";
 
 // SEÇENEK 1: Orbitron + Space Grotesk (Şu anki)
 import { Orbitron, Space_Grotesk } from "next/font/google";
+import { ThemeProvider } from "@/components/layout/themeProvider";
 const mainFont = Orbitron({
   subsets: ["latin"],
   variable: "--font-main",
@@ -153,6 +154,12 @@ export default async function LocaleLayout({ children }: LayoutProps) {
       />
 
       <div className={`${mainFont.variable} ${bodyFont.variable}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <ClientLayoutWrapper>
             <main>{children}</main>
             <Chatbot /> {/* ← HER SAYFADA ÇIKAR */}
@@ -165,6 +172,7 @@ export default async function LocaleLayout({ children }: LayoutProps) {
             position="bottom-right"
             toastOptions={{ style: { zIndex: 9999 } }}
           />
+        </ThemeProvider>
       </div>
     </>
   );

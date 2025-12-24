@@ -17,7 +17,12 @@ export const AuroraBackground = ({
     <main>
       <div
         className={cn(
-          "transition-bg relative flex h-170 flex-col items-center justify-center bg-zinc-50 rounded-tl-3xl rounded-tr-3xl overflow-hidden",
+          "transition-bg relative flex h-170 flex-col items-center justify-center",
+          // Light mode: koyu arkaplan
+          "bg-slate-900",
+          // Dark mode: açık arkaplan
+          "dark:bg-zinc-50",
+          "rounded-tl-3xl rounded-tr-3xl overflow-hidden transition-colors duration-500",
           className
         )}
         {...props}
