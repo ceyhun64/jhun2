@@ -12,22 +12,22 @@ export default function SocialSidebar() {
   const socialIcons = [
     {
       name: "Github",
-      link: "https://www.instagram.com/ceyhunturkmenn/",
+      link: "https://github.com/ceyhunturkmen", // Link düzeltildi
       src: "/socialMedia/github.png",
-      color: "#000000",
+      color: "#181717", // Github orijinal siyahı
       ariaLabel: "Github profiline git",
     },
     {
       name: "Linkedin",
       link: "https://www.instagram.com/ceyhunturkmenn/",
-      src: "/socialMedia/linkedin.avif",
+      src: "/socialMedia/linkedin.png",
       color: "#0A66C2",
       ariaLabel: "Linkedin profiline git",
     },
     {
       name: "Instagram",
       link: "https://www.instagram.com/ceyhunturkmenn/",
-      src: "/socialMedia/instagram.webp",
+      src: "/socialMedia/instagram.png",
       color: "#E1306C",
       ariaLabel: "Instagram sayfasına git",
     },
@@ -65,17 +65,19 @@ export default function SocialSidebar() {
                 href={icon.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={icon.ariaLabel} // Açıklayıcı aria-label
+                aria-label={icon.ariaLabel}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.08, duration: 0.4 }}
                 whileHover={{
                   scale: 1.08,
-                  boxShadow: `0 0 5px ${icon.color}33`,
+                  boxShadow: `0 0 12px ${icon.color}66`, // Renkli parlama
                   y: -2,
                 }}
                 whileTap={{ scale: 0.96 }}
-                className="relative rounded-full shadow-sm backdrop-blur-sm border border-white/10 bg-black"
+                // bg-black kaldırıldı, style ile dinamik renk eklendi
+                style={{ backgroundColor: icon.color }} 
+                className="relative rounded-full shadow-sm backdrop-blur-sm border border-white/20 p-2"
               >
                 {/* Parlama efekti */}
                 <motion.span
@@ -91,11 +93,11 @@ export default function SocialSidebar() {
                     ease: "easeInOut",
                   }}
                 />
-                <div className="relative rounded-full p-0 flex items-center justify-center">
+                <div className="relative rounded-full flex items-center justify-center">
                   <img
                     src={icon.src}
-                    alt="" // Alt boş bırakıldı, çünkü sr-only ile screen reader’a metin verdik
-                    className="w-10 h-10 rounded-full"
+                    alt=""
+                    className="w-7 h-7 object-contain brightness-0 invert" // İkonları beyaz yaparak zemin renginde okunaklı kıldım
                   />
                   <span className="sr-only">{icon.ariaLabel}</span>
                 </div>
@@ -109,19 +111,17 @@ export default function SocialSidebar() {
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileTap={{ scale: 0.92 }}
-        aria-label={isOpen ? "Sosyal sidebar’ı kapat" : "Sosyal sidebar’ı aç"} // Açıklayıcı toggle
+        aria-label={isOpen ? "Sosyal sidebar’ı kapat" : "Sosyal sidebar’ı aç"}
         className="relative bg-slate-900/80 text-white p-3 rounded-full backdrop-blur-md border border-white/10 
                    hover:shadow-[0_0_6px_rgba(56,189,248,0.3)] 
                    hover:bg-slate-800 transition-all duration-500"
       >
-        {/* Çok yumuşak aura efekti */}
         <motion.span
           className="absolute inset-0 rounded-full bg-linear-to-tr from-cyan-400/5 via-blue-600/5 to-transparent blur-[2px]"
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
         />
 
-        {/* Artı ikonu */}
         <motion.div
           className="relative flex items-center justify-center z-10"
           animate={{ rotate: isOpen ? 45 : 0 }}

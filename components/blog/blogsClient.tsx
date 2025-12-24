@@ -243,7 +243,7 @@ export default function BlogsClient({ dict, locale }: Props) {
         {/* --- Filtre --- */}
         <section
           className={cn(
-            "sticky top-0 z-50 transition-all duration-500 ease-in-out",
+            "md:sticky top-15 md:top-17 z-50 transition-all duration-500 ease-in-out",
             isScrolled ? "pt-2" : "pt-4 md:pt-16"
           )}
         >
