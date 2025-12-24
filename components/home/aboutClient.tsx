@@ -256,28 +256,11 @@ export default function AboutClient({ dict }: Props) {
           </motion.div>
         </div>
 
-        {/* Şirket logoları */}
-        {/* <div className="py-16 md:py-32 text-white">
-          <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-semibold">
-            {dict.companies_title}
-          </h2>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
-            {defaultCompanies.map((c, i) => (
-              <img
-                key={i}
-                src={c.src}
-                alt={c.alt}
-                className="h-6 sm:h-8 md:h-10 w-auto filter brightness-0 invert"
-              />
-            ))}
-          </div>
-        </div> */}
-
         {/* Başarılarımız */}
         <div className=" mt-16 relative overflow-hidden py-8 px-4 md:p-16 dark:bg-black text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
-            population={1}
+            population={0.1}
           />
           <div className="relative z-10 text-center md:text-left">
             <h2 className="text-3xl sm:text-4xl md:text-4xl font-semibold">
