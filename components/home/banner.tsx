@@ -51,7 +51,7 @@ const Banner = async ({ locale }: Props) => {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-[#F5F7FA] to-[#F5F7FA] dark:from-black dark:to-slate-950 py-5 transition-colors duration-500">
+    <div className="bg-gradient-to-b from-[#F5F7FA] to-sky-100 dark:from-black dark:to-slate-950 py-5 transition-colors duration-500">
       <div className="mx-auto max-w-7xl rounded-3xl px-4">
         <AuroraBackground>
           {/* HERO BÖLÜMÜ */}

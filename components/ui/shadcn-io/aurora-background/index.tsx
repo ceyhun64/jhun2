@@ -19,7 +19,7 @@ export const AuroraBackground = ({
         className={cn(
           "transition-bg relative flex h-170 flex-col items-center justify-center",
           // Light mode: koyu arkaplan
-          "bg-slate-900",
+          "bg-black",
           // Dark mode: açık arkaplan
           "dark:bg-zinc-50",
           "rounded-tl-3xl rounded-tr-3xl overflow-hidden transition-colors duration-500",

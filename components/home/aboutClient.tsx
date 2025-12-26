@@ -76,7 +76,7 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-[#F5F7FA] to-[#F5F7FA] dark:from-black dark:to-slate-950 font-sans"
+      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-[#F5F7FA] to-sky-100 dark:from-black dark:to-slate-950 font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -109,7 +109,7 @@ export default function AboutClient({ dict }: Props) {
               />
               <div className="relative z-10 flex flex-col justify-between h-full overflow-hidden p-0 md:p-4 space-y-4">
                 {/* 1. ve 2. Paragrafı içeren Ana Kod Bloğu */}
-                <pre className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
+                <pre className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
                   <code>
                     {/* Paragraf 1 */}
                     <span className="text-blue-600 dark:text-blue-400">
@@ -182,8 +182,8 @@ export default function AboutClient({ dict }: Props) {
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   {/* Vizyon Paragrafı (Küçük Kutucuk) */}
-                  <div className="flex flex-col justify-center p-0 md:p-4 rounded-2xl shadow bg-gray-100 dark:bg-gray-900">
-                    <pre className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
+                  <div className="flex flex-col justify-center p-0 md:p-4 rounded-2xl shadow bg-white dark:bg-gray-900">
+                    <pre className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
                       <code>
                         <span className="text-blue-600 dark:text-blue-400">
                           &lt;div id=

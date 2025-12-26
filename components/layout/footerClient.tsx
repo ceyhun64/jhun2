@@ -59,11 +59,23 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background dark:from-black dark:via-zinc-950 dark:to-black text-foreground font-sans border-t border-border dark:border-zinc-800/50">
-      {/* Neon blur background */}
-      <div className="absolute inset-0 opacity-20 dark:opacity-40">
-        <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-amber-500/30 dark:bg-amber-500/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/30 dark:bg-blue-600/20 rounded-full blur-[120px]" />
+    <footer className="relative overflow-hidden bg-gradient-to-b from-background to-white dark:from-black dark:via-zinc-950 dark:to-black text-foreground font-sans border-t border-border dark:border-zinc-800/50">
+      {/* --- ARKA PLAN EFEKTLERİ VE ÇİMEN --- */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Neon blur background */}
+        <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-white dark:bg-amber-500/20 rounded-full blur-[120px] opacity-20 dark:opacity-40" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-white dark:bg-blue-600/20 rounded-full blur-[120px] opacity-20 dark:opacity-40" />
+
+        {/* Light Mod Çimen Görseli - TÜM ARKA PLAN */}
+        <div
+          className="absolute inset-0 w-full h-full opacity-90 dark:hidden"
+          style={{
+            backgroundImage: "url('/footer/grass12.png')",
+            backgroundRepeat: "repeat",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+          }}
+        />
       </div>
 
       {/* Content */}
@@ -167,7 +179,7 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-14 border-t border-border dark:border-zinc-800/70 pt-5 text-center text-sm sm:text-base text-muted-foreground flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+        <div className="mt-14 border-t border-transparent dark:border-zinc-800/70 pt-5 text-center text-sm sm:text-base text-muted-foreground flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
           <span>{dict.copyright}</span>
           <span className="hidden sm:inline">•</span>
           <div className="flex items-center gap-1">
