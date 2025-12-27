@@ -251,7 +251,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                     className="inter-var"
                     containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
                   >
-                    <CardBody className="relative bg-gradient-to-br from-zinc-50/40 via-zinc-100/20 to-zinc-50/40 dark:from-zinc-950/40 dark:via-zinc-900/20 dark:to-zinc-950/40 border border-gray-800/10 dark:border-gray-200/10  rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                    <CardBody className="relative bg-gradient-to-b from-zinc-50/5 via-zinc-100/20 to-zinc-300/40 dark:from-zinc-950/5 dark:via-zinc-900/20 dark:to-zinc-800/50 border border-gray-800/10 dark:border-gray-200/10  rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
                       <CardItem translateZ="140" className="w-full">
                         <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
                           <Link href={`/projects/${item.id}`}>
