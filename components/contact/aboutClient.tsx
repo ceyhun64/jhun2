@@ -7,6 +7,8 @@ import { PixelImage } from "@/components/ui/shadcn-io/pixel-image";
 import { SparklesCore } from "@/components/ui/shadcn-io/sparkles";
 import Link from "next/link";
 import { easeOut, motion } from "framer-motion";
+import { useEffect,useState } from "react";
+import { useTheme } from "next-themes";
 
 interface Props {
   dict: any;
@@ -40,32 +42,18 @@ const itemVariants = {
 };
 
 export default function AboutClient({ dict }: Props) {
-  const defaultCompanies: Company[] = [
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-      alt: "Arc",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-      alt: "Descript",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-      alt: "Mercury",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-      alt: "Ramp",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-      alt: "Retool",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-      alt: "Watershed",
-    },
-  ];
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // useTheme için mounted state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Tema durumuna göre parçacık rengini belirle
+  const currentTheme = mounted ? resolvedTheme || theme : "light";
+  const particleColor = currentTheme === "dark" ? "#FFFFFF" : "#000000";
+
 
   const defaultAchievements: Achievement[] = [
     { label: dict.achievement_1_label, value: dict.achievement_1_value },
@@ -76,20 +64,19 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-8 md:py-16 px-4 md:px-10 bg-linear-to-b from-black  via-slate-900 to-black font-sans"
+      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-[#F5F7FA] via-gray-200 to-[#F5F7FA] dark:from-black dark:via-indigo-950 dark:to-black font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      <div className=" mx-auto">
+      <div className="mx-auto">
         {/* Başlık ve açıklama */}
         <div className="mb-2 md:mb-4 grid gap-5 text-center md:grid-cols-2 md:text-left px-2 md:px-12">
-          <TypingText
-            className="text-3xl sm:text-4xl md:text-5xl font-sans font-semibold tracking-tight text-white"
-            text={dict.typingTitle}
-            cursorClassName="h-8 sm:h-9"
-          />
-          <p className=" text-sm sm:text-base md:text-lg mb-6 md:mb-0 mt-1 md:not-first:mt-4 text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-semibold tracking-tight text-gray-900 dark:text-white">
+            <TypingText text={dict.typingTitle} cursorClassName="h-8 sm:h-9" />
+          </h1>
+
+          <p className="text-sm sm:text-base md:text-lg mb-6 md:mb-0 mt-1 md:not-first:mt-4 text-gray-700 dark:text-white">
             {dict.lead}
           </p>
         </div>
@@ -99,93 +86,133 @@ export default function AboutClient({ dict }: Props) {
           <div className="lg:col-span-2">
             <div className="relative flex-1 rounded-xl overflow-hidden">
               <SparklesCore
-                id="tsparticlesfullpage0"
+                id="tsparticlesfullpage1"
                 background="transparent"
-                minSize={0.6}
-                maxSize={1.4}
-                particleDensity={100}
+                minSize={1}
+                maxSize={2}
+                particleDensity={50}
                 className="absolute inset-0 w-full h-full"
-                particleColor="#FFFFFF"
+                particleColor={particleColor}
                 speed={1}
               />
               <div className="relative z-10 flex flex-col justify-between h-full overflow-hidden p-0 md:p-4 space-y-4">
                 {/* 1. ve 2. Paragrafı içeren Ana Kod Bloğu */}
-                <pre className="bg-gray-900 text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
+                <pre className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
                   <code>
                     {/* Paragraf 1 */}
-                    <span className="text-blue-400">&lt;section id=</span>
-                    <span className="text-yellow-400">"giris"</span>
-                    <span className="text-blue-400">&gt;</span>
-                    {"\n  "}
-                    <span className="text-blue-400">&lt;h2&gt;</span>
-                    <span className="text-yellow-300 font-bold">
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;section id=
+                    </span>
+                    <span className="text-yellow-600 dark:text-yellow-400">
+                      "giris"
+                    </span>
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &gt;
+                    </span>
+                    {"\n  "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;h2&gt;
+                    </span>
+                    <span className="text-yellow-700 dark:text-yellow-300 font-bold">
                       {dict.paragraph1_title}
                     </span>
-                    <span className="text-blue-400">&lt;/h2&gt;</span>
-                    {"\n  "}
-                    <span className="text-blue-400">&lt;p&gt;</span>
-                    {"\n    "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;/h2&gt;
+                    </span>
+                    {"\n  "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;p&gt;
+                    </span>
+                    {"\n    "}
                     {dict.paragraph1_text}
-                    {"\n  "}
-                    <span className="text-blue-400">&lt;/p&gt;</span>
+                    {"\n  "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;/p&gt;
+                    </span>
                     {"\n\n"}
 
                     {/* Misyon Paragrafı */}
-                    {"\n  "}
-                    <span className="text-blue-400">&lt;h3 class=</span>
-                    <span className="text-yellow-400">"mission-focus"</span>
-                    <span className="text-blue-400">&gt;</span>
-                    <span className="text-yellow-300 font-bold">
+                    {"\n  "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;h3 class=
+                    </span>
+                    <span className="text-yellow-600 dark:text-yellow-400">
+                      "mission-focus"
+                    </span>
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &gt;
+                    </span>
+                    <span className="text-yellow-700 dark:text-yellow-300 font-bold">
                       {dict.mission_title}
                     </span>
-                    <span className="text-blue-400">&lt;/h3&gt;</span>
-                    {"\n  "}
-                    <span className="text-blue-400">&lt;p&gt;</span>
-                    {"\n    "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;/h3&gt;
+                    </span>
+                    {"\n  "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;p&gt;
+                    </span>
+                    {"\n    "}
                     {dict.mission_text}
-                    {"\n  "}
-                    <span className="text-blue-400">&lt;/p&gt;</span>
+                    {"\n  "}
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;/p&gt;
+                    </span>
                     {"\n"}
-                    <span className="text-blue-400">&lt;/section&gt;</span>
+                    <span className="text-blue-600 dark:text-blue-400">
+                      &lt;/section&gt;
+                    </span>
                   </code>
                 </pre>
 
                 <motion.div
-                  // itemVariants burada tanımlanmamış olabilir, ancak stil için bırakıldı.
-                  // Eğer bu bileşenin tamamını içeren bir üst bileşen yoksa, buraya tanım eklenmelidir.
-                  // varsayımsal itemVariants: { initial: { y: 20, opacity: 0 }, animate: { y: 0, opacity: 1 } }
                   variants={{}}
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   {/* Vizyon Paragrafı (Küçük Kutucuk) */}
-                  <div className="flex flex-col justify-center p-0 md:p-4 rounded-2xl shadow bg-gray-900">
-                    <pre className="bg-gray-900 text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
+                  <div className="flex flex-col justify-center p-0 md:p-4 rounded-2xl shadow bg-white dark:bg-gray-900">
+                    <pre className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed">
                       <code>
-                        <span className="text-blue-400">&lt;div id=</span>
-                        <span className="text-yellow-400">"vizyon"</span>
-                        <span className="text-blue-400">&gt;</span>
-                        {"\n  "}
-                        <span className="text-blue-400">&lt;h4&gt;</span>
-                        <span className="text-yellow-300 font-bold">
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &lt;div id=
+                        </span>
+                        <span className="text-yellow-600 dark:text-yellow-400">
+                          "vizyon"
+                        </span>
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &gt;
+                        </span>
+                        {"\n  "}
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &lt;h4&gt;
+                        </span>
+                        <span className="text-yellow-700 dark:text-yellow-300 font-bold">
                           {dict.vision_title}
                         </span>
-                        <span className="text-blue-400">&lt;/h4&gt;</span>
-                        {"\n  "}
-                        <span className="text-blue-400">&lt;p&gt;</span>
-                        {"\n    "}
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &lt;/h4&gt;
+                        </span>
+                        {"\n  "}
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &lt;p&gt;
+                        </span>
+                        {"\n    "}
                         {dict.vision_text}
-                        <span className="ml-1 animate-blink text-green-400">
+                        <span className="ml-1 animate-blink text-green-600 dark:text-green-400">
                           _
                         </span>
-                        {"\n  "}
-                        <span className="text-blue-400">&lt;/p&gt;</span>
+                        {"\n  "}
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &lt;/p&gt;
+                        </span>
                         {"\n"}
-                        <span className="text-blue-400">&lt;/div&gt;</span>
+                        <span className="text-blue-600 dark:text-blue-400">
+                          &lt;/div&gt;
+                        </span>
                       </code>
                     </pre>
 
                     <style jsx>{`
-                      /* Buradaki stil etiketi, Next.js'te CSS in JS için yaygın kullanılan bir yöntemdir. */
                       .animate-blink {
                         display: inline-block;
                         width: 1ch;
@@ -205,7 +232,7 @@ export default function AboutClient({ dict }: Props) {
                     `}</style>
                   </div>
 
-                  {/* Görsel Kutusu (Değiştirilmedi) */}
+                  {/* Görsel Kutusu */}
                   <div className="w-full sm:w-auto h-96 sm:h-72 md:h-full rounded-2xl overflow-hidden flex items-center justify-center">
                     <PixelImage src="/logo/logo.webp" grid="4x6" />
                   </div>
@@ -227,16 +254,16 @@ export default function AboutClient({ dict }: Props) {
                 particleColor="#FFFFFF"
                 speed={1}
               />
-              <div className="relative z-10 flex flex-col gap-4 text-white">
+              <div className="relative z-10 flex flex-col gap-4 text-gray-900 dark:text-white">
                 <Link href="/">
                   <GradientText
                     className="text-2xl font-bold font-mono"
                     text={dict.title}
                   />
                 </Link>
-                <h4 className="text-lg sm:text-xl font-semibold tracking-tight">
+                <h2 className="text-lg sm:text-xl font-semibold tracking-tight">
                   {dict.projects_heading}
-                </h4>
+                </h2>
                 <p className="leading-7 text-sm sm:text-base">
                   {dict.projects_description}
                 </p>
@@ -257,28 +284,11 @@ export default function AboutClient({ dict }: Props) {
           </motion.div>
         </div>
 
-        {/* Şirket logoları */}
-        {/* <div className="py-16 md:py-32 text-white">
-          <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-semibold">
-            {dict.companies_title}
-          </h2>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
-            {defaultCompanies.map((c, i) => (
-              <img
-                key={i}
-                src={c.src}
-                alt={c.alt}
-                className="h-6 sm:h-8 md:h-10 w-auto filter brightness-0 invert"
-              />
-            ))}
-          </div>
-        </div> */}
-
         {/* Başarılarımız */}
-        <div className=" mt-16 relative overflow-hidden py-8 px-4 md:p-16 dark:bg-black text-white">
+        <div className="mt-16 relative rounded-xl overflow-hidden py-8 px-4 md:p-16 bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
-            population={1}
+            population={0.1}
           />
           <div className="relative z-10 text-center md:text-left">
             <h2 className="text-3xl sm:text-4xl md:text-4xl font-semibold">

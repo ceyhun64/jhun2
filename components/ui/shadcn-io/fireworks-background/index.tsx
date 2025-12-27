@@ -347,7 +347,7 @@ function FireworksBackground({
       className={cn(
         "relative w-full h-full overflow-hidden",
         className,
-        "bg-gradient-to-br from-sky-100 via-white to-sky-100 dark:from-black dark:via-indigo-950 dark:to-black rounded-xl"
+        "bg-gradient-to-br from-zinc-400 via-zinc-50 to-zinc-400 dark:from-black dark:via-indigo-950 dark:to-black rounded-xl"
       )}
       {...props}
     >

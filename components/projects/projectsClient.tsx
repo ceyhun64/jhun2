@@ -103,7 +103,7 @@ export default function ProjectsClient({ dict, locale }: Props) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F5F7FA] via-amber-100/80 to-[#F5F7FA] dark:from-black dark:via-amber-950/80 dark:to-black text-gray-900 dark:text-white py-15 md:py-20 px-4 md:px-10 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-[#F5F7FA] via-gray-200 to-[#F5F7FA] dark:from-black dark:via-amber-950/80 dark:to-black text-gray-900 dark:text-white py-15 md:py-20 px-4 md:px-10 relative overflow-hidden">
       {/* Neon blur arka plan */}
       <FlickeringGrid
         className="absolute inset-0 z-0"
@@ -217,7 +217,7 @@ export default function ProjectsClient({ dict, locale }: Props) {
                       className="inter-var"
                       containerClassName="py-6 scale-95 md:scale-100 transition-transform duration-300"
                     >
-                      <CardBody className="relative bg-gradient-to-b from-zinc-100/50 to-zinc-50/80 dark:from-zinc-950/50 dark:to-zinc-900/80 border border-white dark:border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 dark:hover:border-blue-400/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                    <CardBody className="relative bg-gradient-to-br from-zinc-50/40 via-zinc-100/20 to-zinc-50/40 dark:from-zinc-950/40 dark:via-zinc-900/20 dark:to-zinc-950/40 border border-gray-800/10 dark:border-gray-200/10  rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
                         <CardItem translateZ="140" className="w-full">
                           <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
                             <Link href={`/${locale}/projects/${proj.id}`}>

@@ -76,7 +76,7 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-[#F5F7FA] to-sky-50 dark:from-black dark:to-slate-950 font-sans"
+      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-gray-200  to-gray-200 dark:from-black dark:to-slate-950 font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -297,7 +297,7 @@ export default function AboutClient({ dict }: Props) {
         </div>
 
         {/* Başarılarımız */}
-        <div className="mt-16 relative overflow-hidden py-8 px-4 md:p-16 bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
+        <div className="mt-16 rounded-xl relative overflow-hidden py-8 px-4 md:p-16 bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
             population={0.1}

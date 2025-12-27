@@ -59,12 +59,12 @@ const ModernFooterClient: React.FC<ModernFooterClientProps> = ({ dict }) => {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-background to-background dark:from-black dark:via-zinc-950 dark:to-black text-foreground font-sans border-t border-border dark:border-zinc-800/50">
+    <footer className="relative overflow-hidden bg-gradient-to-b from-gray-100 to-gray-100 dark:from-black dark:via-zinc-950 dark:to-black text-foreground font-sans border-t border-border dark:border-zinc-800/50">
       {/* --- ARKA PLAN EFEKTLERİ VE ÇİMEN --- */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Neon blur background */}
-        <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-teal-500/30 dark:bg-amber-500/20 rounded-full blur-[120px] opacity-40 dark:opacity-40" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-green-500/30 dark:bg-blue-600/20 rounded-full blur-[120px] opacity-40 dark:opacity-40" />
+        <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-gray-800/50 dark:bg-amber-500/20 rounded-full blur-[120px] opacity-40 dark:opacity-40" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gray-800/50 dark:bg-blue-600/20 rounded-full blur-[120px] opacity-40 dark:opacity-40" />
       </div>
 
       {/* Content */}

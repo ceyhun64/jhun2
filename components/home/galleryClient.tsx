@@ -251,7 +251,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
                     className="inter-var"
                     containerClassName="py-6 scale-85 sm:scale-95 md:scale-100 transition-transform duration-300"
                   >
-                    <CardBody className="relative bg-gradient-to-b from-[#F5F7FA] to-[#F5F7FA] dark:from-zinc-950/10 dark:to-zinc-900 border border-gray-300 dark:border-zinc-800/70 rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
+                    <CardBody className="relative bg-gradient-to-br from-zinc-50/40 via-zinc-100/20 to-zinc-50/40 dark:from-zinc-950/40 dark:via-zinc-900/20 dark:to-zinc-950/40 border border-gray-800/10 dark:border-gray-200/10  rounded-2xl p-3 group/card hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:z-10 text-left">
                       <CardItem translateZ="140" className="w-full">
                         <div className="relative aspect-video overflow-hidden rounded-xl cursor-pointer">
                           <Link href={`/projects/${item.id}`}>
@@ -314,7 +314,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   };
 
   return (
-    <section className="py-16 md:py-28 bg-gradient-to-t from-[#F5F7FA] to-green-50 dark:from-black dark:to-slate-950 relative font-sans overflow-hidden transition-colors duration-500">
+    <section className="py-16 md:py-28 bg-gradient-to-t from-gray-200 to-gray-200 dark:from-black dark:to-slate-950 relative font-sans overflow-hidden transition-colors duration-500">
       {/* Title */}
       <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left md:px-16">
         <RollingText

@@ -22,7 +22,7 @@ function ElegantShape({
   width = 400,
   height = 100,
   rotate = 0,
-  gradient = "from-white/[0.15]",
+  gradient = "from-white",
 }: ElegantShapeProps) {
   const floatAnimation = useMemo(
     () => ({
@@ -69,6 +69,7 @@ function ElegantShape({
     </motion.div>
   );
 }
+
 type CloudShapeProps = {
   className?: string;
   delay?: number;
@@ -186,7 +187,7 @@ export default function HeroesClient({
       className={cn(
         "relative w-full flex mt-20 items-center justify-center overflow-hidden",
         // Light: Yumuşak pastel gradyan, Dark: Derin siyah
-        "bg-gradient-to-b from-sky-200 via-sky-200 to-sky-200",
+        "bg-gradient-to-b from-background via-blue-500/30 to-sky-500/30",
         "dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-black",
         "min-h-[80vh] md:min-h-screen transition-colors duration-500",
         className
@@ -218,6 +219,7 @@ export default function HeroesClient({
             height={120}
             className="left-[10%] bottom-[20%]"
           />
+      
         </div>
 
         {/* DARK THEME – GALAXY */}
@@ -245,6 +247,14 @@ export default function HeroesClient({
             rotate={20}
             gradient="from-cyan-400/20 via-purple-700/15"
             className="right-[15%] top-[25%]"
+          />
+          <ElegantShape
+            delay={0.6}
+            width={360}
+            height={120}
+            rotate={-20}
+            gradient="from-cyan-400/20 via-purple-700/15"
+            className="left-[10%] bottom-[20%]"
           />
         </div>
       </div>
@@ -340,7 +350,6 @@ export default function HeroesClient({
                     transition-all duration-300 transform hover:scale-105
                     border border-orange-400/20 dark:border-yellow-400/20"
               >
-                <Sparkles className="w-5 h-5 mr-2 text-white inline-block animate-pulse" />
                 {dict.ctaText}
               </MagneticButton>
             </Link>

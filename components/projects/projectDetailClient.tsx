@@ -15,6 +15,7 @@ import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { TechnologyItem, Technology } from "./technologyItem";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 type Props = {
   locale: "tr" | "en";
@@ -96,6 +97,8 @@ const TechnologySkeleton = () => (
 export default function ProjectDetailClient({ dict, locale }: Props) {
   const params = useParams();
   const id = params.id;
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -105,6 +108,15 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  // useTheme için mounted state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Tema durumuna göre parçacık rengini belirle
+  const currentTheme = mounted ? (resolvedTheme || theme) : "light";
+  const particleColor = currentTheme === "dark" ? "#FFFFFF" : "#000000";
 
   useEffect(() => {
     if (project) {
@@ -234,24 +246,26 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white dark:from-black dark:via-indigo-950 dark:to-black text-gray-900 dark:text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
-      <SparklesCore
-        id="tsparticlesfullpage1"
-        background="transparent"
-        minSize={1}
-        maxSize={2}
-        particleDensity={50}
-        className="absolute inset-0 w-full h-full"
-        particleColor="#FFFFFF"
-        speed={1}
-      />
+    <div className="min-h-screen bg-gradient-to-b from-[#F5F7FA] via-gray-200 to-[#F5F7FA] dark:from-black dark:via-indigo-950 dark:to-black text-gray-900 dark:text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
+      {mounted && (
+        <SparklesCore
+          id="tsparticlesfullpage1"
+          background="transparent"
+          minSize={1}
+          maxSize={2}
+          particleDensity={50}
+          className="absolute inset-0 w-full h-full"
+          particleColor={particleColor}
+          speed={1}
+        />
+      )}
 
       {/* Görseller ve detay */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-gray-300 dark:border-blue-500/20 bg-white/80 dark:bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden"
+        className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-300/20 dark:border-blue-500/20 bg-black/5 dark:bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden"
       >
         {/* Sol: Görseller */}
         <div className="w-full lg:w-1/2 flex flex-col gap-6">
@@ -438,7 +452,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-        className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-gray-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xs shadow-lg"
+        className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 backdrop-blur-xs shadow-lg"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Sol sütun */}
