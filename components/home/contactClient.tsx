@@ -70,7 +70,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
 
   return (
     <motion.section
-      className="relative py-20 md:py-36 overflow-hidden font-mono bg-gradient-to-b from-sky-100 to-[#F5F7FA] dark:from-slate-950 dark:to-black light:from-slate-50 light:to-slate-100 px-4 md:px-32 text-foreground"
+      className="relative py-20 md:py-36 overflow-hidden font-mono bg-gradient-to-b from-sky-50 to-[#F5F7FA] dark:from-slate-950 dark:to-black light:from-slate-50 light:to-slate-100 px-4 md:px-32 text-foreground"
       initial="hidden"
       animate="visible"
       variants={containerVariants}

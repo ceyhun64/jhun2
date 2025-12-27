@@ -76,7 +76,7 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-[#F5F7FA] to-sky-100 dark:from-black dark:to-slate-950 font-sans"
+      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-[#F5F7FA] to-sky-50 dark:from-black dark:to-slate-950 font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}

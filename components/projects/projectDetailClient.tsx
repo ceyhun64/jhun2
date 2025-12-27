@@ -15,22 +15,20 @@ import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { TechnologyItem, Technology } from "./technologyItem";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
-import GalleryClient from "../home/galleryClient";
 
 type Props = {
   locale: "tr" | "en";
   dict: any;
 };
 
-// --- Arayüz Güncellemesi ---
 interface Project {
   id: string;
   title: string;
-  titleEng?: string; // İngilizce Başlık Eklendi
+  titleEng?: string;
   summary: string;
-  summaryEng?: string; // İngilizce Özet Eklendi
+  summaryEng?: string;
   description: string;
-  descriptionEng?: string; // İngilizce Açıklama Eklendi
+  descriptionEng?: string;
   image: string;
   subImage1?: string;
   subImage2?: string;
@@ -42,67 +40,53 @@ interface Project {
   technologies: Technology[];
 }
 
-// ✅ YENİ SKELETON BİLEŞENİ
+// ✅ Skeleton Bileşeni - Light/Dark Theme Uyumlu
 const ProjectDetailSkeleton = ({ dict }: { dict: any }) => (
-  <div className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden">
+  <div className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-gray-300 dark:border-blue-500/20 bg-white/80 dark:bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden">
     {/* Sol: Görseller İskeleti */}
     <div className="w-full lg:w-1/2 flex flex-col gap-6">
-      {/* Ana Görsel İskeleti */}
-      <Skeleton className="relative w-full aspect-video lg:aspect-[16/9] rounded-xl bg-zinc-800" />
-
-      {/* Küçük Görseller İskeleti */}
+      <Skeleton className="relative w-full aspect-video lg:aspect-[16/9] rounded-xl bg-gray-300 dark:bg-zinc-800" />
       <div className="flex gap-4 overflow-x-hidden">
-        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-zinc-800" />
-        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-zinc-800" />
-        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-zinc-800" />
+        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-gray-300 dark:bg-zinc-800" />
+        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-gray-300 dark:bg-zinc-800" />
+        <Skeleton className="w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg bg-gray-300 dark:bg-zinc-800" />
       </div>
-
-      {/* Buton İskeletleri (Masaüstü) */}
       <div className="hidden lg:flex flex-wrap gap-4 mt-4">
-        <Skeleton className="h-10 w-24 rounded-full bg-zinc-700" />
-        <Skeleton className="h-10 w-32 rounded-full bg-zinc-700" />
+        <Skeleton className="h-10 w-24 rounded-full bg-gray-300 dark:bg-zinc-700" />
+        <Skeleton className="h-10 w-32 rounded-full bg-gray-300 dark:bg-zinc-700" />
       </div>
     </div>
 
     {/* Sağ: Bilgi Alanı İskeleti */}
     <div className="flex-1 flex flex-col justify-center gap-6">
-      {/* Başlık İskeleti */}
       <Skeleton className="h-12 w-3/4 md:w-4/5 rounded-lg bg-amber-300/50" />
-
-      {/* Alt Çizgi İskeleti */}
       <Skeleton className="h-1 w-24 rounded-full bg-blue-500/50 mt-2" />
-
-      {/* Özet İskeleti */}
-      <Skeleton className="h-5 w-full rounded bg-zinc-700" />
-      <Skeleton className="h-5 w-11/12 rounded bg-zinc-700" />
-
-      {/* Açıklama İskeleti */}
-      <Skeleton className="h-4 w-full rounded bg-zinc-800" />
-      <Skeleton className="h-4 w-10/12 rounded bg-zinc-800" />
-      <Skeleton className="h-4 w-full rounded bg-zinc-800" />
-      <Skeleton className="h-4 w-8/12 rounded bg-zinc-800" />
-
-      {/* Mobil Buton İskeletleri */}
+      <Skeleton className="h-5 w-full rounded bg-gray-300 dark:bg-zinc-700" />
+      <Skeleton className="h-5 w-11/12 rounded bg-gray-300 dark:bg-zinc-700" />
+      <Skeleton className="h-4 w-full rounded bg-gray-300 dark:bg-zinc-800" />
+      <Skeleton className="h-4 w-10/12 rounded bg-gray-300 dark:bg-zinc-800" />
+      <Skeleton className="h-4 w-full rounded bg-gray-300 dark:bg-zinc-800" />
+      <Skeleton className="h-4 w-8/12 rounded bg-gray-300 dark:bg-zinc-800" />
       <div className="flex flex-wrap justify-center gap-4 mt-4 lg:hidden">
-        <Skeleton className="h-10 w-24 rounded-full bg-zinc-700" />
-        <Skeleton className="h-10 w-32 rounded-full bg-zinc-700" />
+        <Skeleton className="h-10 w-24 rounded-full bg-gray-300 dark:bg-zinc-700" />
+        <Skeleton className="h-10 w-32 rounded-full bg-gray-300 dark:bg-zinc-700" />
       </div>
     </div>
   </div>
 );
 
-// ✅ TEKNOLOJİ BÖLÜMÜ İSKELETİ
+// ✅ Teknoloji Skeleton - Light/Dark Uyumlu
 const TechnologySkeleton = () => (
   <div className="space-y-4">
     {[1, 2, 3].map((i) => (
       <div
         key={i}
-        className="flex items-center space-x-4 p-2 bg-zinc-900/50 rounded-lg"
+        className="flex items-center space-x-4 p-2 bg-gray-200 dark:bg-zinc-900/50 rounded-lg"
       >
-        <Skeleton className="h-8 w-8 rounded-full bg-zinc-700" />
+        <Skeleton className="h-8 w-8 rounded-full bg-gray-300 dark:bg-zinc-700" />
         <div className="flex-1">
-          <Skeleton className="h-4 w-2/5 rounded bg-zinc-700" />
-          <Skeleton className="h-3 w-4/5 rounded bg-zinc-800 mt-1" />
+          <Skeleton className="h-4 w-2/5 rounded bg-gray-300 dark:bg-zinc-700" />
+          <Skeleton className="h-3 w-4/5 rounded bg-gray-300 dark:bg-zinc-800 mt-1" />
         </div>
       </div>
     ))}
@@ -119,15 +103,12 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   const [mainImage, setMainImage] = useState<string>("");
   const [smallImages, setSmallImages] = useState<string[]>([]);
 
-  // Hook'lar
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  // Proje verileri değiştiğinde görsel listesini güncelleyen useEffect
   useEffect(() => {
     if (project) {
       setMainImage(project.image);
-      // Ana görseli hariç tutarak küçük görseller listesini oluştur
       setSmallImages(
         [
           project.subImage1,
@@ -137,10 +118,9 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
           project.subImage5,
         ]
           .filter((img): img is string => Boolean(img))
-          .filter((img) => img !== project.image) // Ana görseli listeden çıkar
+          .filter((img) => img !== project.image)
       );
     } else {
-      // Project null olduğunda sıfırla
       setMainImage("");
       setSmallImages([]);
     }
@@ -151,9 +131,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     setMainImage(img);
   };
 
-  // --- Veri Çekme İşlemi (useEffect) ---
   useEffect(() => {
-    // Geçersiz ID kontrolü
     if (id === null) {
       setLoading(false);
       setError("Geçersiz proje ID'si.");
@@ -164,8 +142,6 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
       setLoading(true);
       setError(null);
       try {
-        // Yapay gecikme eklendi (Skeleton'ı görebilmek için)
-
         const response = await fetch(`/api/projects/${id}`);
 
         if (!response.ok) {
@@ -188,33 +164,27 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     fetchProject();
   }, [id]);
 
-  // Proje bulunamazsa gösterilecek placeholder
   const NotFoundPlaceholder = () => (
-    <div className="min-h-screen flex items-center justify-center text-white text-3xl font-bold bg-black/80">
+    <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-white text-3xl font-bold bg-gray-100 dark:bg-black/80">
       {dict.notFound}
       <Bot className="animate-pulse ml-2" />
     </div>
   );
 
-  // Düzeltme: Koşullu Çıkışlar (loading, error) tüm Hook'lardan SONRA gelmelidir.
-  // Yüklenme durumunda artık sadece ProjectDetailSkeleton'ı döndürüyoruz.
   if (loading) {
-    // Yükleniyor durumunda genel sayfa yapısını iskelet ile gösteriyoruz
     return (
-      <div className="min-h-screen bg-linear-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
-        {/* Sadece ana içeriğin iskeletini gösteriyoruz. CTA'yı göstermeye gerek yok. */}
+      <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white dark:from-black dark:via-indigo-950 dark:to-black text-gray-900 dark:text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
         <ProjectDetailSkeleton dict={dict} />
-        {/* Teknoloji bölümü iskeleti */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xs shadow-lg"
+          className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-gray-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xs shadow-lg"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="flex flex-col space-y-6">
-              <Skeleton className="h-10 w-3/4 rounded-lg bg-zinc-700" />
-              <Skeleton className="h-32 w-full rounded-2xl bg-zinc-950/60" />
+              <Skeleton className="h-10 w-3/4 rounded-lg bg-gray-300 dark:bg-zinc-700" />
+              <Skeleton className="h-32 w-full rounded-2xl bg-gray-200 dark:bg-zinc-950/60" />
             </div>
             <TechnologySkeleton />
           </div>
@@ -227,7 +197,6 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
     return <NotFoundPlaceholder />;
   }
 
-  // --- Dil Seçimi için Alanları Belirleme ---
   const {
     title,
     titleEng,
@@ -244,12 +213,10 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   const displaySummary = locale === "en" && summaryEng ? summaryEng : summary;
   const displayDescription =
     locale === "en" && descriptionEng ? descriptionEng : description;
-  // ------------------------------------------
 
-  // --- Carousel kaydırma işlevi (Hook değil, kalabilir) ---
   const scroll = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
-    const scrollAmount = 300; // Her tıklamada kayacak mesafe
+    const scrollAmount = 300;
     const currentScrollLeft = carouselRef.current.scrollLeft;
 
     let newScrollPosition;
@@ -267,7 +234,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-black via-indigo-950 to-black text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white dark:from-black dark:via-indigo-950 dark:to-black text-gray-900 dark:text-white py-1 md:py-10 px-3 md:px-20 overflow-hidden relative font-mono">
       <SparklesCore
         id="tsparticlesfullpage1"
         background="transparent"
@@ -284,12 +251,12 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-blue-500/20 bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden"
+        className="max-w-8xl mx-auto mt-20 p-3 md:p-12 rounded-3xl border border-gray-300 dark:border-blue-500/20 bg-white/80 dark:bg-white/5 backdrop-blur-sm shadow-2xl flex flex-col lg:flex-row items-start lg:items-center gap-12 relative overflow-hidden"
       >
         {/* Sol: Görseller */}
         <div className="w-full lg:w-1/2 flex flex-col gap-6">
           <motion.div
-            className="relative rounded-xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl"
+            className="relative rounded-xl overflow-hidden border border-gray-300 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl"
             whileHover={{ scale: 1.02 }}
           >
             {mainImage && (
@@ -301,7 +268,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                 <div className="relative w-full aspect-video lg:aspect-[16/9] rounded-xl overflow-hidden">
                   <Image
                     src={mainImage}
-                    alt={displayTitle} // Güncellenmiş başlık
+                    alt={displayTitle}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 1000px"
                     className="object-cover object-center"
@@ -314,15 +281,13 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
 
           {smallImages.length > 0 && (
             <div className="relative">
-              {/* Sol ok */}
               <button
                 onClick={() => scroll("left")}
-                className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition sm:-left-6"
+                className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 bg-white/70 dark:bg-white/10 hover:bg-white/90 dark:hover:bg-white/20 text-gray-900 dark:text-white p-2 rounded-full backdrop-blur-md transition sm:-left-6"
               >
                 <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
-              {/* Küçük görseller */}
               <div
                 ref={carouselRef}
                 className="flex gap-3 sm:gap-4 overflow-x-auto scroll-smooth py-2 scrollbar-none"
@@ -332,7 +297,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                     key={idx}
                     whileHover={{ scale: 1.05 }}
                     onClick={() => handleThumbnailClick(img)}
-                    className="relative w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg shadow-lg overflow-hidden border border-white/10 cursor-pointer"
+                    className="relative w-32 h-20 sm:w-60 sm:h-36 shrink-0 rounded-lg shadow-lg overflow-hidden border border-gray-300 dark:border-white/10 cursor-pointer"
                   >
                     <Image
                       src={img}
@@ -344,17 +309,16 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                 ))}
               </div>
 
-              {/* Sağ ok */}
               <button
                 onClick={() => scroll("right")}
-                className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition sm:-right-6"
+                className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 bg-white/70 dark:bg-white/10 hover:bg-white/90 dark:hover:bg-white/20 text-gray-900 dark:text-white p-2 rounded-full backdrop-blur-md transition sm:-right-6"
               >
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           )}
 
-          {/* Butonlar (sadece masaüstünde görsellerin altında) */}
+          {/* Butonlar (masaüstü) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -373,7 +337,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
             {demoUrl && (
               <Button
                 onClick={() => window.open(demoUrl, "_blank")}
-                className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all text-sm sm:text-base"
+                className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all text-sm sm:text-base"
               >
                 {dict.demoButton} <ArrowRight className="w-4 h-4" />
               </Button>
@@ -382,23 +346,22 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         </div>
 
         {/* Sağ: Bilgi Alanı */}
-        <div className="relative flex-1 flex flex-col justify-center gap-6 md:gap-3  md:p-0 ">
+        <div className="relative flex-1 flex flex-col justify-center gap-6 md:gap-3 md:p-0">
           <div className="absolute inset-0 -z-10 overflow-hidden rounded-4xl">
-            {/* Büyük yumuşak glow top */}
+            {/* Glow efektleri - Light mode için daha yumuşak */}
             <motion.div
               animate={{ x: [-100, 100, -100], y: [-50, 50, -50] }}
               transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
-              className="absolute top-1/4 left-1/2 w-[600px] h-[600px] bg-linear-to-tr from-amber-400 via-amber-500 to-amber-300 opacity-20 rounded-full filter blur-3xl"
+              className="absolute top-1/4 left-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-amber-200 via-amber-300 to-amber-200 dark:from-amber-400 dark:via-amber-500 dark:to-amber-300 opacity-10 dark:opacity-20 rounded-full filter blur-3xl"
             ></motion.div>
 
-            {/* Küçük glow toplar */}
             <motion.div
               animate={{ x: [50, -50, 50], y: [-30, 30, -30] }}
               transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
-              className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-linear-to-br from-amber-300 via-amber-400 to-amber-500 opacity-15 rounded-full filter blur-2xl"
+              className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-gradient-to-br from-amber-200 via-amber-300 to-amber-400 dark:from-amber-300 dark:via-amber-400 dark:to-amber-500 opacity-10 dark:opacity-15 rounded-full filter blur-2xl"
             ></motion.div>
 
-            {/* Yavaş hareket eden küçük partiküller */}
+            {/* Partiküller */}
             <div className="absolute inset-0 pointer-events-none">
               {[...Array(20)].map((_, i) => (
                 <motion.div
@@ -410,7 +373,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
                     ease: "easeInOut",
                     delay: i * 0.3,
                   }}
-                  className={`absolute w-1 h-1 bg-amber-200/40 rounded-full`}
+                  className="absolute w-1 h-1 bg-amber-400/20 dark:bg-amber-200/40 rounded-full"
                   style={{
                     top: `${Math.random() * 100}%`,
                     left: `${Math.random() * 100}%`,
@@ -421,28 +384,28 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
           </div>
 
           {/* Başlık */}
-          <h1 className=" p-0 md:p-4 text-3xl md:text-6xl font-extrabold tracking-tight font-mono text-transparent bg-clip-text bg-linear-to-r from-amber-500 via-amber-300 to-yellow-100 drop-shadow-[0_0_12px_rgba(255,180,0,0.7)] hover:drop-shadow-[0_0_20px_rgba(255,200,0,0.9)] transition-shadow duration-300">
+          <h1 className="p-0 md:p-4 text-3xl md:text-6xl font-extrabold tracking-tight font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 dark:from-amber-500 dark:via-amber-300 dark:to-yellow-100 drop-shadow-[0_0_12px_rgba(255,180,0,0.7)] hover:drop-shadow-[0_0_20px_rgba(255,200,0,0.9)] transition-shadow duration-300">
             <GradientText
               gradient="linear-gradient(90deg, #f59e0b 0%, #fbbf24 40%, #fef3c7 60%, #fbbf24 80%, #f59e0b 100%)"
-              text={displayTitle} // Güncellenmiş başlık
+              text={displayTitle}
               className="inline font-mono"
             />
           </h1>
 
           {/* Neon alt çizgi */}
-          <div className="h-1 w-24 bg-linear-to-r from-blue-400 via-blue-500 to-blue-600 rounded-full mt-2 md:ms-4 "></div>
+          <div className="h-1 w-24 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 dark:from-blue-400 dark:via-blue-500 dark:to-blue-600 rounded-full mt-2 md:ms-4"></div>
 
           {/* Özet */}
-          <p className="text-gray-200 text-lg md:text-xl leading-relaxed font-sans p-0 md:p-4 ">
-            {displaySummary} {/* Güncellenmiş özet */}
+          <p className="text-gray-800 dark:text-gray-200 text-lg md:text-xl leading-relaxed font-sans p-0 md:p-4">
+            {displaySummary}
           </p>
 
           {/* Açıklama */}
-          <p className="text-gray-300 leading-relaxed text-sm md:text-md font-mono whitespace-pre-line p-0 md:p-4 ">
-            {displayDescription} {/* Güncellenmiş açıklama */}
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm md:text-md font-mono whitespace-pre-line p-0 md:p-4">
+            {displayDescription}
           </p>
 
-          {/* Butonlar (sadece mobilde, en altta) */}
+          {/* Butonlar (mobil) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -461,7 +424,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
             {demoUrl && (
               <Button
                 onClick={() => window.open(demoUrl, "_blank")}
-                className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all text-sm sm:text-base"
+                className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-[0_0_12px_rgba(249,115,22,0.4)] transition-all text-sm sm:text-base"
               >
                 {dict.demoButton} <ArrowRight className="w-4 h-4" />
               </Button>
@@ -470,68 +433,100 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         </div>
       </motion.div>
 
-      {/* --- Yeni Eklenen Araçlar ve Teknoloji Yığını Bölümü --- */}
+      {/* Araçlar ve Teknoloji Yığını */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-        className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xs shadow-lg"
+        className="max-w-8xl mx-auto mt-20 p-2 md:p-12 rounded-3xl border border-gray-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xs shadow-lg"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Sol sütun */}
           <div className="flex flex-col space-y-2 md:space-y-6">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white font-mono mt-2 p-4 md:p-0">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white font-mono mt-2 p-4 md:p-0">
               {dict.technologiesTitle}
             </h2>
 
-            <pre className="bg-gray-950/60 text-white p-2 md:p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed mt-4 md:mt-6">
+            <pre className="bg-gray-100 dark:bg-gray-950/60 text-gray-900 dark:text-white p-2 md:p-4 rounded-2xl font-mono overflow-x-auto whitespace-pre-wrap text-sm leading-relaxed mt-4 md:mt-6 border border-gray-300 dark:border-gray-800">
               <code>
-                <span className="text-blue-400">&lt;div class=</span>
-                <span className="text-yellow-400">"project-info"</span>
-                <span className="text-blue-400">&gt;</span>
-                {"\n  "}
-                <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;div class=
+                </span>
+                <span className="text-yellow-600 dark:text-yellow-400">
+                  "project-info"
+                </span>
+                <span className="text-blue-600 dark:text-blue-400">&gt;</span>
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;p&gt;
+                </span>
+                {"\n    "}
                 {dict.technologiesIntro.p1}
-                {"\n  "}
-                <span className="text-blue-400">&lt;/p&gt;</span>
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/p&gt;
+                </span>
                 {"\n"}
-                {"\n  "}
-                <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;p&gt;
+                </span>
+                {"\n    "}
                 {dict.technologiesIntro.p2}
-                {"\n  "}
-                <span className="text-blue-400">&lt;/p&gt;</span>
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/p&gt;
+                </span>
                 {"\n"}
-                {"\n  "}
-                <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;p&gt;
+                </span>
+                {"\n    "}
                 {dict.technologiesIntro.p3}
-                {"\n  "}
-                <span className="text-blue-400">&lt;/p&gt;</span>
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/p&gt;
+                </span>
                 {"\n"}
-                {"\n  "}
-                <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;p&gt;
+                </span>
+                {"\n    "}
                 {dict.technologiesIntro.p4}
-                {"\n  "}
-                <span className="text-blue-400">&lt;/p&gt;</span>
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/p&gt;
+                </span>
                 {"\n"}
-                {"\n  "}
-                <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;p&gt;
+                </span>
+                {"\n    "}
                 {dict.technologiesIntro.p5}
-                {"\n  "}
-                <span className="text-blue-400">&lt;/p&gt;</span>
-                {"\n"} {"\n  "}
-                <span className="text-blue-400">&lt;p&gt;</span>
-                {"\n    "}
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/p&gt;
+                </span>
+                {"\n"} {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;p&gt;
+                </span>
+                {"\n    "}
                 {dict.technologiesIntro.p6}
-                <span className="ml-1 animate-blink text-green-400">_</span>
-                {"\n  "}
-                <span className="text-blue-400">&lt;/p&gt;</span>
+                <span className="ml-1 animate-blink text-green-600 dark:text-green-400">
+                  _
+                </span>
+                {"\n  "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/p&gt;
+                </span>
                 {"\n"}
-                <span className="text-blue-400">&lt;/div&gt;</span>
+                <span className="text-blue-600 dark:text-blue-400">
+                  &lt;/div&gt;
+                </span>
               </code>
             </pre>
 
@@ -554,20 +549,20 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
               }
             `}</style>
 
-            {/* 🌐 Masaüstü: Butonlar (yerinde kalır) */}
+            {/* Masaüstü: Butonlar */}
             <div className="hidden lg:flex space-x-6 mt-2 md:mt-8 p-4 md:p-0">
               <a
                 href={githubUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors group"
+                className="flex items-center space-x-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors group"
               >
                 <ArrowRight className="w-4 h-4 transform rotate-180 group-hover:rotate-0 transition-transform duration-300" />
                 <span className="font-medium">{dict.links.openGithub}</span>
               </a>
               <Link
                 href={`/${locale}/contact`}
-                className="flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-colors group"
+                className="flex items-center space-x-2 text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors group"
               >
                 <ArrowRight className="w-4 h-4 transform rotate-180 group-hover:rotate-0 transition-transform duration-300" />
                 <span className="font-medium">{dict.links.getInTouch}</span>
@@ -584,20 +579,20 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
               />
             ))}
 
-            {/* 📱 Mobil: Butonlar en altta */}
+            {/* Mobil: Butonlar */}
             <div className="flex lg:hidden flex-row space-x-6 mt-8 p-4">
               <a
                 href={githubUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors group"
+                className="flex items-center justify-center space-x-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors group"
               >
                 <ArrowRight className="w-4 h-4 transform rotate-180 group-hover:rotate-0 transition-transform duration-300" />
                 <span className="font-medium">{dict.links.openGithub}</span>
               </a>
               <Link
                 href={`/${locale}/contact`}
-                className="flex items-center justify-center space-x-2 text-pink-400 hover:text-pink-300 transition-colors group"
+                className="flex items-center justify-center space-x-2 text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors group"
               >
                 <ArrowRight className="w-4 h-4 transform rotate-180 group-hover:rotate-0 transition-transform duration-300" />
                 <span className="font-medium">{dict.links.getInTouch}</span>
@@ -607,7 +602,7 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         </div>
       </motion.div>
 
-      {/* --- CTA (Call To Action) Bölümü --- */}
+      {/* CTA - Light/Dark Theme Uyumlu */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -615,25 +610,25 @@ export default function ProjectDetailClient({ dict, locale }: Props) {
         viewport={{ once: true }}
         className="mt-32 mb-20 text-center relative z-10"
       >
-        <div className="relative inline-block px-10 py-8 rounded-3xl bg-linear-to-r from-amber-400 via-orange-500 to-yellow-400 border border-amber-500/30 shadow-[0_0_50px_rgba(255,200,0,0.5)] hover:shadow-[0_0_80px_rgba(255,220,100,0.7)] transition-all duration-700 backdrop-blur-md">
-          <h2 className="text-3xl md:text-5xl font-extrabold font-mono text-transparent bg-clip-text bg-linear-to-r from-amber-200 via-yellow-100 to-white drop-shadow-[0_0_15px_rgba(255,220,100,0.3)]">
+        <div className="relative inline-block px-10 py-8 rounded-3xl bg-gradient-to-r from-amber-100 via-orange-100 to-yellow-100 dark:from-amber-400 dark:via-orange-500 dark:to-yellow-400 border border-amber-300 dark:border-amber-500/30 shadow-[0_0_30px_rgba(255,200,0,0.3)] dark:shadow-[0_0_50px_rgba(255,200,0,0.5)] hover:shadow-[0_0_50px_rgba(255,200,0,0.4)] dark:hover:shadow-[0_0_80px_rgba(255,220,100,0.7)] transition-all duration-700 backdrop-blur-md">
+          <h2 className="text-3xl md:text-5xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 dark:from-amber-200 dark:via-yellow-100 dark:to-white drop-shadow-[0_0_15px_rgba(255,220,100,0.3)]">
             {dict.cta.title}
           </h2>
-          <p className="text-gray-200 text-base sm:text-lg mt-3 font-sans leading-relaxed">
+          <p className="text-gray-800 dark:text-gray-200 text-base sm:text-lg mt-3 font-sans leading-relaxed">
             {dict.cta.subtitle}
           </p>
 
           <Link
             href={`/${locale}/contact`}
-            className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-amber-500 via-orange-400 to-yellow-300 rounded-full text-black font-semibold text-base md:text-lg shadow-[0_0_20px_rgba(255,200,0,0.7)] hover:scale-105 hover:shadow-[0_0_40px_rgba(255,220,100,0.8)] transition-all duration-300"
+            className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300 rounded-full text-white font-semibold text-base md:text-lg shadow-[0_0_20px_rgba(255,200,0,0.7)] hover:scale-105 hover:shadow-[0_0_40px_rgba(255,220,100,0.8)] transition-all duration-300"
           >
             {dict.cta.button} <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
 
-        {/* Hafif arka plan glow efekti */}
+        {/* Arka plan glow */}
         <div className="absolute inset-0 flex justify-center items-center -z-10">
-          <div className="w-[400px] h-[400px] bg-linear-to-r from-amber-400 via-yellow-500 to-orange-400 opacity-20 blur-3xl rounded-full"></div>
+          <div className="w-[400px] h-[400px] bg-gradient-to-r from-amber-200 via-yellow-300 to-orange-200 dark:from-amber-400 dark:via-yellow-500 dark:to-orange-400 opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
         </div>
       </motion.div>
     </div>

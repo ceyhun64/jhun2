@@ -314,7 +314,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ dict, locale }) => {
   };
 
   return (
-    <section className="py-16 md:py-28 bg-gradient-to-t from-[#F5F7FA] to-sky-100 dark:from-black dark:to-slate-950 relative font-sans overflow-hidden transition-colors duration-500">
+    <section className="py-16 md:py-28 bg-gradient-to-t from-[#F5F7FA] to-green-50 dark:from-black dark:to-slate-950 relative font-sans overflow-hidden transition-colors duration-500">
       {/* Title */}
       <div className="container mx-auto mb-1 md:mb-10 text-center md:text-left md:px-16">
         <RollingText
