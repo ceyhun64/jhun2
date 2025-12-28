@@ -13,7 +13,12 @@ export default function ThemeToggle() {
   // Hydration hatasını önlemek için mounted kontrolü
   React.useEffect(() => {
     setMounted(true);
-  }, []);
+
+    // İlk açılışta dark tema ayarla
+    if (!localStorage.getItem("theme")) {
+      setTheme("dark");
+    }
+  }, [setTheme]);
 
   if (!mounted) {
     return <div className="h-9 w-9" />; // Boş yer tutucu
