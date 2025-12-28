@@ -37,14 +37,14 @@ interface Blog {
 
 const BlogDetailSkeleton = () => (
   <div className="max-w-5xl mx-auto mt-32 px-6">
-    <Skeleton className="w-full aspect-[21/9] rounded-3xl bg-white/5" />
+    <Skeleton className="w-full aspect-[21/9] rounded-3xl bg-zinc-200 dark:bg-white/5" />
     <div className="mt-12 space-y-6">
-      <Skeleton className="h-16 w-3/4 bg-white/5" />
-      <Skeleton className="h-6 w-1/4 bg-white/5" />
+      <Skeleton className="h-16 w-3/4 bg-zinc-200 dark:bg-white/5" />
+      <Skeleton className="h-6 w-1/4 bg-zinc-200 dark:bg-white/5" />
       <div className="space-y-4 pt-10">
-        <Skeleton className="h-4 w-full bg-white/5" />
-        <Skeleton className="h-4 w-full bg-white/5" />
-        <Skeleton className="h-4 w-2/3 bg-white/5" />
+        <Skeleton className="h-4 w-full bg-zinc-200 dark:bg-white/5" />
+        <Skeleton className="h-4 w-full bg-zinc-200 dark:bg-white/5" />
+        <Skeleton className="h-4 w-2/3 bg-zinc-200 dark:bg-white/5" />
       </div>
     </div>
   </div>
@@ -84,14 +84,14 @@ export default function BlogDetailClient({ dict, locale }: Props) {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-[#030303]">
+      <div className="min-h-screen bg-white dark:bg-[#030303]">
         <BlogDetailSkeleton />
       </div>
     );
 
   if (!blog)
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#030303] text-white">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-[#030303] text-zinc-900 dark:text-white">
         <Bot className="w-16 h-16 text-amber-500 mb-6" />
         <h1 className="text-2xl font-light tracking-widest uppercase">
           {content.notFound || "Blog Not Found"}
@@ -115,14 +115,14 @@ export default function BlogDetailClient({ dict, locale }: Props) {
       : blog.description;
 
   return (
-    <div className="relative min-h-screen bg-linear-to-br from-black  to-black text-zinc-300 selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="relative min-h-screen bg-white dark:bg-gradient-to-br dark:from-black dark:to-black text-zinc-700 dark:text-zinc-300 selection:bg-amber-500/30 selection:text-amber-200">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-amber-500 origin-left z-50"
         style={{ scaleX }}
       />
 
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 dark:block hidden">
         <SparklesCore
           id="blogParticles"
           background="transparent"
@@ -144,7 +144,7 @@ export default function BlogDetailClient({ dict, locale }: Props) {
           >
             <button
               onClick={() => router.back()}
-              className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors uppercase tracking-tighter text-xs"
+              className="group flex items-center gap-2 text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors uppercase tracking-tighter text-xs"
             >
               <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {locale === "tr" ? "Bloglara Dön" : "Back to Blog"}
@@ -160,15 +160,15 @@ export default function BlogDetailClient({ dict, locale }: Props) {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-6 mb-12"
           >
-            <h1 className="text-4xl md:text-7xl font-medium tracking-tight text-white leading-[1.1]">
+            <h1 className="text-4xl md:text-7xl font-medium tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
               <GradientText
-                gradient="linear-gradient(to right, #ffffff, #a1a1aa)"
+                gradient="linear-gradient(to right, #18181b, #71717a)"
+                className="inline dark:bg-gradient-to-r dark:from-white dark:to-zinc-400"
                 text={title}
-                className="inline"
               />
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-500 font-light">
+            <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-500 dark:text-zinc-500 font-light">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-amber-500/70" />
                 {new Date(blog.createdAt).toLocaleDateString(
@@ -179,7 +179,7 @@ export default function BlogDetailClient({ dict, locale }: Props) {
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-amber-500/70" />5 min read
               </div>
-              <button className="flex items-center gap-2 hover:text-white transition-colors">
+              <button className="flex items-center gap-2 hover:text-zinc-900 dark:hover:text-white transition-colors">
                 <Share2 className="w-4 h-4" />
                 Share
               </button>
@@ -191,7 +191,7 @@ export default function BlogDetailClient({ dict, locale }: Props) {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl mb-16"
+            className="relative aspect-[21/9] rounded-[2rem] overflow-hidden border border-zinc-200 dark:border-white/5 shadow-2xl mb-16"
           >
             <Image
               src={blog.image}
@@ -200,7 +200,7 @@ export default function BlogDetailClient({ dict, locale }: Props) {
               className="object-cover transition-transform duration-700 hover:scale-105"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-[#030303] via-transparent to-transparent opacity-60" />
           </motion.div>
 
           {/* Content Layout */}
@@ -213,14 +213,14 @@ export default function BlogDetailClient({ dict, locale }: Props) {
             >
               {/* Summary Block */}
               <div className="relative pl-8 border-l-2 border-amber-500/50">
-                <p className="text-xl md:text-2xl text-zinc-200 leading-relaxed font-light italic">
+                <p className="text-xl md:text-2xl text-zinc-800 dark:text-zinc-200 leading-relaxed font-light italic">
                   {summary}
                 </p>
               </div>
 
               {/* Main Text */}
-              <article className="prose prose-invert prose-amber max-w-none">
-                <div className="text-zinc-400 leading-[1.8] text-lg font-light whitespace-pre-line space-y-6">
+              <article className="prose prose-zinc dark:prose-invert prose-amber max-w-none">
+                <div className="text-zinc-600 dark:text-zinc-400 leading-[1.8] text-lg font-light whitespace-pre-line space-y-6">
                   {description}
                 </div>
               </article>
@@ -228,19 +228,19 @@ export default function BlogDetailClient({ dict, locale }: Props) {
 
             {/* Sidebar / Extra Info */}
             <aside className="lg:col-span-4 space-y-8">
-              <div className="sticky top-32 p-8 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
-                <h3 className="text-white font-medium mb-4 uppercase tracking-widest text-xs text-amber-500">
+              <div className="sticky top-32 p-8 rounded-3xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/[0.02] backdrop-blur-md">
+                <h3 className="text-zinc-900 dark:text-white font-medium mb-4 uppercase tracking-widest text-xs text-amber-500">
                   About this article
                 </h3>
-                <p className="text-sm text-zinc-400 leading-relaxed mb-6 font-light">
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6 font-light">
                   {locale === "tr"
                     ? "Bu içerik yapay zeka ve dijital dönüşümün geleceği üzerine derinlemesine bir bakış sunmaktadır."
                     : "This content provides an in-depth look at the future of AI and digital transformation."}
                 </p>
-                <div className="h-[1px] w-full bg-white/10 mb-6" />
+                <div className="h-[1px] w-full bg-zinc-200 dark:bg-white/10 mb-6" />
                 <Link
                   href={`/${locale}/blog`}
-                  className="group flex items-center justify-between text-white text-sm hover:text-amber-500 transition-colors"
+                  className="group flex items-center justify-between text-zinc-900 dark:text-white text-sm hover:text-amber-500 transition-colors"
                 >
                   <span>Explore more</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -261,17 +261,17 @@ export default function BlogDetailClient({ dict, locale }: Props) {
             {/* CTA Background Gradient */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1),transparent)]" />
 
-            <h2 className="text-3xl md:text-5xl font-medium text-white mb-6 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-medium text-zinc-900 dark:text-white mb-6 tracking-tight">
               {content.cta?.title || "Let's Shape the Future"}
             </h2>
-            <p className="text-zinc-400 text-lg mb-10 max-w-lg mx-auto font-light leading-relaxed">
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg mb-10 max-w-lg mx-auto font-light leading-relaxed">
               {content.cta?.text ||
                 "Elevate your business with cutting-edge digital solutions tailored to your needs."}
             </p>
 
             <Link
               href={`/${locale}/contact`}
-              className="relative inline-flex items-center gap-3 px-10 py-5 bg-white text-black rounded-full font-bold text-sm uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all duration-500 group overflow-hidden"
+              className="relative inline-flex items-center gap-3 px-10 py-5 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-sm uppercase tracking-widest hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500 dark:hover:text-white transition-all duration-500 group overflow-hidden"
             >
               <span className="relative z-10">
                 {content.cta?.button || "Get in Touch"}
