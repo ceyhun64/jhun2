@@ -279,9 +279,9 @@ export default function AboutClient({ dict }: Props) {
                 <p className="leading-7 text-sm sm:text-base">
                   {dict.projects_description}
                 </p>
-                <h4 className="text-lg sm:text-xl font-semibold tracking-tight mt-6">
+                <h3 className="text-lg sm:text-xl font-semibold tracking-tight mt-6">
                   {dict.logo_title}
-                </h4>
+                </h3>
                 <p className="mt-2 text-sm sm:text-base">
                   {dict.logo_paragraph1}
                 </p>
