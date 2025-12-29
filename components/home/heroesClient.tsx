@@ -219,7 +219,6 @@ export default function HeroesClient({
             height={120}
             className="left-[10%] bottom-[20%]"
           />
-      
         </div>
 
         {/* DARK THEME – GALAXY */}
@@ -353,9 +352,12 @@ export default function HeroesClient({
                 {dict.ctaText}
               </MagneticButton>
             </Link>
+
+
           </motion.div>
         </motion.div>
       </div>
+
 
       {/* Alt Gölge - İyileştirilmiş geçişler */}
       <div

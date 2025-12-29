@@ -7,6 +7,8 @@ import { PixelImage } from "@/components/ui/shadcn-io/pixel-image";
 import { SparklesCore } from "@/components/ui/shadcn-io/sparkles";
 import Link from "next/link";
 import { easeOut, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 interface Props {
   dict: any;
@@ -40,32 +42,17 @@ const itemVariants = {
 };
 
 export default function AboutClient({ dict }: Props) {
-  const defaultCompanies: Company[] = [
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-      alt: "Arc",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-      alt: "Descript",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-      alt: "Mercury",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-      alt: "Ramp",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-      alt: "Retool",
-    },
-    {
-      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-      alt: "Watershed",
-    },
-  ];
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // useTheme için mounted state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Tema durumuna göre parçacık rengini belirle
+  const currentTheme = mounted ? resolvedTheme || theme : "light";
+  const particleColor = currentTheme === "dark" ? "#FFFFFF" : "#000000";
 
   const defaultAchievements: Achievement[] = [
     { label: dict.achievement_1_label, value: dict.achievement_1_value },
@@ -76,7 +63,7 @@ export default function AboutClient({ dict }: Props) {
 
   return (
     <motion.section
-      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-gray-200  to-gray-200 dark:from-black dark:to-slate-950 font-sans"
+      className="py-8 md:py-16 px-4 md:px-10 bg-gradient-to-b from-gray-200 via-gray-200 to-gray-200 dark:from-black dark:via-slate-950 dark:to-slate-950 font-sans"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -98,13 +85,13 @@ export default function AboutClient({ dict }: Props) {
           <div className="lg:col-span-2">
             <div className="relative flex-1 rounded-xl overflow-hidden">
               <SparklesCore
-                id="tsparticlesfullpage0"
+                id="tsparticles-left-section-home"
                 background="transparent"
-                minSize={0.6}
-                maxSize={1.4}
-                particleDensity={100}
+                minSize={1}
+                maxSize={2}
+                particleDensity={50}
                 className="absolute inset-0 w-full h-full"
-                particleColor="#FFFFFF"
+                particleColor={particleColor}
                 speed={1}
               />
               <div className="relative z-10 flex flex-col justify-between h-full overflow-hidden p-0 md:p-4 space-y-4">
@@ -257,13 +244,13 @@ export default function AboutClient({ dict }: Props) {
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             <div className="relative rounded-xl overflow-hidden p-0.5 md:p-4">
               <SparklesCore
-                id="tsparticlesfullpage1"
+                id="tsparticles-right-section-right"
                 background="transparent"
                 minSize={0.6}
                 maxSize={1.4}
                 particleDensity={100}
                 className="absolute inset-0 w-full h-full"
-                particleColor="#FFFFFF"
+                particleColor={particleColor}
                 speed={1}
               />
               <div className="relative z-10 flex flex-col gap-4 text-gray-900 dark:text-white">
@@ -297,7 +284,7 @@ export default function AboutClient({ dict }: Props) {
         </div>
 
         {/* Başarılarımız */}
-        <div className="mt-16 rounded-xl relative overflow-hidden py-8 px-4 md:p-16 bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
+        <div className="mt-16 relative rounded-xl overflow-hidden py-8 px-4 md:p-16 bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
           <FireworksBackground
             className="absolute inset-0 w-full h-full"
             population={0.1}

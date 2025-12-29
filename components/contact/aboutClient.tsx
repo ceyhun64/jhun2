@@ -7,7 +7,7 @@ import { PixelImage } from "@/components/ui/shadcn-io/pixel-image";
 import { SparklesCore } from "@/components/ui/shadcn-io/sparkles";
 import Link from "next/link";
 import { easeOut, motion } from "framer-motion";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 interface Props {
@@ -54,7 +54,6 @@ export default function AboutClient({ dict }: Props) {
   const currentTheme = mounted ? resolvedTheme || theme : "light";
   const particleColor = currentTheme === "dark" ? "#FFFFFF" : "#000000";
 
-
   const defaultAchievements: Achievement[] = [
     { label: dict.achievement_1_label, value: dict.achievement_1_value },
     { label: dict.achievement_2_label, value: dict.achievement_2_value },
@@ -86,7 +85,7 @@ export default function AboutClient({ dict }: Props) {
           <div className="lg:col-span-2">
             <div className="relative flex-1 rounded-xl overflow-hidden">
               <SparklesCore
-                id="tsparticlesfullpage1"
+                id="tsparticles-left-section"
                 background="transparent"
                 minSize={1}
                 maxSize={2}
@@ -245,13 +244,13 @@ export default function AboutClient({ dict }: Props) {
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             <div className="relative rounded-xl overflow-hidden p-0.5 md:p-4">
               <SparklesCore
-                id="tsparticlesfullpage1"
+                id="tsparticles-right-section"
                 background="transparent"
                 minSize={0.6}
                 maxSize={1.4}
                 particleDensity={100}
                 className="absolute inset-0 w-full h-full"
-                particleColor="#FFFFFF"
+                particleColor={particleColor}
                 speed={1}
               />
               <div className="relative z-10 flex flex-col gap-4 text-gray-900 dark:text-white">
