@@ -231,7 +231,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
         {/* Right side form */}
         <motion.form
           onSubmit={handleSubmit}
-          className="w-full flex flex-col gap-2 md:gap-4 rounded-2xl border border-border dark:border-white/10 p-6 sm:p-8 md:p-14 bg-gradient-to-br from-zinc-400 via-zinc-50 to-zinc-400 dark:from-white/5 dark:via-white/5 dark:to-white/5 backdrop-blur-xl shadow-xl dark:shadow-[0_0_25px_rgba(255,255,255,0.1)] hover:shadow-2xl dark:hover:shadow-[0_0_40px_rgba(255,180,0,0.3)] transition-all duration-500 hover:scale-[1.03]"
+          className="w-full flex flex-col gap-2 md:gap-4 rounded-2xl border border-border dark:border-white/10 p-6 sm:p-8 md:p-14 bg-gradient-to-br from-zinc-400 via-zinc-300 to-zinc-400 dark:from-white/5 dark:via-white/5 dark:to-white/5 backdrop-blur-xl shadow-xl dark:shadow-[0_0_25px_rgba(255,255,255,0.1)] hover:shadow-2xl dark:hover:shadow-[0_0_40px_rgba(255,180,0,0.3)] transition-all duration-500 hover:scale-[1.03]"
           variants={itemVariants}
         >
           {/* Name fields */}

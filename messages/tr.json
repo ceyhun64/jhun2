@@ -214,5 +214,24 @@
       "text": "Ilginç projelere ve konusmalara her zaman açıgım. Birlikte harika bir seyler yaratalım.",
       "button": "Iletisime Geç"
     }
+  },
+
+  "blogDetail": {
+    "notFound": "Blog Bulunamadı",
+    "backButton": "Geri Dön",
+    "backToBlog": "Bloglara Dön",
+    "categoryLabel": "Içgörü",
+    "readTime": "5 dk okuma",
+    "shareButton": "Paylas",
+    "sidebar": {
+      "title": "Bu makale hakkında",
+      "description": "Bu içerik yapay zeka ve dijital dönüsümün gelecegi üzerine derinlemesine bir bakıs sunmaktadır.",
+      "exploreMore": "Daha fazla kesfet"
+    },
+    "cta": {
+      "title": "Gelecegi Birlikte Sekillendirelim",
+      "text": "Isletmenizi ihtiyaçlarınıza özel son teknoloji dijital çözümlerle yükseltin.",
+      "button": "Iletisime Geç"
+    }
   }
 }

@@ -215,5 +215,24 @@
       "text": "I'm always open to interesting projects and conversations. Let's create something amazing together.",
       "button": "Get in Touch"
     }
+  },
+
+  "blogDetail": {
+    "notFound": "Blog Not Found",
+    "backButton": "Go Back",
+    "backToBlog": "Back to Blog",
+    "categoryLabel": "Insight",
+    "readTime": "5 min read",
+    "shareButton": "Share",
+    "sidebar": {
+      "title": "About this article",
+      "description": "This content provides an in-depth look at the future of AI and digital transformation.",
+      "exploreMore": "Explore more"
+    },
+    "cta": {
+      "title": "Let's Shape the Future",
+      "text": "Elevate your business with cutting-edge digital solutions tailored to your needs.",
+      "button": "Get in Touch"
+    }
   }
 }

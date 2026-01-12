@@ -13,8 +13,6 @@ import {
 } from "lucide-react";
 import { GradientText } from "@/components/ui/shadcn-io/gradient-text";
 import { useParams, useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { SparklesCore } from "../ui/shadcn-io/sparkles";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 
@@ -65,8 +63,6 @@ export default function BlogDetailClient({ dict, locale }: Props) {
     restDelta: 0.001,
   });
 
-  const content = dict?.blogs || {};
-
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -94,14 +90,14 @@ export default function BlogDetailClient({ dict, locale }: Props) {
       <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-[#030303] text-zinc-900 dark:text-white">
         <Bot className="w-16 h-16 text-amber-500 mb-6" />
         <h1 className="text-2xl font-light tracking-widest uppercase">
-          {content.notFound || "Blog Not Found"}
+          {dict?.notFound || "Blog Not Found"}
         </h1>
         <button
           onClick={() => router.back()}
           className="mt-8 text-amber-500 hover:text-amber-400 flex items-center gap-2 transition-all"
         >
-          <ChevronLeft className="w-4 h-4" />{" "}
-          {locale === "tr" ? "Geri Dön" : "Go Back"}
+          <ChevronLeft className="w-4 h-4" />
+          {dict?.backButton || "Go Back"}
         </button>
       </div>
     );
@@ -123,15 +119,7 @@ export default function BlogDetailClient({ dict, locale }: Props) {
       />
 
       <div className="fixed inset-0 z-0 dark:block hidden">
-        <SparklesCore
-          id="blogParticles"
-          background="transparent"
-          minSize={0.4}
-          maxSize={1}
-          particleDensity={30}
-          className="w-full h-full"
-          particleColor="#fbbf24"
-        />
+        <div className="w-full h-full bg-transparent" />
       </div>
 
       <main className="relative z-10 pt-32 pb-24 px-6 md:px-10">
@@ -147,10 +135,10 @@ export default function BlogDetailClient({ dict, locale }: Props) {
               className="group flex items-center gap-2 text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors uppercase tracking-tighter text-xs"
             >
               <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              {locale === "tr" ? "Bloglara Dön" : "Back to Blog"}
+              {dict?.backToBlog || "Back to Blog"}
             </button>
             <div className="px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-[10px] uppercase tracking-[0.2em] font-bold">
-              Insight
+              {dict?.categoryLabel || "Insight"}
             </div>
           </motion.div>
 
@@ -177,11 +165,12 @@ export default function BlogDetailClient({ dict, locale }: Props) {
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-amber-500/70" />5 min read
+                <Clock className="w-4 h-4 text-amber-500/70" />
+                {dict?.readTime || "5 min read"}
               </div>
               <button className="flex items-center gap-2 hover:text-zinc-900 dark:hover:text-white transition-colors">
                 <Share2 className="w-4 h-4" />
-                Share
+                {dict?.shareButton || "Share"}
               </button>
             </div>
           </motion.header>
@@ -230,19 +219,18 @@ export default function BlogDetailClient({ dict, locale }: Props) {
             <aside className="lg:col-span-4 space-y-8">
               <div className="sticky top-32 p-8 rounded-3xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/[0.02] backdrop-blur-md">
                 <h3 className="text-zinc-900 dark:text-white font-medium mb-4 uppercase tracking-widest text-xs text-amber-500">
-                  About this article
+                  {dict?.sidebar?.title || "About this article"}
                 </h3>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6 font-light">
-                  {locale === "tr"
-                    ? "Bu içerik yapay zeka ve dijital dönüşümün geleceği üzerine derinlemesine bir bakış sunmaktadır."
-                    : "This content provides an in-depth look at the future of AI and digital transformation."}
+                  {dict?.sidebar?.description ||
+                    "This content provides an in-depth look at the future of AI and digital transformation."}
                 </p>
                 <div className="h-[1px] w-full bg-zinc-200 dark:bg-white/10 mb-6" />
                 <Link
                   href={`/${locale}/blog`}
                   className="group flex items-center justify-between text-zinc-900 dark:text-white text-sm hover:text-amber-500 transition-colors"
                 >
-                  <span>Explore more</span>
+                  <span>{dict?.sidebar?.exploreMore || "Explore more"}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -262,10 +250,10 @@ export default function BlogDetailClient({ dict, locale }: Props) {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1),transparent)]" />
 
             <h2 className="text-3xl md:text-5xl font-medium text-zinc-900 dark:text-white mb-6 tracking-tight">
-              {content.cta?.title || "Let's Shape the Future"}
+              {dict?.cta?.title || "Let's Shape the Future"}
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400 text-lg mb-10 max-w-lg mx-auto font-light leading-relaxed">
-              {content.cta?.text ||
+              {dict?.cta?.text ||
                 "Elevate your business with cutting-edge digital solutions tailored to your needs."}
             </p>
 
@@ -274,7 +262,7 @@ export default function BlogDetailClient({ dict, locale }: Props) {
               className="relative inline-flex items-center gap-3 px-10 py-5 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-sm uppercase tracking-widest hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500 dark:hover:text-white transition-all duration-500 group overflow-hidden"
             >
               <span className="relative z-10">
-                {content.cta?.button || "Get in Touch"}
+                {dict?.cta?.button || "Get in Touch"}
               </span>
               <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
             </Link>

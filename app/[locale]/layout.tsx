@@ -7,7 +7,6 @@ import SocialSidebar from "@/components/layout/socialSidebar";
 import type { Metadata } from "next";
 import Chatbot from "@/components/chatbot/chatBot";
 
-// Teknolojik fontlar - İstediğiniz kombinasyonu seçin:
 
 // SEÇENEK 1: Orbitron + Space Grotesk (Şu anki)
 import { Orbitron, Space_Grotesk } from "next/font/google";
@@ -70,7 +69,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "next.js developer",
       "dijital çözümler",
     ],
-
     alternates: {
       canonical: canonicalUrl,
       languages: {
