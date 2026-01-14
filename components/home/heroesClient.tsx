@@ -332,7 +332,7 @@ export default function HeroesClient({
               ease: "easeInOut",
             }}
           >
-            <Link href={`/${locale}/contact`}>
+            <Link href={`/${locale}/projects`}>
               <MagneticButton
                 className="relative px-8 py-4 text-white font-semibold text-lg rounded-full
                     bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500
