@@ -17,23 +17,28 @@ export async function POST(request: NextRequest) {
     if (!name || !icon || !type || yoe === undefined || !color) {
       return NextResponse.json(
         { message: "Tüm alanlar zorunludur." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    // ✅ projects alanı boş array olarak başlatılır
     const newTechnology = await Technology.create({
       name,
       icon,
       type,
       yoe,
       color,
-      projects: [], // İlk oluşturulduğunda boş
+      projects: [],
     });
 
     return NextResponse.json(
-      { message: "Teknoloji başarıyla eklendi.", technology: newTechnology },
-      { status: 201 }
+      {
+        message: "Teknoloji başarıyla eklendi.",
+        technology: {
+          ...newTechnology.toObject(),
+          id: newTechnology._id.toString(),
+        },
+      },
+      { status: 201 },
     );
   } catch (err) {
     console.error("Teknoloji eklenemedi:", err);
@@ -41,30 +46,38 @@ export async function POST(request: NextRequest) {
     if (err instanceof Error && (err as any).code === 11000) {
       return NextResponse.json(
         { message: "Bu teknoloji zaten mevcut." },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
     return NextResponse.json(
       { message: "Teknoloji eklenirken bir hata oluştu." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     await connectDB();
 
-    // ✅ İsteğe bağlı: Projeleri de görmek isterseniz populate edin
     const technologies = await Technology.find({}).sort({ name: 1 }).lean();
 
-    return NextResponse.json({ technologies });
+    return NextResponse.json({
+      technologies: technologies.map((t) => ({
+        ...t,
+        id: t._id.toString(),
+        // projects dizisindeki ObjectId'leri de string'e çevir
+        projects: Array.isArray(t.projects)
+          ? t.projects.map((p: any) => p.toString())
+          : [],
+      })),
+    });
   } catch (err) {
     console.error("Teknolojiler alınamadı:", err);
     return NextResponse.json(
       { message: "Teknolojiler alınamadı." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,14 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { Eye, EyeOff, ArrowRight, Lock, Mail, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { signIn } from "next-auth/react";
 
 export default function AdminLogin() {
@@ -31,119 +26,150 @@ export default function AdminLogin() {
         password,
       });
 
-      if (res?.error) setLoginMessage("❌ Hatalı email veya şifre!");
-      else if (res?.ok) {
-        const sessionRes = await fetch("/api/auth/session");
-        const sessionData = await sessionRes.json();
-
-        if (sessionData?.user?.role !== "ADMIN") {
-          setLoginMessage("❌ Bu alan sadece adminler için!");
-          return;
-        }
-
-        setLoginMessage("✅ Giriş başarılı! Yönlendiriliyorsunuz...");
-        setTimeout(() => router.push("/admin/dashboard"), 1000);
-      } else setLoginMessage("❌ Bilinmeyen bir hata oluştu.");
-    } catch (error) {
-      console.error(error);
-      setLoginMessage("❌ Giriş sırasında bir hata oluştu.");
+      if (res?.error) {
+        setLoginMessage("Hatalı e-posta veya şifre.");
+      } else if (res?.ok) {
+        setLoginMessage("success");
+        setTimeout(() => router.push("/admin/projects"), 800);
+      } else {
+        setLoginMessage("Bilinmeyen bir hata oluştu.");
+      }
+    } catch {
+      setLoginMessage("Giriş sırasında bir hata oluştu.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-linear-to-b from-[#0a0f25] to-[#101a3b]">
-      {/* Minimal glow arka plan */}
-      <div className="absolute inset-0 bg-linear-to-tr from-[#0f1326] to-[#081024] opacity-60 blur-[60px]"></div>
+    <div className="min-h-screen bg-[#070709] flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background grid */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(139,92,246,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139,92,246,0.5) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Glow orbs */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/8 rounded-full blur-3xl pointer-events-none" />
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative z-10 w-full max-w-md bg-black/50 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg p-8"
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-sm"
       >
-        <div className="flex flex-col items-center mb-6">
-          <Image
-            src="/favicon.ico"
-            alt="Logo"
-            width={60}
-            height={60}
-            className="mb-3"
-          />
-          <h1 className="text-3xl font-bold text-white tracking-tight">
-            Admin Panel
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-700 mb-5 shadow-lg shadow-violet-900/30">
+            <Shield className="w-7 h-7 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-white tracking-tight">
+            Yönetici Girişi
           </h1>
-          <p className="text-gray-300 mt-1 text-center text-sm">
-            Yönetici girişi için kimlik doğrulaması yapın
-          </p>
+          <p className="text-zinc-500 text-sm mt-1.5">Kimliğinizi doğrulayın</p>
         </div>
 
-        <Separator className="my-5 bg-white/20" />
-
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <Label className="text-gray-200 flex items-center gap-2">
-              <Mail size={16} /> E-posta
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="admin@jhun.com"
-              className="mt-2 bg-black/20 text-white placeholder-gray-400 border border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-            />
-          </div>
-
-          <div>
-            <Label className="text-gray-200 flex items-center gap-2">
-              <Lock size={16} /> Şifre
-            </Label>
-            <div className="relative mt-2">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="bg-black/20 text-white placeholder-gray-400 border border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
+        {/* Card */}
+        <div className="bg-white/[0.03] border border-white/8 rounded-2xl p-7 backdrop-blur-xl shadow-2xl">
+          <form onSubmit={handleLogin} className="space-y-5">
+            {/* Email */}
+            <div>
+              <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">
+                E-posta
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="admin@example.com"
+                  className="w-full bg-white/3 border border-white/8 text-white placeholder-zinc-600 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-violet-500/60 focus:bg-white/5 transition-all"
+                />
+              </div>
             </div>
-          </div>
 
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-linear-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-sky-500/40 transition-all"
-          >
-            {isLoading ? "Yükleniyor..." : "Giriş Yap"}
-          </Button>
-        </form>
+            {/* Password */}
+            <div>
+              <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">
+                Şifre
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="••••••••"
+                  className="w-full bg-white/3 border border-white/8 text-white placeholder-zinc-600 rounded-xl pl-10 pr-12 py-3 text-sm focus:outline-none focus:border-violet-500/60 focus:bg-white/5 transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
 
-        {loginMessage && (
-          <p
-            className={`mt-4 text-center text-sm ${
-              loginMessage.includes("başarılı")
-                ? "text-green-400"
-                : "text-red-500"
-            }`}
-          >
-            {loginMessage}
-          </p>
-        )}
+            {/* Error message */}
+            {loginMessage && loginMessage !== "success" && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2.5 px-4 py-3 bg-red-500/8 border border-red-500/20 rounded-xl"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
+                <p className="text-sm text-red-400">{loginMessage}</p>
+              </motion.div>
+            )}
+            {loginMessage === "success" && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2.5 px-4 py-3 bg-emerald-500/8 border border-emerald-500/20 rounded-xl"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+                <p className="text-sm text-emerald-400">
+                  Giriş başarılı, yönlendiriliyorsunuz…
+                </p>
+              </motion.div>
+            )}
 
-        <p className="text-center text-gray-400 text-xs mt-6">
-          © {new Date().getFullYear()} .jhun Admin System
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl text-sm transition-all duration-200 shadow-lg shadow-violet-900/30 hover:shadow-violet-900/50"
+            >
+              {isLoading ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  Giriş Yap
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+
+        <p className="text-center text-zinc-700 text-xs mt-6 font-mono">
+          © {new Date().getFullYear()} .jhun admin system
         </p>
       </motion.div>
     </div>

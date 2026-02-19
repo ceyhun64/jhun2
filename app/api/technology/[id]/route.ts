@@ -9,15 +9,14 @@ import Technology from "@/models/technology";
 import Project from "@/models/projects";
 
 export async function GET(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _request: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
   try {
     await connectDB();
 
-    // ✅ İsteğe bağlı: Bu teknolojiyi kullanan projeleri de göster
     const technology = await Technology.findById(id)
       .populate("projects")
       .lean();
@@ -25,23 +24,34 @@ export async function GET(
     if (!technology) {
       return NextResponse.json(
         { message: "Teknoloji bulunamadı." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
-    return NextResponse.json({ technology });
+    const result = {
+      ...technology,
+      id: technology._id.toString(),
+      projects: Array.isArray(technology.projects)
+        ? technology.projects.map((p: any) => ({
+            ...p,
+            id: p._id?.toString(),
+          }))
+        : [],
+    };
+
+    return NextResponse.json({ technology: result });
   } catch (err) {
     console.error("Teknoloji alınamadı:", err);
     return NextResponse.json(
       { message: "Teknoloji alınamadı." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _request: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
@@ -52,14 +62,14 @@ export async function DELETE(
     if (!technology) {
       return NextResponse.json(
         { message: "Teknoloji bulunamadı." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
-    // ✅ ÇOK ÖNEMLİ: İlişkiyi projelerden de temizle
+    // İlişkiyi projelerden de temizle
     await Project.updateMany(
       { technologies: id },
-      { $pull: { technologies: id } }
+      { $pull: { technologies: id } },
     );
 
     await Technology.findByIdAndDelete(id);
@@ -69,14 +79,14 @@ export async function DELETE(
     console.error("Teknoloji silinemedi:", err);
     return NextResponse.json(
       { message: "Teknoloji silinirken bir hata oluştu." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(
   request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
@@ -89,26 +99,31 @@ export async function PUT(
     if (!name || !icon || !type || yoe === undefined || !color) {
       return NextResponse.json(
         { message: "Tüm alanlar zorunludur." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const updatedTechnology = await Technology.findByIdAndUpdate(
       id,
       { name, icon, type, yoe, color },
-      { new: true, runValidators: true }
-    );
+      { new: true, runValidators: true },
+    ).lean();
 
     if (!updatedTechnology) {
       return NextResponse.json(
         { message: "Teknoloji bulunamadı." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
+    const result = {
+      ...updatedTechnology,
+      id: updatedTechnology._id.toString(),
+    };
+
     return NextResponse.json({
       message: "Teknoloji başarıyla güncellendi.",
-      technology: updatedTechnology,
+      technology: result,
     });
   } catch (err) {
     console.error("Teknoloji güncellenemedi:", err);
@@ -116,13 +131,13 @@ export async function PUT(
     if (err instanceof Error && (err as any).code === 11000) {
       return NextResponse.json(
         { message: "Bu teknoloji adı zaten kullanılıyor." },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
     return NextResponse.json(
       { message: "Teknoloji güncellenirken bir hata oluştu." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

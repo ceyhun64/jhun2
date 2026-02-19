@@ -1,3 +1,5 @@
+// app/lib/session.ts
+
 import withSession from "next-session";
 
 export const session = withSession({

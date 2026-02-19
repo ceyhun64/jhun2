@@ -7,6 +7,8 @@ import type { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import connectDB from "@/lib/mongoose";
 import Blog from "@/models/blog";
+import type { IBlog } from "@/models/blog";
+import type { FlattenMaps } from "mongoose";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -14,17 +16,29 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-const BLOG_FOLDER = "products/blogs";
+type LeanBlog = FlattenMaps<IBlog> & { _id: string };
 
 async function deleteImageFromCloudinary(imageUrl?: string | null) {
   if (!imageUrl || !imageUrl.includes("res.cloudinary.com")) return;
   try {
     const parts = imageUrl.split("/");
-    const publicIdWithExtension = parts.slice(-2).join("/");
+    // Cloudinary URL formatı: .../upload/v{version}/{folder}/{filename}.{ext}
+    // public_id = folder/filename (uzantısız)
+    const uploadIndex = parts.indexOf("upload");
+    if (uploadIndex === -1) return;
+
+    // version segmentini (v12345...) atla
+    const afterUpload = parts.slice(uploadIndex + 1);
+    const withoutVersion = afterUpload[0]?.startsWith("v")
+      ? afterUpload.slice(1)
+      : afterUpload;
+
+    const publicIdWithExtension = withoutVersion.join("/");
     const publicId = publicIdWithExtension.substring(
       0,
-      publicIdWithExtension.lastIndexOf(".")
+      publicIdWithExtension.lastIndexOf("."),
     );
+
     await cloudinary.uploader.destroy(publicId, { resource_type: "image" });
   } catch (err) {
     console.warn(`Cloudinary silme hatası: ${imageUrl}`, err);
@@ -33,15 +47,15 @@ async function deleteImageFromCloudinary(imageUrl?: string | null) {
 
 // ------------------------- GET -------------------------
 export async function GET(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
   try {
     await connectDB();
 
-    const blog = await Blog.findById(id).lean();
+    const blog = await Blog.findById(id).lean<LeanBlog>();
 
     if (!blog)
       return NextResponse.json({ message: "Blog bulunamadı" }, { status: 404 });
@@ -60,28 +74,27 @@ export async function GET(
 
 // ------------------------- DELETE -------------------------
 export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
   try {
     await connectDB();
 
-    const blog = await Blog.findById(id).lean();
+    const blog = await Blog.findById(id).lean<LeanBlog>();
     if (!blog)
       return NextResponse.json({ message: "Blog bulunamadı" }, { status: 404 });
 
-    // Cloudinary'den görseli sil
     await deleteImageFromCloudinary(blog.image);
-
     await Blog.findByIdAndDelete(id);
+
     return NextResponse.json({ message: "Blog ve görsel silindi" });
   } catch (err) {
     console.error("Blog Silme Hatası:", err);
     return NextResponse.json(
       { message: "Blog silinirken hata oluştu" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -89,7 +102,7 @@ export async function DELETE(
 // ------------------------- PUT -------------------------
 export async function PUT(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   const formData = await req.formData();
@@ -108,7 +121,7 @@ export async function PUT(
   if (!title || !summary || !description || !url)
     return NextResponse.json(
       { message: "Eksik zorunlu alanlar var" },
-      { status: 400 }
+      { status: 400 },
     );
 
   if (!existingImage && (!imageFile || imageFile.size === 0))
@@ -117,23 +130,23 @@ export async function PUT(
   try {
     await connectDB();
 
-    const blog = await Blog.findById(id).lean();
+    const blog = await Blog.findById(id).lean<LeanBlog>();
     if (!blog)
       return NextResponse.json({ message: "Blog bulunamadı" }, { status: 404 });
 
-    // Eğer URL değiştiriliyorsa, aynı URL'ye sahip başka blog var mı kontrol et
+    // URL çakışma kontrolü
     if (url && url !== blog.url) {
       const existingBlog = await Blog.findOne({ url, _id: { $ne: id } });
       if (existingBlog) {
         return NextResponse.json(
           { message: "Bu URL zaten kullanılıyor" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
 
     // Görsel güncelleme
-    let finalImageUrl: string | null = existingImage;
+    let finalImageUrl: string = existingImage || blog.image;
 
     if (imageFile && imageFile.size > 0) {
       // Eski görseli sil
@@ -159,38 +172,42 @@ export async function PUT(
     } else if (!existingImage && blog.image) {
       // Görsel tamamen kaldırılmışsa
       await deleteImageFromCloudinary(blog.image);
-      finalImageUrl = null;
+      finalImageUrl = "";
     }
 
-    // Blog update
     const updatedBlog = await Blog.findByIdAndUpdate(
       id,
       {
         title,
-        titleEng,
+        titleEng: titleEng || null,
         summary,
-        summaryEng,
+        summaryEng: summaryEng || null,
         description,
-        descriptionEng,
+        descriptionEng: descriptionEng || null,
         url,
-        image: finalImageUrl ?? blog.image,
+        image: finalImageUrl,
       },
-      { new: true }
-    ).lean();
+      { new: true },
+    ).lean<LeanBlog>();
 
-    const result = updatedBlog
-      ? {
-          ...updatedBlog,
-          id: updatedBlog._id.toString(),
-        }
-      : null;
+    if (!updatedBlog) {
+      return NextResponse.json(
+        { message: "Blog güncellenemedi" },
+        { status: 500 },
+      );
+    }
+
+    const result = {
+      ...updatedBlog,
+      id: updatedBlog._id.toString(),
+    };
 
     return NextResponse.json({ blog: result });
   } catch (err) {
     console.error("Blog Güncelleme Hatası:", err);
     return NextResponse.json(
       { message: "Blog güncellenirken hata oluştu" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

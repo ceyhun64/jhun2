@@ -8,6 +8,8 @@ import { v2 as cloudinary } from "cloudinary";
 import connectDB from "@/lib/mongoose";
 import Project from "@/models/projects";
 import Technology from "@/models/technology";
+import type { IProject } from "@/models/projects";
+import type { FlattenMaps } from "mongoose";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -15,7 +17,9 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-const PROJECT_FOLDER = "products/projeler";
+const PROJECT_FOLDER = "products/projects";
+
+type LeanProject = FlattenMaps<IProject> & { _id: string };
 
 async function uploadImageToCloudinary(file: File): Promise<string> {
   const buffer = Buffer.from(await file.arrayBuffer());
@@ -26,7 +30,7 @@ async function uploadImageToCloudinary(file: File): Promise<string> {
         if (err || !result)
           return reject(err || new Error("Cloudinary yükleme başarısız."));
         resolve(result.secure_url);
-      }
+      },
     );
     uploadStream.end(buffer);
   });
@@ -36,57 +40,68 @@ async function deleteImageFromCloudinary(imageUrl?: string | null) {
   if (!imageUrl || !imageUrl.includes("res.cloudinary.com")) return;
   try {
     const parts = imageUrl.split("/");
-    const publicIdWithExtension = parts.slice(-2).join("/");
+    const uploadIndex = parts.indexOf("upload");
+    if (uploadIndex === -1) return;
+
+    // version segmentini (v12345...) atla
+    const afterUpload = parts.slice(uploadIndex + 1);
+    const withoutVersion = afterUpload[0]?.startsWith("v")
+      ? afterUpload.slice(1)
+      : afterUpload;
+
+    const publicIdWithExtension = withoutVersion.join("/");
     const publicId = publicIdWithExtension.substring(
       0,
-      publicIdWithExtension.lastIndexOf(".")
+      publicIdWithExtension.lastIndexOf("."),
     );
+
     await cloudinary.uploader.destroy(publicId, { resource_type: "image" });
   } catch (err) {
     console.warn(`Cloudinary silme hatası: ${imageUrl}`, err);
   }
 }
 
+function transformProject(project: any) {
+  return {
+    ...project,
+    id: project._id.toString(),
+    technologies: Array.isArray(project.technologies)
+      ? project.technologies
+          .map((tech: any) => {
+            if (!tech || !tech._id) return null;
+            return {
+              id: tech._id.toString(),
+              name: tech.name,
+              icon: tech.icon,
+              type: tech.type,
+              yoe: tech.yoe,
+              color: tech.color,
+            };
+          })
+          .filter(Boolean)
+      : [],
+  };
+}
+
 // ------------------------- GET -------------------------
 export async function GET(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
   try {
     await connectDB();
 
-    // ✅ Teknolojileri populate et
     const project = await Project.findById(id).populate("technologies").lean();
 
     if (!project)
       return NextResponse.json(
         { message: "Proje bulunamadı" },
-        { status: 404 }
+        { status: 404 },
       );
 
-    const result = {
-      ...project,
-      id: project._id.toString(),
-      technologies: Array.isArray(project.technologies)
-        ? project.technologies
-            .map((tech: any) => {
-              if (!tech || !tech._id) return null;
-              return {
-                id: tech._id.toString(),
-                name: tech.name,
-                icon: tech.icon,
-                type: tech.type,
-                yoe: tech.yoe,
-                color: tech.color,
-              };
-            })
-            .filter(Boolean)
-        : [],
-    };
-
-    return NextResponse.json({ project: result });
+    return NextResponse.json({ project: transformProject(project) });
   } catch (err) {
     console.error("Proje getirme hatası:", err);
     return NextResponse.json({ message: "Proje alınamadı" }, { status: 500 });
@@ -95,30 +110,29 @@ export async function GET(
 
 // ------------------------- DELETE -------------------------
 export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
   try {
     await connectDB();
 
-    const project = await Project.findById(id).lean();
+    const project = await Project.findById(id).lean<LeanProject>();
     if (!project)
       return NextResponse.json(
         { message: "Proje bulunamadı" },
-        { status: 404 }
+        { status: 404 },
       );
 
-    // ✅ ÇOK ÖNEMLİ: İlişkiyi teknolojilerden de temizle
+    // Teknoloji ilişkisini temizle
     await Technology.updateMany({ projects: id }, { $pull: { projects: id } });
 
-    // Cloudinary'den görselleri sil
+    // Cloudinary'den tüm görselleri sil
     await deleteImageFromCloudinary(project.image);
     for (let i = 1; i <= 5; i++) {
-      await deleteImageFromCloudinary(
-        project[`subImage${i}` as keyof typeof project] as string | null
-      );
+      const key = `subImage${i}` as keyof LeanProject;
+      await deleteImageFromCloudinary(project[key] as string | null);
     }
 
     await Project.findByIdAndDelete(id);
@@ -127,7 +141,7 @@ export async function DELETE(
     console.error("Proje Silme Hatası:", err);
     return NextResponse.json(
       { message: "Proje silinirken hata oluştu" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -135,7 +149,7 @@ export async function DELETE(
 // ------------------------- PUT -------------------------
 export async function PUT(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   const formData = await req.formData();
@@ -147,8 +161,8 @@ export async function PUT(
   const url = formData.get("url") as string;
   const description = formData.get("description") as string;
   const descriptionEng = formData.get("descriptionEng") as string;
-  const demoUrl = (formData.get("demoUrl") || null) as string | null;
-  const githubUrl = (formData.get("githubUrl") || null) as string | null;
+  const demoUrl = (formData.get("demoUrl") as string) || null;
+  const githubUrl = (formData.get("githubUrl") as string) || null;
 
   const existingImage = formData.get("existingImage") as string | null;
   const existingSubImages: (string | null)[] = Array(5)
@@ -164,73 +178,66 @@ export async function PUT(
     .getAll("technologies")
     .map((t) => t.toString())
     .filter(
-      (id) => id && id !== "undefined" && id !== "null" && id.trim() !== ""
+      (id) => id && id !== "undefined" && id !== "null" && id.trim() !== "",
     );
-
 
   if (!title || !summary || !url || !description)
     return NextResponse.json(
       { message: "Eksik zorunlu alanlar var" },
-      { status: 400 }
+      { status: 400 },
     );
 
   if (!existingImage && (!imageFile || imageFile.size === 0))
     return NextResponse.json(
       { message: "Ana görsel zorunludur" },
-      { status: 400 }
+      { status: 400 },
     );
 
   try {
     await connectDB();
 
-    const project = await Project.findById(id).lean();
+    const project = await Project.findById(id).lean<LeanProject>();
     if (!project)
       return NextResponse.json(
         { message: "Proje bulunamadı" },
-        { status: 404 }
+        { status: 404 },
       );
 
-    // ✅ ÇOK ÖNEMLİ: Eski ve yeni teknolojileri karşılaştır
-    const oldTechIds = project.technologies.map((t: any) => t.toString());
+    // Teknoloji ilişkilerini güncelle
+    const oldTechIds = (project.technologies as any[]).map((t) => t.toString());
     const removedTechIds = oldTechIds.filter(
-      (oldId: string) => !technologyIds.includes(oldId)
+      (old) => !technologyIds.includes(old),
     );
-    const addedTechIds = technologyIds.filter(
-      (newId: string) => !oldTechIds.includes(newId)
-    );
+    const addedTechIds = technologyIds.filter((n) => !oldTechIds.includes(n));
 
-    // Kaldırılan teknolojilerden bu projeyi çıkar
     if (removedTechIds.length > 0) {
       await Technology.updateMany(
         { _id: { $in: removedTechIds } },
-        { $pull: { projects: id } }
+        { $pull: { projects: id } },
       );
     }
-
-    // Eklenen teknolojilere bu projeyi ekle
     if (addedTechIds.length > 0) {
       await Technology.updateMany(
         { _id: { $in: addedTechIds } },
-        { $addToSet: { projects: id } }
+        { $addToSet: { projects: id } },
       );
     }
 
     // Ana görsel
-    let finalImageUrl: string | null = existingImage;
+    let finalImageUrl: string = existingImage || project.image;
     if (imageFile && imageFile.size > 0) {
       if (project.image) await deleteImageFromCloudinary(project.image);
       finalImageUrl = await uploadImageToCloudinary(imageFile);
     } else if (!existingImage && project.image) {
       await deleteImageFromCloudinary(project.image);
-      finalImageUrl = null;
+      finalImageUrl = "";
     }
 
     // Alt görseller
     const finalSubImages: (string | null)[] = [...existingSubImages];
     for (let i = 0; i < 5; i++) {
-      const oldUrl = project[`subImage${i + 1}` as keyof typeof project] as
-        | string
-        | null;
+      const key = `subImage${i + 1}` as keyof LeanProject;
+      const oldUrl = project[key] as string | null;
       const newFile = subImageFiles[i];
       if (newFile && newFile.size > 0) {
         if (oldUrl) await deleteImageFromCloudinary(oldUrl);
@@ -241,55 +248,44 @@ export async function PUT(
       }
     }
 
-    // Project update
     const updatedProject = await Project.findByIdAndUpdate(
       id,
       {
         title,
-        titleEng,
+        titleEng: titleEng || null,
         summary,
-        summaryEng,
+        summaryEng: summaryEng || null,
         url,
         description,
-        descriptionEng,
-        demoUrl,
-        githubUrl,
-        image: finalImageUrl ?? project.image,
+        descriptionEng: descriptionEng || null,
+        demoUrl: demoUrl || null,
+        githubUrl: githubUrl || null,
+        image: finalImageUrl,
         subImage1: finalSubImages[0],
         subImage2: finalSubImages[1],
         subImage3: finalSubImages[2],
         subImage4: finalSubImages[3],
         subImage5: finalSubImages[4],
-        technologies: technologyIds.length > 0 ? technologyIds : [],
+        technologies: technologyIds,
       },
-      { new: true }
+      { new: true },
     )
       .populate("technologies")
       .lean();
 
-    const result = updatedProject
-      ? {
-          ...updatedProject,
-          id: updatedProject._id.toString(),
-          technologies: Array.isArray(updatedProject.technologies)
-            ? updatedProject.technologies.map((tech: any) => ({
-                id: tech._id.toString(),
-                name: tech.name,
-                icon: tech.icon,
-                type: tech.type,
-                yoe: tech.yoe,
-                color: tech.color,
-              }))
-            : [],
-        }
-      : null;
+    if (!updatedProject) {
+      return NextResponse.json(
+        { message: "Proje güncellenemedi" },
+        { status: 500 },
+      );
+    }
 
-    return NextResponse.json({ project: result });
+    return NextResponse.json({ project: transformProject(updatedProject) });
   } catch (err) {
     console.error("Proje Güncelleme Hatası:", err);
     return NextResponse.json(
       { message: "Proje güncellenirken hata oluştu" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

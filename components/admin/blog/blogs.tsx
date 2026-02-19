@@ -14,6 +14,16 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import {
+  Trash2,
+  Plus,
+  Eye,
+  Pencil,
+  FileText,
+  Calendar,
+  AlertTriangle,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Blog {
   id: string;
@@ -42,16 +52,17 @@ export default function Blogs() {
   const [modalLoading, setModalLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState<Blog | null>(null);
+  const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const fetchBlogs = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch("/api/blog");
-      if (!res.ok) throw new Error("Bloglar alınırken hata oluştu.");
+      if (!res.ok) throw new Error();
       const result = await res.json();
       setBlogs(result.blogs || []);
-    } catch (err) {
-      console.error("Bloglar alınamadı:", err);
+    } catch {
       toast.error("Bloglar yüklenirken bir sorun oluştu.");
     } finally {
       setLoading(false);
@@ -62,11 +73,10 @@ export default function Blogs() {
     try {
       setModalLoading(true);
       const res = await fetch(`/api/blog/${id}`);
-      if (!res.ok) throw new Error("Blog detayı alınamadı.");
+      if (!res.ok) throw new Error();
       const result = await res.json();
       setModalBlogData(result.blog);
-    } catch (err) {
-      console.error("Blog detayı alınamadı:", err);
+    } catch {
       toast.error("Blog detayı yüklenirken bir sorun oluştu.");
       closeDetailModal();
     } finally {
@@ -77,58 +87,40 @@ export default function Blogs() {
   useEffect(() => {
     fetchBlogs();
   }, [fetchBlogs]);
-
   useEffect(() => {
-    if (modalBlogId) {
-      fetchBlogDetail(modalBlogId);
-    } else {
-      setModalBlogData(null);
-    }
+    if (modalBlogId) fetchBlogDetail(modalBlogId);
+    else setModalBlogData(null);
   }, [modalBlogId, fetchBlogDetail]);
 
-  const handleCheckboxChange = (id: string) => {
+  const handleCheckboxChange = (id: string) =>
     setSelectedBlogs((prev) =>
-      prev.includes(id) ? prev.filter((b_id) => b_id !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id],
     );
-  };
 
-  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      setSelectedBlogs(blogs.map((b) => b.id));
-    } else {
-      setSelectedBlogs([]);
-    }
-  };
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSelectedBlogs(e.target.checked ? blogs.map((b) => b.id) : []);
 
-  const openDetailModal = (id: string) => {
-    setModalBlogId(id);
-  };
-
+  const openDetailModal = (id: string) => setModalBlogId(id);
   const closeDetailModal = () => {
     setModalBlogId(null);
     setModalBlogData(null);
   };
-
   const openEditModal = (blog: Blog) => {
     setBlogToEdit(blog);
     setIsEditModalOpen(true);
   };
-
   const closeEditModal = () => {
     setBlogToEdit(null);
     setIsEditModalOpen(false);
   };
-
   const handleEditSuccess = () => {
     closeEditModal();
     fetchBlogs();
   };
-
   const handleAddSuccess = () => {
     setIsAddModalOpen(false);
     fetchBlogs();
   };
-
   const openDeleteDialog = (blog: Blog) => {
     setBlogToDelete(blog);
     setDeleteDialogOpen(true);
@@ -136,139 +128,257 @@ export default function Blogs() {
 
   const confirmDelete = async () => {
     if (!blogToDelete) return;
-
     try {
       const res = await fetch(`/api/blog/${blogToDelete.id}`, {
         method: "DELETE",
         credentials: "include",
       });
-      if (!res.ok) throw new Error("Silme işlemi başarısız oldu.");
-
+      if (!res.ok) throw new Error();
       setBlogs((prev) => prev.filter((b) => b.id !== blogToDelete.id));
       setSelectedBlogs((prev) => prev.filter((id) => id !== blogToDelete.id));
-
-      toast.success(`${blogToDelete.title} blog yazısı başarıyla silindi.`);
+      toast.success(`"${blogToDelete.title}" silindi.`);
       setDeleteDialogOpen(false);
       setBlogToDelete(null);
-    } catch (err) {
-      console.error("Blog silinemedi:", err);
+    } catch {
       toast.error("Blog silinirken bir hata oluştu.");
     }
   };
 
+  const confirmBulkDelete = async () => {
+    if (!selectedBlogs.length) return;
+    setBulkDeleting(true);
+    const errors: string[] = [];
+    await Promise.all(
+      selectedBlogs.map(async (id) => {
+        try {
+          const res = await fetch(`/api/blog/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+          });
+          if (!res.ok) throw new Error();
+        } catch {
+          errors.push(id);
+        }
+      }),
+    );
+    const deletedCount = selectedBlogs.length - errors.length;
+    setBlogs((prev) =>
+      prev.filter(
+        (b) => !selectedBlogs.includes(b.id) || errors.includes(b.id),
+      ),
+    );
+    setSelectedBlogs([]);
+    setBulkDeleting(false);
+    setBulkDeleteDialogOpen(false);
+    if (errors.length === 0) toast.success(`${deletedCount} blog silindi.`);
+    else toast.warning(`${deletedCount} silindi, ${errors.length} silinemedi.`);
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
-        <div className="text-white text-xl">Yükleniyor...</div>
+      <div className="flex items-center justify-center min-h-screen bg-[#070709]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
+          <p className="text-zinc-600 text-sm">Yükleniyor…</p>
+        </div>
       </div>
     );
   }
 
   return (
     <>
-      <div className="flex flex-col md:flex-row min-h-screen bg-black text-white">
+      <div className="flex flex-col md:flex-row min-h-screen bg-[#070709] text-white">
         <Sidebar />
 
         <main
-          className={`flex-1 p-4 md:p-8 transition-all ${
-            isMobile ? "" : "md:ml-64"
-          }`}
+          className={`flex-1 p-5 md:p-8 transition-all ${isMobile ? "" : "md:ml-64"}`}
         >
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white ms-12 md:ms-0">
-              Blog Yönetimi
-            </h1>
-
-            <Button
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 mt-10 md:mt-0">
+            <div>
+              <div className="flex items-center gap-2.5 mb-1">
+                <FileText className="w-5 h-5 text-violet-400" />
+                <h1 className="text-xl font-bold text-white tracking-tight">
+                  Blog Yönetimi
+                </h1>
+              </div>
+              <p className="text-zinc-600 text-sm">
+                {blogs.length} yazı listeleniyor
+              </p>
+            </div>
+            <button
               onClick={() => setIsAddModalOpen(true)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg shadow-violet-900/30"
             >
+              <Plus className="w-4 h-4" />
               Yeni Blog Ekle
-            </Button>
+            </button>
           </div>
 
           {blogs.length === 0 ? (
-            <div className="text-center text-gray-400 mt-12">
-              <p className="text-xl">Henüz blog yazısı bulunmamaktadır.</p>
-              <p className="mt-2">Yeni bir blog yazısı ekleyerek başlayın.</p>
+            <div className="flex flex-col items-center justify-center py-24 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-white/3 border border-white/5 flex items-center justify-center mb-4">
+                <FileText className="w-7 h-7 text-zinc-700" />
+              </div>
+              <p className="text-zinc-500 font-medium">Henüz blog yazısı yok</p>
+              <p className="text-zinc-700 text-sm mt-1">
+                Yeni bir yazı ekleyerek başlayın
+              </p>
             </div>
           ) : (
             <>
-              <div className="mb-4 mt-4 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={
-                    selectedBlogs.length === blogs.length && blogs.length > 0
-                  }
-                  onChange={handleSelectAll}
-                  className="w-5 h-5 accent-blue-500 cursor-pointer"
-                />
-                <label className="select-none cursor-pointer">
-                  Tümünü Seç ({selectedBlogs.length}/{blogs.length})
-                </label>
-              </div>
-
-              <div className="space-y-4">
-                {blogs.map((blog) => (
-                  <div
-                    key={blog.id}
-                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-white/10 backdrop-blur-xs rounded-xl border border-white/10 shadow-lg transition-all duration-300 hover:bg-white/15"
-                  >
-                    <div className="flex items-start gap-4 mb-4 sm:mb-0 w-full sm:w-auto">
-                      <input
-                        type="checkbox"
-                        id={`checkbox-${blog.id}`}
-                        checked={selectedBlogs.includes(blog.id)}
-                        onChange={() => handleCheckboxChange(blog.id)}
-                        className="w-5 h-5 mt-2 accent-blue-500 cursor-pointer"
-                      />
-                      <label
-                        htmlFor={`checkbox-${blog.id}`}
-                        className="cursor-pointer"
-                      >
-                        <img
-                          src={blog.image}
-                          alt={blog.title}
-                          className="w-36 h-20 object-cover rounded-lg"
-                        />
-                      </label>
-                      <div className="flex-1">
-                        <h2 className="text-xl font-semibold mb-1">
-                          {blog.title}
-                        </h2>
-                        <p className="text-gray-300 text-sm line-clamp-2">
-                          {blog.summary}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          {new Date(blog.createdAt).toLocaleDateString("tr-TR")}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2 ms-auto sm:ms-0">
-                      <button
-                        onClick={() => openDetailModal(blog.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition font-medium"
-                      >
-                        Detay
-                      </button>
-
-                      <button
-                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition font-medium"
-                        onClick={() => openEditModal(blog)}
-                      >
-                        Düzenle
-                      </button>
-
-                      <button
-                        onClick={() => openDeleteDialog(blog)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm transition font-medium"
-                      >
-                        Sil
-                      </button>
+              {/* Toolbar */}
+              <div className="flex items-center gap-3 mb-4 p-3 bg-white/[0.02] border border-white/5 rounded-xl">
+                <label className="flex items-center gap-2.5 cursor-pointer group">
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedBlogs.length === blogs.length &&
+                        blogs.length > 0
+                      }
+                      onChange={handleSelectAll}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-4 h-4 rounded border transition-all ${selectedBlogs.length === blogs.length && blogs.length > 0 ? "bg-violet-600 border-violet-500" : "border-zinc-700 bg-white/3 group-hover:border-zinc-500"} flex items-center justify-center`}
+                    >
+                      {selectedBlogs.length === blogs.length &&
+                        blogs.length > 0 && (
+                          <svg
+                            className="w-2.5 h-2.5 text-white"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        )}
                     </div>
                   </div>
-                ))}
+                  <span className="text-xs text-zinc-500">Tümünü seç</span>
+                </label>
+
+                <span className="text-zinc-700 text-xs">
+                  {selectedBlogs.length > 0
+                    ? `${selectedBlogs.length} seçili`
+                    : `${blogs.length} yazı`}
+                </span>
+
+                <AnimatePresence>
+                  {selectedBlogs.length > 0 && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      onClick={() => setBulkDeleteDialogOpen(true)}
+                      className="ml-auto flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-3 py-1.5 rounded-lg text-xs font-medium transition"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      {selectedBlogs.length} kaydı sil
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* List */}
+              <div className="space-y-2">
+                <AnimatePresence>
+                  {blogs.map((blog, i) => (
+                    <motion.div
+                      key={blog.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.04 }}
+                      className={`group flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 ${
+                        selectedBlogs.includes(blog.id)
+                          ? "bg-violet-600/5 border-violet-500/30"
+                          : "bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10"
+                      }`}
+                    >
+                      {/* Checkbox */}
+                      <label
+                        className="cursor-pointer flex-shrink-0"
+                        onClick={() => handleCheckboxChange(blog.id)}
+                      >
+                        <div
+                          className={`w-4 h-4 rounded border transition-all ${selectedBlogs.includes(blog.id) ? "bg-violet-600 border-violet-500" : "border-zinc-700 bg-white/3"} flex items-center justify-center`}
+                        >
+                          {selectedBlogs.includes(blog.id) && (
+                            <svg
+                              className="w-2.5 h-2.5 text-white"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={3}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          )}
+                        </div>
+                      </label>
+
+                      {/* Image */}
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        className="w-16 h-11 object-cover rounded-lg flex-shrink-0 border border-white/5"
+                      />
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <h2 className="text-sm font-semibold text-white truncate">
+                          {blog.title}
+                        </h2>
+                        <p className="text-zinc-600 text-xs mt-0.5 line-clamp-1">
+                          {blog.summary}
+                        </p>
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                          <Calendar className="w-3 h-3 text-zinc-700" />
+                          <span className="text-[11px] text-zinc-700">
+                            {new Date(blog.createdAt).toLocaleDateString(
+                              "tr-TR",
+                            )}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-1.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => openDetailModal(blog.id)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg text-zinc-400 hover:text-white text-xs font-medium transition"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          Detay
+                        </button>
+                        <button
+                          onClick={() => openEditModal(blog)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/8 hover:bg-emerald-500/15 border border-emerald-500/20 rounded-lg text-emerald-400 text-xs font-medium transition"
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                          Düzenle
+                        </button>
+                        <button
+                          onClick={() => openDeleteDialog(blog)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/8 hover:bg-red-500/15 border border-red-500/20 rounded-lg text-red-400 text-xs font-medium transition"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          Sil
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
             </>
           )}
@@ -283,47 +393,98 @@ export default function Blogs() {
       </div>
 
       <AddBlogModal
-        trigger={<span className="sr-only">Add Trigger</span>}
+        trigger={<span className="sr-only">Add</span>}
         blogToEdit={null}
         onSuccess={handleAddSuccess}
         open={isAddModalOpen}
         setOpen={setIsAddModalOpen}
       />
-
       <AddBlogModal
-        trigger={<span className="sr-only">Edit Trigger</span>}
+        trigger={<span className="sr-only">Edit</span>}
         blogToEdit={blogToEdit}
         onSuccess={handleEditSuccess}
         open={isEditModalOpen}
         setOpen={setIsEditModalOpen}
       />
 
+      {/* Delete dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="bg-neutral-900 border border-white/10 text-white">
+        <DialogContent className="bg-[#0e0e14] border border-white/8 text-white max-w-sm rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-xl">
-              Blog yazısını silmek istediğinize emin misiniz?
-            </DialogTitle>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-4 h-4 text-red-400" />
+              </div>
+              <DialogTitle className="text-base font-semibold">
+                Blogu Sil
+              </DialogTitle>
+            </div>
           </DialogHeader>
-          <p className="text-gray-400">
-            Bu işlem{" "}
-            <strong className="text-white">{blogToDelete?.title}</strong> blog
-            yazısını <strong className="text-red-400">kalıcı olarak</strong>{" "}
-            silecektir.
+          <p className="text-zinc-500 text-sm leading-relaxed">
+            <span className="text-white font-medium">
+              "{blogToDelete?.title}"
+            </span>{" "}
+            başlıklı yazı kalıcı olarak silinecek. Bu işlem geri alınamaz.
           </p>
-          <DialogFooter className="flex justify-end gap-2 mt-4">
+          <DialogFooter className="flex gap-2 mt-2">
             <Button
               variant="outline"
-              className="border-gray-600 text-gray-300 hover:bg-gray-800"
               onClick={() => setDeleteDialogOpen(false)}
+              className="flex-1 border-white/8 text-zinc-400 hover:bg-white/5 bg-transparent rounded-xl"
             >
               İptal
             </Button>
             <Button
-              className="bg-red-600 hover:bg-red-700"
               onClick={confirmDelete}
+              className="flex-1 bg-red-600 hover:bg-red-500 rounded-xl"
             >
-              Evet, Sil
+              Sil
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Bulk delete dialog */}
+      <Dialog
+        open={bulkDeleteDialogOpen}
+        onOpenChange={setBulkDeleteDialogOpen}
+      >
+        <DialogContent className="bg-[#0e0e14] border border-white/8 text-white max-w-sm rounded-2xl">
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                <Trash2 className="w-4 h-4 text-red-400" />
+              </div>
+              <DialogTitle className="text-base font-semibold">
+                Toplu Silme
+              </DialogTitle>
+            </div>
+          </DialogHeader>
+          <p className="text-zinc-500 text-sm leading-relaxed">
+            <span className="text-white font-medium">
+              {selectedBlogs.length} yazı
+            </span>{" "}
+            kalıcı olarak silinecek. Bu işlem geri alınamaz.
+          </p>
+          <DialogFooter className="flex gap-2 mt-2">
+            <Button
+              variant="outline"
+              onClick={() => setBulkDeleteDialogOpen(false)}
+              disabled={bulkDeleting}
+              className="flex-1 border-white/8 text-zinc-400 hover:bg-white/5 bg-transparent rounded-xl"
+            >
+              İptal
+            </Button>
+            <Button
+              onClick={confirmBulkDelete}
+              disabled={bulkDeleting}
+              className="flex-1 bg-red-600 hover:bg-red-500 rounded-xl"
+            >
+              {bulkDeleting ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                "Sil"
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>

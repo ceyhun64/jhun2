@@ -6,6 +6,10 @@ import connectDB from "@/lib/mongoose";
 import Admin from "@/models/admin";
 import bcrypt from "bcrypt";
 import type { NextAuthOptions } from "next-auth";
+import { seedAdmin } from "@/data/seed";
+
+// Uygulama başlarken bir kez çalışır
+seedAdmin().catch(console.error);
 
 const authOptions: NextAuthOptions = {
   providers: [
