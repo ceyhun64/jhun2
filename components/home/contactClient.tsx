@@ -248,7 +248,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
                 id="firstname"
                 name="firstname"
                 placeholder={dict.form.firstNamePlaceholder}
-                className="w-full bg-background/50 dark:bg-white/10 border border-input dark:border-white/20 placeholder:text-muted-foreground dark:placeholder:text-white/40 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 dark:focus:shadow-[0_0_15px_#fbbf24] transition-all rounded-lg px-3 py-2 sm:py-2 md:py-3 text-xs sm:text-sm md:text-base"
+                className="w-full bg-background/50 dark:bg-white/10 border border-input dark:border-white/20 placeholder:text-black dark:placeholder:text-black focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 dark:focus:shadow-[0_0_15px_#fbbf24] transition-all rounded-lg px-3 py-2 sm:py-2 md:py-3 text-xs sm:text-sm md:text-base"
               />
             </div>
 
@@ -315,7 +315,7 @@ Mesaj: ${formData.get("message")?.toString() || ""}`,
               id="message"
               name="message"
               placeholder={dict.form.messagePlaceholder}
-              className="w-full bg-background/50 dark:bg-white/10 border border-input dark:border-white/20 placeholder:text-muted-foreground dark:placeholder:text-white/40 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 dark:focus:shadow-[0_0_20px_#facc15] transition-all rounded-lg px-3 py-2 sm:py-2 md:py-3 min-h-[140px] sm:min-h-[160px] md:min-h-[160px] text-xs sm:text-sm md:text-base resize-none"
+              className="w-full bg-background/50 dark:bg-white/10 border border-input dark:border-white/20 text-black dark:text-white placeholder:text-muted-foreground dark:placeholder:text-white/40 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 dark:focus:shadow-[0_0_20px_#facc15] transition-all rounded-lg px-3 py-2 sm:py-2 md:py-3 min-h-[140px] sm:min-h-[160px] md:min-h-[160px] text-xs sm:text-sm md:text-base resize-none"
             />
           </div>
 

@@ -30,7 +30,7 @@ export default function ChatInput({
           onKeyPress={onKeyPress}
           placeholder={placeholder}
           disabled={isLoading}
-          className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+          className="flex-1 px-4 py-3 placeholder:text-gray-400 text-gray-900 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
         />
         <button
           onClick={onSend}

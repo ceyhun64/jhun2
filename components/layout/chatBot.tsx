@@ -69,7 +69,7 @@ export default function PortfolioChatbot() {
           learned.length > 0
             ? learned.reduce(
                 (sum: number, item: LearnedResponse) => sum + item.confidence,
-                0
+                0,
               ) / learned.length
             : 0;
 
@@ -158,20 +158,28 @@ export default function PortfolioChatbot() {
   const generateSmartResponse = async (userInput: string): Promise<string> => {
     const input = userInput.toLowerCase();
 
-    // 1. Önce öğrenilmiş yanıtlardan ara
+    // Önce öğrenilmiş cevaplara bak
     const learned = await findLearnedResponse(input);
-    if (learned) {
-      return `🧠 ${learned}`;
-    }
+    if (learned) return `🧠 ${learned}`;
 
-    // 2. Benzerlik analizi yap
-    const similar = await findSimilarConversation(input);
-    if (similar) {
-      return `💡 ${similar}`;
-    }
+    // Gemini API'ye sor
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userInput,
+          locale: "tr", // ← sabit "tr" (eski dosyada locale yok)
+          context: messages.slice(-6), // ← chatMessages değil, messages
+        }),
+      });
 
-    // 3. Pattern matching ile yanıt ver
-    return getContextualResponse(input);
+      const data = await res.json();
+      return data.response;
+    } catch (error) {
+      // Gemini başarısız olursa keyword sisteme fallback
+      return getContextualResponse(userInput);
+    }
   };
 
   // Öğrenilmiş yanıtları ara
@@ -217,7 +225,7 @@ export default function PortfolioChatbot() {
 
   // Benzer konuşmaları bul
   const findSimilarConversation = async (
-    input: string
+    input: string,
   ): Promise<string | null> => {
     try {
       const result = await window.storage.get("conversations");
@@ -309,7 +317,7 @@ export default function PortfolioChatbot() {
       for (const item of learned) {
         const similarity = calculateSimilarity(
           question.toLowerCase(),
-          item.question.toLowerCase()
+          item.question.toLowerCase(),
         );
         if (similarity > bestSimilarity && similarity > 0.75) {
           bestSimilarity = similarity;
