@@ -44,19 +44,45 @@ interface PortfolioChatbotProps {
   messages: any;
 }
 
+// localStorage yardımcı fonksiyonları (window.storage yerine)
+const storage = {
+  get: async (key: string) => {
+    try {
+      const value = localStorage.getItem(key);
+      return value ? { value } : null;
+    } catch {
+      return null;
+    }
+  },
+  set: async (key: string, value: string) => {
+    try {
+      localStorage.setItem(key, value);
+      return true;
+    } catch {
+      return null;
+    }
+  },
+  delete: async (key: string) => {
+    try {
+      localStorage.removeItem(key);
+      return true;
+    } catch {
+      return null;
+    }
+  },
+};
+
 export const getContextualResponse = (
   userInput: string,
-  locale: string
+  locale: string,
 ): string => {
   const input = userInput.toLowerCase();
 
-  // Locale'e göre keywords ve responses yükle
   const localeKeywords =
     keywords[locale as keyof typeof keywords] || keywords.tr;
   const localeResponses =
     responses[locale as keyof typeof responses] || responses.tr;
 
-  // Anahtar kelime eşleştirme
   for (const [category, words] of Object.entries(localeKeywords)) {
     if (words.some((word: string) => input.includes(word))) {
       const response =
@@ -65,14 +91,11 @@ export const getContextualResponse = (
     }
   }
 
-  // Kısa soru kontrolü - güvenli erişim
   if (input.length < 15) {
     const shortQuestion = (localeResponses as any).short_question;
     if (shortQuestion) return shortQuestion;
-    // short_question yoksa default'a düş
   }
 
-  // Varsayılan yanıt
   return (
     (localeResponses as any).default || "Daha fazla bilgi verebilir misiniz?"
   );
@@ -106,11 +129,9 @@ export default function ChatBotClient({
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const learnedResult = await window.storage.get(
-          `learned_responses_${locale}`
-        );
-        const conversationsResult = await window.storage.get(
-          `conversations_${locale}`
+        const learnedResult = await storage.get(`learned_responses_${locale}`);
+        const conversationsResult = await storage.get(
+          `conversations_${locale}`,
         );
 
         const learned = learnedResult ? JSON.parse(learnedResult.value) : [];
@@ -122,7 +143,7 @@ export default function ChatBotClient({
           learned.length > 0
             ? learned.reduce(
                 (sum: number, item: LearnedResponse) => sum + item.confidence,
-                0
+                0,
               ) / learned.length
             : 0;
 
@@ -181,7 +202,7 @@ export default function ChatBotClient({
 
   const findLearnedResponse = async (input: string): Promise<string | null> => {
     try {
-      const result = await window.storage.get(`learned_responses_${locale}`);
+      const result = await storage.get(`learned_responses_${locale}`);
       if (!result) return null;
 
       const learned: LearnedResponse[] = JSON.parse(result.value);
@@ -203,9 +224,9 @@ export default function ChatBotClient({
         bestMatch.useCount++;
         bestMatch.lastUsed = new Date().toISOString();
         bestMatch.confidence = Math.min(0.98, bestMatch.confidence + 0.02);
-        await window.storage.set(
+        await storage.set(
           `learned_responses_${locale}`,
-          JSON.stringify(learned)
+          JSON.stringify(learned),
         );
         return bestMatch.answer;
       }
@@ -216,10 +237,10 @@ export default function ChatBotClient({
   };
 
   const findSimilarConversation = async (
-    input: string
+    input: string,
   ): Promise<string | null> => {
     try {
-      const result = await window.storage.get(`conversations_${locale}`);
+      const result = await storage.get(`conversations_${locale}`);
       if (!result) return null;
 
       const conversations: Conversation[] = JSON.parse(result.value);
@@ -242,16 +263,41 @@ export default function ChatBotClient({
 
   const generateSmartResponse = async (userInput: string): Promise<string> => {
     const input = userInput.toLowerCase();
+
+    // Önce öğrenilmiş cevaplara bak
     const learned = await findLearnedResponse(input);
     if (learned) return `${t.learnedPrefix} ${learned}`;
-    const similar = await findSimilarConversation(input);
-    if (similar) return `${t.similarPrefix} ${similar}`;
-    return getContextualResponse(input, locale);
+
+    // Gemini API'ye sor
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userInput,
+          locale,
+          context: chatMessages.slice(-6),
+        }),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+      if (!data.response) throw new Error("Boş yanıt");
+
+      return data.response;
+    } catch (error) {
+      console.error("Gemini API hatası:", error);
+      // Gemini başarısız olursa keyword sisteme fallback
+      const similar = await findSimilarConversation(input);
+      if (similar) return `${t.similarPrefix} ${similar}`;
+      return getContextualResponse(input, locale);
+    }
   };
 
   const saveConversation = async (question: string, answer: string) => {
     try {
-      const result = await window.storage.get(`conversations_${locale}`);
+      const result = await storage.get(`conversations_${locale}`);
       const conversations: Conversation[] = result
         ? JSON.parse(result.value)
         : [];
@@ -262,10 +308,7 @@ export default function ChatBotClient({
         context: conversationContext.slice(-3),
       });
       const recent = conversations.slice(-200);
-      await window.storage.set(
-        `conversations_${locale}`,
-        JSON.stringify(recent)
-      );
+      await storage.set(`conversations_${locale}`, JSON.stringify(recent));
       await analyzeAndLearn(question, answer);
     } catch (error) {
       console.error("Conversation save error:", error);
@@ -274,7 +317,7 @@ export default function ChatBotClient({
 
   const analyzeAndLearn = async (question: string, answer: string) => {
     try {
-      const result = await window.storage.get(`learned_responses_${locale}`);
+      const result = await storage.get(`learned_responses_${locale}`);
       const learned: LearnedResponse[] = result ? JSON.parse(result.value) : [];
       let existing = null;
       let bestSimilarity = 0;
@@ -282,7 +325,7 @@ export default function ChatBotClient({
       for (const item of learned) {
         const similarity = calculateSimilarity(
           question.toLowerCase(),
-          item.question.toLowerCase()
+          item.question.toLowerCase(),
         );
         if (similarity > bestSimilarity && similarity > 0.75) {
           bestSimilarity = similarity;
@@ -309,10 +352,7 @@ export default function ChatBotClient({
         existing.lastUsed = new Date().toISOString();
       }
 
-      await window.storage.set(
-        `learned_responses_${locale}`,
-        JSON.stringify(learned)
-      );
+      await storage.set(`learned_responses_${locale}`, JSON.stringify(learned));
     } catch (error) {
       console.error("Learning error:", error);
     }
@@ -363,8 +403,8 @@ export default function ChatBotClient({
   const resetData = async () => {
     if (confirm(t.resetConfirm)) {
       try {
-        await window.storage.delete(`learned_responses_${locale}`);
-        await window.storage.delete(`conversations_${locale}`);
+        await storage.delete(`learned_responses_${locale}`);
+        await storage.delete(`conversations_${locale}`);
         setStats({ learned: 0, conversations: 0, confidence: 0 });
         alert(t.resetSuccess);
       } catch (error) {
