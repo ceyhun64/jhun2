@@ -339,7 +339,7 @@ export default function Projects() {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-16 h-11 object-cover rounded-lg flex-shrink-0 border border-white/5"
+                        className="w-28 h-16 object-cover rounded-sm flex-shrink-0 border border-white/5"
                       />
 
                       <div className="flex-1 min-w-0">
