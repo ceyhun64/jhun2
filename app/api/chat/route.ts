@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
          Give short friendly responses in English.`;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash", // ← bunu değiştir
+      model: "gemini-2.0-flash-lite", // ← bunu dene
       systemInstruction: systemPrompt,
     });
 
