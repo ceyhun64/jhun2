@@ -157,30 +157,28 @@ export default function PortfolioChatbot() {
   // Akıllı yanıt üretme sistemi
   const generateSmartResponse = async (userInput: string): Promise<string> => {
     const input = userInput.toLowerCase();
+
+    // 1. Öğrenilmiş cevaplara bak
     const learned = await findLearnedResponse(input);
     if (learned) return `🧠 ${learned}`;
 
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: userInput,
-          locale: "tr",
-          context: messages.slice(-6),
-        }),
-      });
+    // 2. Direkt API'ye sor - keyword kontrolü YOK
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: userInput,
+        locale: "tr",
+        context: messages.slice(-6),
+      }),
+    });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      const data = await res.json();
-      if (!data.response) throw new Error("Boş yanıt");
+    const data = await res.json();
+    if (!data.response) throw new Error("Boş yanıt");
 
-      return data.response;
-    } catch (error) {
-      console.error("Gemini API hatası:", error); // ← bunu görüyorsan sorun burası
-      return getContextualResponse(userInput);
-    }
+    return data.response;
   };
 
   // Öğrenilmiş yanıtları ara
