@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# .jhun{} — Resmi Şirket Sitesi
 
-## Getting Started
+**jhun.com.tr** | İletişim, Portfolyo & Profesyonel Web Geliştirme Hizmetleri
 
-First, run the development server:
+---
+
+## Hakkında
+
+İhtiyaca göre her türlü sitenin tasarlandığı profesyonel web geliştirme hizmetlerimizle işletmenizi dijitale taşıyor, markanıza özel modern ve kullanıcı dostu çözümler sunuyoruz.
+
+Kişisel portfolyo sitelerinden kurumsal tanıtım sayfalarına, bloglardan e-ticaret altyapılarına kadar tüm projeleri estetik, hızlı ve güvenli şekilde hayata geçiriyoruz. Mobil uyumlu tasarımlar, güçlü içerik yönetim sistemleri ve SEO odaklı altyapımız sayesinde hem görünürlüğünüzü artırıyor hem de ziyaretçilere etkileyici bir deneyim sunuyoruz.
+
+Tasarım, yazılım, güncelleme ve teknik destek süreçlerinde yanınızda olarak dijitalde güçlü bir varlık oluşturmanıza yardımcı oluyoruz. İster iletişim, ister portfolyo, ister tanıtım amaçlı olsun; hayal ettiğiniz siteyi eksiksiz şekilde gerçeğe dönüştürürüz.
+
+---
+
+## Özellikler
+
+- Kişisel & kurumsal portfolyo siteleri
+- İletişim & tanıtım sayfaları
+- Blog & içerik yönetim sistemleri
+- E-ticaret altyapıları
+- Mobil uyumlu (responsive) tasarım
+- SEO odaklı geliştirme
+- Teknik destek & bakım hizmetleri
+
+---
+
+## Teknoloji
+
+Bu proje [Next.js](https://nextjs.org) ile geliştirilmiştir.
+
+### Geliştirme Ortamını Başlatmak
 
 ```bash
 npm run dev
-# or
+# veya
 yarn dev
-# or
+# veya
 pnpm dev
-# or
+# veya
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açarak uygulamayı görüntüleyebilirsiniz.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Düzenleme yapmak için `app/page.tsx` dosyasını değiştirebilirsiniz. Sayfa, yaptığınız değişikliklerle otomatik olarak güncellenir.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Yayına Alma
 
-To learn more about Next.js, take a look at the following resources:
+Bu projeyi yayına almanın en kolay yolu [Vercel Platformu](https://vercel.com/new)'nu kullanmaktır.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Daha fazla bilgi için [Next.js dağıtım belgelerine](https://nextjs.org/docs/app/building-your-application/deploying) göz atabilirsiniz.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## İletişim
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Web:** [jhun.com.tr](https://jhun.com.tr)
